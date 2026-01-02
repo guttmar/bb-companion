@@ -46,6 +46,12 @@
   button:hover {
     background-color: #45a049;
   }
+
+  button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
 </style>
 
 <table>
@@ -61,9 +67,13 @@
       <td>
         <button on:click={() => currentRoster.update(r => {
           r.players[p.id] = r.players[p.id] ?? 0;
+          if (r.players[p.id] == 0) {
+            return r;
+          }
+
           r.players[p.id]--;
           return r;
-        })}>−</button>
+        })} disabled={($currentRoster.players[p.id] ?? 0) == 0}>−</button>
         <span>{$currentRoster.players[p.id] ?? 0}</span>
         <button on:click={() => currentRoster.update(r => {
           r.players[p.id] = r.players[p.id] ?? 0;
