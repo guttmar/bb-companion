@@ -151,7 +151,7 @@ export const bb2020Teams: TeamMap = {
     players: [
       {
         id: "eagle-warrior",
-        name: "Eagle Warrior",
+        name: "Eagle Warrior Linewoman",
         ma: 6,
         st: 3,
         ag: 3,
@@ -162,7 +162,7 @@ export const bb2020Teams: TeamMap = {
       },
       {
         id: "python-warrior",
-        name: "Python Warrior",
+        name: "Python Warrior Thrower",
         ma: 6,
         st: 3,
         ag: 3,
@@ -173,22 +173,22 @@ export const bb2020Teams: TeamMap = {
       },
       {
         id: "piranha-warrior",
-        name: "Piranha Warrior",
+        name: "Piranha Warrior Blitzer",
         ma: 7,
         st: 3,
         ag: 3,
-        pa: 4,
+        pa: 5,
         av: 8,
         cost: 90000,
         max: 2
       },
       {
         id: "jaguar-warrior",
-        name: "Jaguar Warrior",
+        name: "Jaguar Warrior Blocker",
         ma: 6,
         st: 4,
         ag: 3,
-        pa: 4,
+        pa: 5,
         av: 9,
         cost: 110000,
         max: 2
