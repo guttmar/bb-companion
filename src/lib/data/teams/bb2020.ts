@@ -194,5 +194,70 @@ export const bb2020Teams: TeamMap = {
         max: 2
       }
     ]
+  },
+
+  imperialNobility: {
+    id: "imperial-nobility",
+    name: "Imperial Nobility",
+    tier: 2,
+    rerollCost: 70000,
+    apothecary: true,
+    players: [
+      {
+        id: "imperial-retainer",
+        name: "Imperial Retainer Lineman",
+        ma: 6,
+        st: 3,
+        ag: 4,
+        pa: 4,
+        av: 8,
+        cost: 45000,
+        max: 12
+      },
+      {
+        id: "imperial-thrower",
+        name: "Imperial Thrower",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 3,
+        av: 9,
+        cost: 75000,
+        max: 2
+      },
+      {
+        id: "bodyguard",
+        name: "Bodyguard",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 5,
+        av: 9,
+        cost: 90000,
+        max: 4
+      },
+      {
+        id: "noble-blitzer",
+        name: "Noble Blitzer",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 105000,
+        max: 2
+      },
+      {
+        id: "ogre",
+        name: "Ogre",
+        ma: 5,
+        st: 5,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 140000,
+        max: 1
+      }
+    ]
   }
 };
