@@ -21,7 +21,7 @@
 
   td > span {
     display: inline-block;
-    width: 1.5rem;
+    width: 3.5rem;
     text-align: center;
   }
 
@@ -61,7 +61,7 @@
       <th>Cost</th>
       <th>Name</th>
     </tr>
-    
+
     {#each $selectedTeam?.players ?? [] as p}
     <tr>
       <td>
@@ -74,7 +74,7 @@
           r.players[p.id]--;
           return r;
         })} disabled={($currentRoster.players[p.id] ?? 0) == 0}>−</button>
-        <span>{$currentRoster.players[p.id] ?? 0}</span>
+        <span>{$currentRoster.players[p.id] ?? 0} / {p.max}</span>
         <button on:click={() => currentRoster.update(r => {
           r.players[p.id] = r.players[p.id] ?? 0;
           r.players[p.id]++;
