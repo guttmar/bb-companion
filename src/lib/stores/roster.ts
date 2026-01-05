@@ -5,8 +5,14 @@ export const selectedTeamId = writable<string>("human");
 
 export const selectedTeam = derived(selectedTeamId, id => TEAMS[id]);
 
-export const currentRoster = writable<{ players: Record<string, number> }>({
-  players: {}
+export const currentRoster = writable<{
+  players: Record<string, number>;
+  reRolls: number;
+  apothecary: number;
+}>({
+  players: {},
+  reRolls: 0,
+  apothecary: 0
 });
 
 export const startingTreasury = writable(1000000);
@@ -19,5 +25,7 @@ export const treasuryLeft = derived(
       (sum, [id, count]) =>
         sum + ($team?.players.find((p: { id: string; cost: number }) => p.id === id)?.cost ?? 0) * (count as number),
       0
-    )
+    ) -
+    ($team?.rerollCost ?? 0) * $roster.reRolls -
+    ($team?.apothecary ? 50000 * $roster.apothecary : 0)
 );

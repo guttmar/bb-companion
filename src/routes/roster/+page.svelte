@@ -1,5 +1,6 @@
 <script>
   import RosterTable from "$lib/tools/RosterTable.svelte";
+  import OtherTable from "$lib/tools/OtherTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
   import { treasuryLeft, currentRoster, selectedTeam, selectedTeamId } from "$lib/stores/roster";
   import { bb2020Teams } from "$lib/data/teams/bb2020";
@@ -7,7 +8,7 @@
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
 
   $: if ($selectedTeamId) {
-    currentRoster.set({ players: {} });
+    currentRoster.set({ players: {}, reRolls: 0, apothecary: 0 });
   }
 </script>
 
@@ -42,6 +43,12 @@
     border-radius: 4px;
     width: 100%;
   }
+
+  h2 {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
 </style>
 
 <main>
@@ -56,4 +63,7 @@
   <p>Treasury left: {$treasuryLeft}</p>
   <p>Total players: {totalPlayers}</p>
   <RosterWarnings />
+
+  <h2>Other</h2>
+  <OtherTable />
 </main>
