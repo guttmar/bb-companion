@@ -1,6 +1,7 @@
 <script>
   import RosterTable from "$lib/tools/RosterTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
+  import { treasuryLeft } from "$lib/stores/roster";
 </script>
 
 <style>
@@ -23,5 +24,6 @@
 
 <main>
   <RosterTable />
+  <p>Treasury left: {$treasuryLeft}</p>
   <RosterWarnings />
 </main>
