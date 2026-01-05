@@ -140,5 +140,59 @@ export const bb2020Teams: TeamMap = {
         max: 1
       }
     ]
+  },
+
+  amazon: {
+    id: "amazon",
+    name: "Amazon",
+    tier: 1,
+    rerollCost: 50000,
+    apothecary: true,
+    players: [
+      {
+        id: "eagle-warrior",
+        name: "Eagle Warrior",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 50000,
+        max: 16
+      },
+      {
+        id: "python-warrior",
+        name: "Python Warrior",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 3,
+        av: 8,
+        cost: 80000,
+        max: 2
+      },
+      {
+        id: "piranha-warrior",
+        name: "Piranha Warrior",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 90000,
+        max: 2
+      },
+      {
+        id: "jaguar-warrior",
+        name: "Jaguar Warrior",
+        ma: 6,
+        st: 4,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 110000,
+        max: 2
+      }
+    ]
   }
 };
