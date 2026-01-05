@@ -1,7 +1,9 @@
 <script>
   import RosterTable from "$lib/tools/RosterTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
-  import { treasuryLeft } from "$lib/stores/roster";
+  import { treasuryLeft, currentRoster } from "$lib/stores/roster";
+
+  $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
 </script>
 
 <style>
@@ -25,5 +27,6 @@
 <main>
   <RosterTable />
   <p>Treasury left: {$treasuryLeft}</p>
+  <p>Total players: {totalPlayers}</p>
   <RosterWarnings />
 </main>
