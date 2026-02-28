@@ -2,10 +2,11 @@
   import RosterTable from "$lib/tools/RosterTable.svelte";
   import OtherTable from "$lib/tools/OtherTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
-  import { treasuryLeft, currentRoster, selectedTeam, selectedTeamId } from "$lib/stores/roster";
-  import { bb2020Teams } from "$lib/data/teams/bb2020";
+  import { treasuryLeft, currentRoster, selectedTeam, selectedTeamId, teams } from "$lib/stores/roster";
 
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
+
+  $: teamIds = Object.keys($teams ?? {});
 
   $: if ($selectedTeamId) {
     currentRoster.set({ players: {}, reRolls: 0, apothecary: 0 });
@@ -54,8 +55,8 @@
 <main>
   <label for="team-select">Choose a team:</label>
   <select id="team-select" bind:value={$selectedTeamId}>
-    {#each Object.keys(bb2020Teams) as teamId}
-      <option value={teamId}>{bb2020Teams[teamId].name}</option>
+    {#each teamIds as teamId}
+      <option value={teamId}>{$teams[teamId].name}</option>
     {/each}
   </select>
 

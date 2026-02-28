@@ -12,6 +12,8 @@ export interface PlayerType {
 
   cost: number;
   max: number;
+
+  skills?: string[];
 }
 
 export interface Team {

@@ -1,8 +1,15 @@
 import type { Ruleset, TeamMap } from "./types";
 import { bb2020Teams } from "./bb2020";
+import { bb2025Teams } from "./bb2025";
+
+const teamsByRuleset: Record<Ruleset, TeamMap> = {
+  "2016": bb2020Teams,
+  "2020": bb2020Teams,
+  "2025": bb2025Teams
+};
 
 export function getTeams(ruleset: Ruleset): TeamMap {
-  const teams = ruleset === "2020" ? bb2020Teams : bb2020Teams; // Placeholder
+  const teams = teamsByRuleset[ruleset];
 
   // Map `players` to `roster` for compatibility
   return Object.fromEntries(
@@ -12,7 +19,5 @@ export function getTeams(ruleset: Ruleset): TeamMap {
     ])
   );
 }
-
-export const TEAMS = getTeams("2020");
 
 export * from "./types";

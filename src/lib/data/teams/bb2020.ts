@@ -196,6 +196,59 @@ export const bb2020Teams: TeamMap = {
     ]
   },
 
+  lizardmen: {
+    id: "lizardmen",
+    name: "Lizardmen",
+    tier: 1,
+    rerollCost: 70000,
+    apothecary: true,
+    players: [
+      {
+        id: "skink-lineman",
+        name: "Skink Lineman",
+        ma: 8,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 60000,
+        max: 16
+      },
+      {
+        id: "chameleon-skink",
+        name: "Chameleon Skink",
+        ma: 7,
+        st: 2,
+        ag: 3,
+        pa: 3,
+        av: 8,
+        cost: 70000,
+        max: 2
+      },
+      {
+        id: "saurus-blocker",
+        name: "Saurus Blocker",
+        ma: 6,
+        st: 4,
+        ag: 5,
+        pa: 6,
+        av: 10,
+        cost: 85000,
+        max: 6
+      },
+      {
+        id: "kroxigor",
+        name: "Kroxigor",
+        ma: 6,
+        st: 5,
+        ag: 5,
+        av: 10,
+        cost: 140000,
+        max: 1
+      }
+    ]
+  },
+
   imperialNobility: {
     id: "imperial-nobility",
     name: "Imperial Nobility",

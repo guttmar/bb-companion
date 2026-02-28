@@ -1,9 +1,15 @@
 import { writable, derived } from "svelte/store";
-import { TEAMS } from "$lib/data/teams";
+import { getTeams } from "$lib/data/teams";
+import { settings } from "$lib/stores/settings";
 
 export const selectedTeamId = writable<string>("human");
 
-export const selectedTeam = derived(selectedTeamId, id => TEAMS[id]);
+export const teams = derived(settings, ($settings) => getTeams($settings.ruleset));
+
+export const selectedTeam = derived(
+  [selectedTeamId, teams],
+  ([$id, $teams]) => $teams?.[$id]
+);
 
 export const currentRoster = writable<{
   players: Record<string, number>;
