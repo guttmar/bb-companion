@@ -44,6 +44,9 @@ importers:
       eslint-plugin-svelte:
         specifier: ^3.13.1
         version: 3.13.1(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.0)
+      fluentui-icons-svelte:
+        specifier: ^1.0.3
+        version: 1.0.3(svelte@5.46.0)
       globals:
         specifier: ^16.5.0
         version: 16.5.0
@@ -913,6 +916,11 @@ packages:
 
   flatted@3.3.3:
     resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
+
+  fluentui-icons-svelte@1.0.3:
+    resolution: {integrity: sha512-HPvdXS2Jt065XndVSm4sc1OA8EeuZ53q8wRVTBCYv1wmZtA/FwT5Pgg/t7RQKcmzixCsamoDFlsxbLVAG98WJg==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   fsevents@2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
@@ -2319,6 +2327,10 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.3.3: {}
+
+  fluentui-icons-svelte@1.0.3(svelte@5.46.0):
+    dependencies:
+      svelte: 5.46.0
 
   fsevents@2.3.2:
     optional: true

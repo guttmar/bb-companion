@@ -8,10 +8,13 @@
 	import BookFilled from 'fluentui-icons-svelte/BookFilled.svelte';
 	import SettingsRegular from 'fluentui-icons-svelte/SettingsRegular.svelte';
 	import SettingsFilled from 'fluentui-icons-svelte/SettingsFilled.svelte';
+	import FolderRegular from 'fluentui-icons-svelte/FolderRegular.svelte';
+	import FolderFilled from 'fluentui-icons-svelte/FolderFilled.svelte';
 
 	const tabs = [
 		{ href: '/', label: 'Home', iconRegular: HomeRegular, iconFilled: HomeFilled },
 		{ href: '/roster', label: 'Roster', iconRegular: PeopleTeamRegular, iconFilled: PeopleTeamFilled },
+		{ href: '/saved-teams', label: 'Saved teams', iconRegular: FolderRegular, iconFilled: FolderFilled },
 		{ href: '/skills', label: 'Skills', iconRegular: BookRegular, iconFilled: BookFilled },
 		{ href: '/settings', label: 'Settings', iconRegular: SettingsRegular, iconFilled: SettingsFilled }
 	];
