@@ -3,6 +3,20 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			(function () {
+				try {
+					const raw = localStorage.getItem('bb-companion:settings');
+					if (raw) {
+						const s = JSON.parse(raw);
+						if (s && s.theme === 'dark') document.documentElement.classList.add('dark');
+						else document.documentElement.classList.remove('dark');
+					} else document.documentElement.classList.remove('dark');
+				} catch (_) {
+					document.documentElement.classList.remove('dark');
+				}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

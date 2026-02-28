@@ -3,38 +3,39 @@
 </script>
 
 <style>
-  table {
+  table.roster-table {
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0;
   }
 
-  th, td {
+  .roster-table th,
+  .roster-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
   }
 
-  td {
+  .roster-table td {
     min-width: auto;
   }
 
-  td > span {
+  .roster-table td > span {
     display: inline-block;
     width: 3.5rem;
     text-align: center;
   }
 
-  th {
+  .roster-table th {
     background-color: #3d8c40;
     color: white;
   }
 
-  tr:nth-child(even) {
+  .roster-table tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  button {
+  .roster-table button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -43,18 +44,53 @@
     border-radius: 4px;
   }
 
-  button:hover {
+  .roster-table button:hover {
     background-color: #45a049;
   }
 
-  button:disabled {
+  .roster-table button:disabled {
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
   }
+
+  :global(.dark) .roster-table th,
+  :global(.dark) .roster-table td {
+    border-color: #404040;
+  }
+
+  :global(.dark) .roster-table td {
+    color: #a3a3a3;
+  }
+
+  :global(.dark) .roster-table th {
+    background-color: #166534;
+  }
+
+  :global(.dark) .roster-table tr:nth-child(even) {
+    background-color: #262626;
+  }
+
+  :global(.dark) .roster-table tr:nth-child(odd) {
+    background-color: #171717;
+  }
+
+  :global(.dark) .roster-table button {
+    background-color: #15803d;
+    color: white;
+  }
+
+  :global(.dark) .roster-table button:hover {
+    background-color: #166534;
+  }
+
+  :global(.dark) .roster-table button:disabled {
+    background-color: #525252;
+    color: #737373;
+  }
 </style>
 
-<table>
+<table class="roster-table">
   <tbody>
     <tr>
       <th>#</th>

@@ -3,23 +3,24 @@
 </script>
 
 <style>
-  table {
+  table.other-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
   }
 
-  th, td {
+  .other-table th,
+  .other-table td {
     border: 1px solid #ccc;
     padding: 0.75rem;
     text-align: center;
   }
 
-  th {
+  .other-table th {
     background-color: #f2f2f2;
   }
 
-  button {
+  .other-table button {
     cursor: pointer;
     padding: 0.25rem 0.5rem;
     font-size: 1rem;
@@ -30,13 +31,41 @@
     margin: 0 0.25rem;
   }
 
-  button:disabled {
+  .other-table button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+  :global(.dark) .other-table th,
+  :global(.dark) .other-table td {
+    border-color: #404040;
+  }
+
+  :global(.dark) .other-table th {
+    background-color: #262626;
+    color: #e5e5e5;
+  }
+
+  :global(.dark) .other-table td {
+    color: #a3a3a3;
+  }
+
+  :global(.dark) .other-table button {
+    background-color: #2563eb;
+    color: white;
+  }
+
+  :global(.dark) .other-table button:hover:not(:disabled) {
+    background-color: #1d4ed8;
+  }
+
+  :global(.dark) .other-table button:disabled {
+    background-color: #525252;
+    color: #737373;
+  }
 </style>
 
-<table>
+<table class="other-table">
   <tbody>
     <tr>
       <th>Count</th>

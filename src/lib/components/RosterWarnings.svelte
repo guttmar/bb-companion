@@ -12,6 +12,12 @@
     border-radius: 4px;
     font-size: 0.9rem;
   }
+
+  :global(.dark) .warning {
+    border-color: #7f1d1d;
+    background-color: #450a0a;
+    color: #fecaca;
+  }
 </style>
 
 {#each $rosterValidation as w}

@@ -4,12 +4,14 @@ import type { RulesetId } from "$lib/domain/rulesets";
 
 type Settings = {
   ruleset: RulesetId;
+  theme: "light" | "dark";
 };
 
 const SETTINGS_STORAGE_KEY = "bb-companion:settings";
 
 const DEFAULT_SETTINGS: Settings = {
-  ruleset: "2020"
+  ruleset: "2020",
+  theme: "light"
 };
 
 function createSettingsStore() {
@@ -27,7 +29,13 @@ function createSettingsStore() {
           typeof parsed.ruleset === "string" &&
           ["2016", "2020", "2025"].includes(parsed.ruleset)
         ) {
-          initial = { ruleset: parsed.ruleset as RulesetId };
+          initial = {
+            ruleset: parsed.ruleset as RulesetId,
+            theme:
+              parsed.theme === "dark" || parsed.theme === "light"
+                ? parsed.theme
+                : DEFAULT_SETTINGS.theme
+          };
         }
       } catch {
         // Ignore invalid JSON and fall back to defaults

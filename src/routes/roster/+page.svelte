@@ -21,6 +21,10 @@
     padding: 0;
   }
 
+  :global(.dark) :global(body) {
+    background-color: #0a0a0a;
+  }
+
   main {
     max-width: 800px;
     margin: 2rem auto;
@@ -30,10 +34,19 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
+  :global(.dark) main {
+    background: #171717;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
   label {
     font-weight: bold;
     margin-bottom: 0.5rem;
     display: block;
+  }
+
+  :global(.dark) main label {
+    color: #e5e5e5;
   }
 
   select {
@@ -45,10 +58,24 @@
     width: 100%;
   }
 
+  :global(.dark) main select {
+    border-color: #525252;
+    background: #262626;
+    color: #e5e5e5;
+  }
+
   h2 {
     margin-top: 2rem;
     font-size: 1.5rem;
     color: #333;
+  }
+
+  :global(.dark) main h2 {
+    color: #e5e5e5;
+  }
+
+  :global(.dark) main p {
+    color: #a3a3a3;
   }
 </style>
 
