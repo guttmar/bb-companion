@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import HomeRegular from 'fluentui-icons-svelte/HomeRegular.svelte';
 	import HomeFilled from 'fluentui-icons-svelte/HomeFilled.svelte';
 	import PeopleTeamRegular from 'fluentui-icons-svelte/PeopleTeamRegular.svelte';
@@ -26,7 +27,7 @@
 	{#each tabs as tab}
 		{@const active = $page.url.pathname === tab.href}
 		<a
-			href={tab.href}
+			href={base + tab.href}
 			aria-label={tab.label}
 			aria-current={active ? 'page' : undefined}
 			class="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg transition-colors {active
