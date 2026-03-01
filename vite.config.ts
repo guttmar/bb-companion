@@ -13,7 +13,7 @@ export default defineConfig({
 			manifest: {
 				name: 'BB Companion',
 				short_name: 'BB Companion',
-				description: 'Blood Bowl roster companion app',
+				description: 'Blood Bowl Companion app',
 				theme_color: '#ffffff',
 				background_color: '#f9fafb',
 				display: 'standalone',
