@@ -1,5 +1,27 @@
 <script lang="ts">
   import { selectedTeam, currentRoster } from "$lib/stores/roster";
+  import { bb2025Skills, type Skill } from "$lib/data/skills/bb2025";
+  import DismissRegular from 'fluentui-icons-svelte/DismissRegular.svelte';
+
+  let openSkill: Skill | null = null;
+
+  function resolveSkill(name: string): Skill | null {
+    const n = (name ?? "").toLowerCase();
+    for (const cat of bb2025Skills) {
+      for (const s of cat.skills) {
+        if ((s.name && s.name.toLowerCase() === n) || (s.id && s.id.toLowerCase() === n)) return s as Skill;
+      }
+    }
+    return null;
+  }
+
+  function showSkill(name: string) {
+    openSkill = resolveSkill(name) ?? { id: name, name, type: "passive", description: "No description available." } as Skill;
+  }
+
+  function closeSkill() {
+    openSkill = null;
+  }
 </script>
 
 <style>
@@ -88,6 +110,114 @@
     background-color: #525252;
     color: #737373;
   }
+  
+  /* Skills UI */
+  .skill-btn {
+    background: transparent;
+    color: #064e3b;
+    border: 1px solid #c7f0d6;
+    padding: 4px 6px;
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+
+  .skill-btn:hover {
+    background: #e6f7ed;
+  }
+
+  :global(.dark) .skill-btn {
+    background: transparent;
+    color: #86efac;
+    border-color: #14532d;
+  }
+
+  .skill-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+  }
+
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .skill-desc {
+    color: #374151;
+  }
+
+  .badge {
+    margin-left: 0.5rem;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    background: #d1fae5;
+    border-radius: 999px;
+    color: #065f46;
+    margin-right: 0.4rem;
+  }
+
+  .elite {
+    background: #fde68a;
+    color: #92400e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  :global(.dark) .skill-card {
+    background: #0b1220;
+    border-color: #222;
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  .modal {
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+  }
+
+  :global(.dark) .modal-overlay {
+    background: rgba(0,0,0,0.7);
+  }
+
+  .close-icon {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .close-icon :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 </style>
 
 <table class="roster-table">
@@ -96,6 +226,7 @@
       <th>#</th>
       <th>Cost</th>
       <th>Name</th>
+      <th>Skills</th>
     </tr>
 
     {#each $selectedTeam?.players ?? [] as p}
@@ -119,7 +250,38 @@
       </td>
       <td>{p.cost}</td>
       <td>{p.name}</td>
+      <td>
+        {#each p.skills ?? [] as s}
+          <button class="skill-btn" on:click={() => showSkill(s)}>{s}</button>
+        {/each}
+      </td>
     </tr>
+
     {/each}
   </tbody>
 </table>
+
+{#if openSkill}
+  <div class="modal-overlay" on:click={closeSkill}>
+    <div class="modal" on:click|stopPropagation>
+      <div class="skill-card">
+        <div class="skill-header">
+          <div>
+            <strong>{openSkill.name}</strong>
+            <span class="badge">{openSkill.type}</span>
+            {#if openSkill.elite}
+              <span class="elite">Elite</span>
+            {/if}
+          </div>
+          <div>
+            <button class="close-icon" on:click={closeSkill} aria-label="Close">
+              <DismissRegular />
+            </button>
+          </div>
+        </div>
+        <div class="skill-desc">{openSkill.description}</div>
+      </div>
+    </div>
+  </div>
+{/if}
+
