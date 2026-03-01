@@ -149,6 +149,14 @@
     min-width: 12rem;
   }
 
+  .treasury-input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 10rem;
+  }
+
   :global(.dark) .team-name-input {
     border-color: #525252;
     background: #262626;
@@ -213,6 +221,15 @@
       placeholder="My team"
       bind:value={teamName}
       class="team-name-input"
+    />
+    <label for="starting-treasury">Starting treasury</label>
+    <input
+      id="starting-treasury"
+      type="number"
+      min="0"
+      step="1"
+      class="treasury-input"
+      bind:value={$startingTreasury}
     />
     <button type="button" class="save-btn" on:click={handleSave}>Save team</button>
   </div>
