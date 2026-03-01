@@ -3,6 +3,7 @@
   import { teams } from "$lib/stores/roster";
   import EditRegular from "fluentui-icons-svelte/EditRegular.svelte";
   import DeleteRegular from "fluentui-icons-svelte/DeleteRegular.svelte";
+  import { base } from '$app/paths';
 
   let deletingId: string | null = null;
   const ICON_SIZE = 18;
@@ -176,7 +177,7 @@
   <h1>Saved teams</h1>
 
   {#if $savedTeams.length === 0}
-    <p class="empty">No saved teams. <a href="/roster">Create a roster</a> and save it to see it here.</p>
+    <p class="empty">No saved teams. <a href="{base + '/roster'}" use:link>Create a roster</a> and save it to see it here.</p>
   {:else}
     <ul class="list">
       {#each $savedTeams as team (team.id)}
@@ -199,7 +200,7 @@
               <button type="button" class="btn btn-confirm" on:click={() => confirmDelete(team)}>Yes</button>
               <button type="button" class="btn btn-cancel" on:click={() => (deletingId = null)}>No</button>
             {:else}
-              <a href="/roster?load={encodeURIComponent(team.id)}" class="btn btn-edit">
+              <a href="{base + '/roster?load=' + encodeURIComponent(team.id)}" class="btn btn-edit" use:link>
                 <EditRegular width={ICON_SIZE} height={ICON_SIZE} />
               </a>
               <button type="button" class="btn btn-delete" on:click={() => confirmDelete(team)}>

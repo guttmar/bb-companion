@@ -3,6 +3,7 @@
   import { tick } from "svelte";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import { base } from '$app/paths';
   import RosterTable from "$lib/tools/RosterTable.svelte";
   import OtherTable from "$lib/tools/OtherTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
@@ -216,7 +217,7 @@
     <button type="button" class="save-btn" on:click={handleSave}>Save team</button>
   </div>
   {#if saveMessage}
-    <p class="save-message">{saveMessage} <a href="/saved-teams">View saved teams</a></p>
+    <p class="save-message">{saveMessage} <a href="{base + '/saved-teams'}" use:link>View saved teams</a></p>
   {/if}
 
   <h2>Other</h2>
