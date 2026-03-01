@@ -6,6 +6,9 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
+		serviceWorker: {
+			register: false
+		},
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',

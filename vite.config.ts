@@ -2,9 +2,48 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit()],
+	plugins: [
+		tailwindcss(),
+		sveltekit(),
+		SvelteKitPWA({
+			registerType: 'autoUpdate',
+			manifest: {
+				name: 'BB Companion',
+				short_name: 'BB Companion',
+				description: 'Blood Bowl roster companion app',
+				theme_color: '#ffffff',
+				background_color: '#f9fafb',
+				display: 'standalone',
+				icons: [
+					{
+						src: 'pwa-64x64.png',
+						sizes: '64x64',
+						type: 'image/png'
+					},
+					{
+						src: 'pwa-192x192.png',
+						sizes: '192x192',
+						type: 'image/png'
+					},
+					{
+						src: 'pwa-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'any'
+					},
+					{
+						src: 'maskable-icon-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'maskable'
+					}
+				]
+			}
+		})
+	],
 
 	test: {
 		expect: { requireAssertions: true },

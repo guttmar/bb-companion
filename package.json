@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "pnpm run generate-pwa-assets && vite build",
+		"generate-pwa-assets": "pwa-assets-generator",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -24,6 +25,8 @@
 		"@tailwindcss/forms": "^0.5.10",
 		"@tailwindcss/vite": "^4.1.17",
 		"@types/node": "^22",
+		"@vite-pwa/assets-generator": "^1.0.2",
+		"@vite-pwa/sveltekit": "^1.1.0",
 		"@vitest/browser-playwright": "^4.0.15",
 		"eslint": "^9.39.1",
 		"eslint-config-prettier": "^10.1.8",
@@ -41,7 +44,8 @@
 		"typescript-eslint": "^8.48.1",
 		"vite": "^7.2.6",
 		"vitest": "^4.0.15",
-		"vitest-browser-svelte": "^2.0.1"
+		"vitest-browser-svelte": "^2.0.1",
+		"workbox-window": "^7.4.0"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
