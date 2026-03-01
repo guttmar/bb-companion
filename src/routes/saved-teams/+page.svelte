@@ -177,7 +177,7 @@
   <h1>Saved teams</h1>
 
   {#if $savedTeams.length === 0}
-    <p class="empty">No saved teams. <a href="{base + '/roster'}" use:link>Create a roster</a> and save it to see it here.</p>
+    <p class="empty">No saved teams. <a href="{base + '/roster'}">Create a roster</a> and save it to see it here.</p>
   {:else}
     <ul class="list">
       {#each $savedTeams as team (team.id)}
@@ -200,7 +200,7 @@
               <button type="button" class="btn btn-confirm" on:click={() => confirmDelete(team)}>Yes</button>
               <button type="button" class="btn btn-cancel" on:click={() => (deletingId = null)}>No</button>
             {:else}
-              <a href="{base + '/roster?load=' + encodeURIComponent(team.id)}" class="btn btn-edit" use:link>
+              <a href="{base + '/roster?load=' + encodeURIComponent(team.id)}" class="btn btn-edit">
                 <EditRegular width={ICON_SIZE} height={ICON_SIZE} />
               </a>
               <button type="button" class="btn btn-delete" on:click={() => confirmDelete(team)}>

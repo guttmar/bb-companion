@@ -5,9 +5,9 @@
 
 {#if open}
   <nav class="p-4 bg-gray-200 dark:bg-gray-800">
-    <a href="{base + '/'}" use:link>Home</a><br />
-    <a href="{base + '/roster'}" use:link>Roster</a><br />
-    <a href="{base + '/skills'}" use:link>Skills</a><br />
-    <a href="{base + '/settings'}" use:link>Settings</a>
+    <a href="{base + '/'}">Home</a><br />
+    <a href="{base + '/roster'}">Roster</a><br />
+    <a href="{base + '/skills'}">Skills</a><br />
+    <a href="{base + '/settings'}">Settings</a>
   </nav>
 {/if}

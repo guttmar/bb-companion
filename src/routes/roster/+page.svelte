@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   import { tick } from "svelte";
   import { page } from "$app/stores";
@@ -15,10 +15,15 @@
     teams,
     startingTreasury
   } from "$lib/stores/roster";
-  import { getSavedTeam, saveTeam } from "$lib/stores/savedTeams";
+  import { getSavedTeam, saveTeam, updateTeam } from "$lib/stores/savedTeams";
 
   let teamName = "";
   let saveMessage = "";
+  // currently-editing saved team id (undefined when creating new)
+  export let editingId: string | undefined;
+  // keep track of the template that was used when loading the team so
+  // we can clear editing state if the user switches to a different base
+  let loadedTemplateId: string | undefined;
 
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
 
@@ -28,17 +33,29 @@
     currentRoster.set({ players: {}, reRolls: 0, apothecary: 0 });
   }
 
+  // if the user switches teams while editing a saved roster clear the
+  // editing state (otherwise we'd accidentally update a team that no
+  // longer matches the template they are working on)
+  $: if (loadedTemplateId && $selectedTeamId !== loadedTemplateId) {
+    editingId = undefined;
+    loadedTemplateId = undefined;
+  }
+
   onMount(() => {
     const loadId = $page.url.searchParams.get("load");
     if (loadId) {
       const saved = getSavedTeam(loadId);
       if (saved) {
+        // set editing state and form fields
+        editingId = saved.id;
+        teamName = saved.name ?? "";
+        if (saved.startingTreasury != null) {
+          startingTreasury.set(saved.startingTreasury);
+        }
         selectedTeamId.set(saved.selectedTeamId);
+        loadedTemplateId = saved.selectedTeamId;
         tick().then(() => {
           currentRoster.set({ ...saved.roster });
-          if (saved.startingTreasury != null) {
-            startingTreasury.set(saved.startingTreasury);
-          }
           const url = new URL($page.url);
           url.searchParams.delete("load");
           goto(url.pathname + url.search, { replaceState: true });
@@ -48,13 +65,25 @@
   });
 
   function handleSave() {
-    const id = saveTeam({
+    const payload = {
       name: teamName.trim() || undefined,
       selectedTeamId: $selectedTeamId,
       roster: { ...$currentRoster },
       startingTreasury: $startingTreasury
-    });
-    saveMessage = "Team saved.";
+    };
+
+    if (editingId) {
+      // update existing record
+      updateTeam(editingId, payload);
+      saveMessage = "Team updated.";
+    } else {
+      const id = saveTeam(payload);
+      saveMessage = "Team saved.";
+    }
+
+    // if we just saved (or updated) clear the name field but keep editingId
+    // so the user can continue to tweak without losing context.  if the
+    // roster template changes the reactive block below will reset editingId.
     teamName = "";
   }
 </script>
@@ -212,7 +241,14 @@
   <RosterWarnings />
 
   <h2>Save team</h2>
-  <p class="save-hint">Optionally give the team a name, then save to access it from Saved teams.</p>
+  <p class="save-hint">
+    {#if editingId}
+      You are editing a saved team. Give it a name or modify the roster and
+      click update.
+    {:else}
+      Optionally give the team a name, then save to access it from Saved teams.
+    {/if}
+  </p>
   <div class="save-row">
     <label for="team-name">Team name (optional)</label>
     <input
@@ -231,10 +267,12 @@
       class="treasury-input"
       bind:value={$startingTreasury}
     />
-    <button type="button" class="save-btn" on:click={handleSave}>Save team</button>
+    <button type="button" class="save-btn" on:click={handleSave}>
+      {editingId ? 'Update team' : 'Save team'}
+    </button>
   </div>
   {#if saveMessage}
-    <p class="save-message">{saveMessage} <a href="{base + '/saved-teams'}" use:link>View saved teams</a></p>
+    <p class="save-message">{saveMessage} <a href="{base + '/saved-teams'}">View saved teams</a></p>
   {/if}
 
   <h2>Other</h2>
