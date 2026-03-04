@@ -4,6 +4,228 @@ import { bb2020Teams } from "./bb2020";
 export const bb2025Teams: TeamMap = {
   ...bb2020Teams,
 
+  amazon: {
+    id: "amazon",
+    name: "Amazon",
+    tier: 1,
+    rerollCost: 60000,
+    apothecary: true,
+    players: [
+      {
+        id: "eagle-warrior",
+        name: "Eagle Warrior Linewoman",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 50000,
+        max: 16,
+        skills: ["Dodge"]
+      },
+      {
+        id: "python-warrior",
+        name: "Python Warrior Thrower",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 3,
+        av: 8,
+        cost: 80000,
+        max: 2,
+        skills: ["Dodge", "On the Ball", "Pass", "Safe Pass"]
+      },
+      {
+        id: "piranha-warrior",
+        name: "Piranha Warrior Blitzer",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 90000,
+        max: 2,
+        skills: ["Dodge", "Hit and Run", "Jump Up"]
+      },
+      {
+        id: "jaguar-warrior",
+        name: "Jaguar Warrior Blocker",
+        ma: 6,
+        st: 4,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 110000,
+        max: 2,
+        skills: ["Defensive", "Dodge"]
+      }
+    ]
+  },
+
+  human: {
+    id: "human",
+    name: "Human",
+    tier: 2,
+    rerollCost: 50000,
+    apothecary: true,
+    players: [
+      {
+        id: "lineman",
+        name: "Human Lineman",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 50000,
+        max: 16,
+        skills: []
+      },
+      {
+        id: "halfling-hopeful",
+        name: "Halfling Hopeful",
+        ma: 5,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 7,
+        cost: 30000,
+        max: 3,
+        skills: ["Dodge", "Right Stuff", "Stunty"]
+      },
+      {
+        id: "thrower",
+        name: "Human Thrower",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 3,
+        av: 9,
+        cost: 75000,
+        max: 2,
+        skills: ["Pass", "Sure Hands"]
+      },
+      {
+        id: "catcher",
+        name: "Human Catcher",
+        ma: 8,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 75000,
+        max: 2,
+        skills: ["Catch", "Dodge"]
+      },
+      {
+        id: "blitzer",
+        name: "Human Blitzer",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 85000,
+        max: 2,
+        skills: ["Block", "Tackle"]
+      },
+      {
+        id: "ogre",
+        name: "Ogre",
+        ma: 5,
+        st: 5,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 140000,
+        max: 1,
+        skills: ["Bone Head", "Loner (3+)", "Mighty Blow", "Thick Skull", "Throw Team Mate"]
+      }
+    ]
+  },
+
+  orc: {
+    id: "orc",
+    name: "Orc",
+    tier: 2,
+    rerollCost: 60000,
+    apothecary: true,
+    players: [
+      {
+        id: "lineman",
+        name: "Orc Lineman",
+        ma: 5,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 10,
+        cost: 50000,
+        max: 16,
+        skills: []
+      },
+      {
+        id: "goblin",
+        name: "Goblin",
+        ma: 6,
+        st: 2,
+        ag: 3,
+        pa: 3,
+        av: 8,
+        cost: 40000,
+        max: 4,
+        skills: ["Dodge", "Right Stuff", "Stunty"]
+      },
+      {
+        id: "thrower",
+        name: "Orc Thrower",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 3,
+        av: 9,
+        cost: 75000,
+        max: 2,
+        skills: ["Pass", "Sure Hands"]
+      },
+      {
+        id: "blitzer",
+        name: "Orc Blitzer",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 10,
+        cost: 85000,
+        max: 2,
+        skills: ["Block", "Break Tackle"]
+      },
+      {
+        id: "big-un-blocker",
+        name: "Big Un Blocker",
+        ma: 5,
+        st: 4,
+        ag: 4,
+        pa: 6,
+        av: 10,
+        cost: 95000,
+        max: 2,
+        skills: ["Mighty Blow", "Taunt", "Thick Skull", "Unsteady"]
+      },
+      {
+        id: "untrained-troll",
+        name: "Untrained Troll",
+        ma: 4,
+        st: 5,
+        ag: 5,
+        pa: 5,
+        av: 10,
+        cost: 115000,
+        max: 1,
+        skills: ["Always Hungry", "Loner (4+)", "Mighty Blow", "Projectile Vomit", "Really Stupid", "Regeneration", "Throw Team Mate"]
+      }
+    ]
+  },
+
   lizardmen: {
     id: "lizardmen",
     name: "Lizardmen",
@@ -134,10 +356,47 @@ export const bb2025Teams: TeamMap = {
   blackOrcs: {
     id: "black-orcs",
     name: "Black Orcs",
-    tier: 1,
+    tier: 3,
     rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "goblin-bruiser-lineman",
+        name: "Goblin Bruiser Lineman",
+        ma: 6,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 45000,
+        max: 16,
+        skills: ["Dodge", "Right Stuff", "Stunty", "Thick Skull"]
+      },
+      {
+        id: "black-orc",
+        name: "Black Orc",
+        ma: 4,
+        st: 4,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 90000,
+        max: 6,
+        skills: ["Brawler", "Grab"]
+      },
+      {
+        id: "trained-troll",
+        name: "Trained Troll",
+        ma: 4,
+        st: 5,
+        ag: 5,
+        pa: 5,
+        av: 10,
+        cost: 115000,
+        max: 1,
+        skills: ["Always Hungry", "Mighty Blow", "Projectile Vomit", "Really Stupid", "Regeneration", "Throw Team Mate"]
+      }
+    ]
   },
 
   bretonnia: {
@@ -660,9 +919,69 @@ export const bb2025Teams: TeamMap = {
     id: "dwarf",
     name: "Dwarf",
     tier: 1,
-    rerollCost: 50000,
+    rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "dwarf-lineman",
+        name: "Dwarf Lineman",
+        ma: 4,
+        st: 3,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 70000,
+        max: 16,
+        skills: ["Block", "Defensive", "Thick Skull"]
+      },
+      {
+        id: "dwarf-runner",
+        name: "Dwarf Runner",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 80000,
+        max: 2,
+        skills: ["Sprint", "Sure Hands", "Thick Skull"]
+      },
+      {
+        id: "dwarf-blitzer",
+        name: "Dwarf Blitzer",
+        ma: 5,
+        st: 3,
+        ag: 4,
+        pa: 4,
+        av: 10,
+        cost: 100000,
+        max: 2,
+        skills: ["Block", "Diving Tackle", "Tackle", "Thick Skull"]
+      },
+      {
+        id: "troll-slayer",
+        name: "Troll Slayer",
+        ma: 5,
+        st: 3,
+        ag: 4,
+        pa: 5,
+        av: 9,
+        cost: 95000,
+        max: 2,
+        skills: ["Block", "Dauntless", "Frenzy", "Hatred (Troll)", "Thick Skull"]
+      },
+      {
+        id: "deathroller",
+        name: "Deathroller",
+        ma: 5,
+        st: 7,
+        ag: 5,
+        av: 11,
+        cost: 170000,
+        max: 1,
+        skills: ["Break Tackle", "Dirty Player", "Juggernaut", "Loner (4+)", "Mighty Blow", "No Ball", "Secret Weapon", "Stand Firm"]
+      }
+    ]
   },
 
   elvenUnion: {
@@ -726,10 +1045,59 @@ export const bb2025Teams: TeamMap = {
   gnomes: {
     id: "gnomes",
     name: "Gnomes",
-    tier: 2,
+    tier: 3,
     rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "gnome-lineman",
+        name: "Gnome Lineman",
+        ma: 6,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 40000,
+        max: 16,
+        skills: ["Dodge", "Stunty"]
+      },
+      {
+        id: "gnome-catcher",
+        name: "Gnome Catcher",
+        ma: 8,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 7,
+        cost: 55000,
+        max: 2,
+        skills: ["Catch", "Dodge", "Side Step", "Stunty"]
+      },
+      {
+        id: "gnome-blitzer",
+        name: "Gnome Blitzer",
+        ma: 7,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 65000,
+        max: 2,
+        skills: ["Block", "Dodge", "Stunty"]
+      },
+      {
+        id: "sappling",
+        name: "Sappling",
+        ma: 5,
+        st: 4,
+        ag: 3,
+        pa: 4,
+        av: 10,
+        cost: 100000,
+        max: 1,
+        skills: ["Block", "Mighty Blow", "Stand Firm", "Thick Skull", "Unsteady"]
+      }
+    ]
   },
 
   goblins: {
@@ -856,16 +1224,114 @@ export const bb2025Teams: TeamMap = {
     tier: 3,
     rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "halfling-lineman",
+        name: "Halfling Lineman",
+        ma: 5,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 7,
+        cost: 30000,
+        max: 16,
+        skills: ["Dodge", "Right Stuff", "Stunty"]
+      },
+      {
+        id: "halfling-catcher",
+        name: "Halfling Catcher",
+        ma: 7,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 7,
+        cost: 45000,
+        max: 2,
+        skills: ["Catch", "Dodge", "Right Stuff", "Side Step", "Stunty"]
+      },
+      {
+        id: "halfling-blitzer",
+        name: "Halfling Blitzer",
+        ma: 6,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 60000,
+        max: 2,
+        skills: ["Block", "Dodge", "Right Stuff", "Stunty"]
+      },
+      {
+        id: "treeman",
+        name: "Treeman",
+        ma: 2,
+        st: 6,
+        ag: 1,
+        pa: 6,
+        av: 11,
+        cost: 140000,
+        max: 1,
+        skills: ["Loner (3+)", "Mighty Blow", "Regeneration", "Stand Firm", "Thick Skull", "Unsteady"]
+      }
+    ]
   },
 
   highElf: {
     id: "high-elf",
     name: "High Elf",
     tier: 1,
-    rerollCost: 50000,
+    rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "high-elf-lineman",
+        name: "High Elf Lineman",
+        ma: 6,
+        st: 3,
+        ag: 2,
+        pa: 3,
+        av: 9,
+        cost: 60000,
+        max: 16,
+        skills: []
+      },
+      {
+        id: "high-elf-blitzer",
+        name: "High Elf Blitzer",
+        ma: 7,
+        st: 3,
+        ag: 2,
+        pa: 4,
+        av: 9,
+        cost: 85000,
+        max: 4,
+        skills: ["Block", "Dodge"]
+      },
+      {
+        id: "high-elf-archer",
+        name: "High Elf Archer",
+        ma: 6,
+        st: 3,
+        ag: 2,
+        pa: 4,
+        av: 9,
+        cost: 80000,
+        max: 2,
+        skills: ["Dodge", "Pass", "Accurate"]
+      },
+      {
+        id: "high-elf-thrower",
+        name: "High Elf Thrower",
+        ma: 6,
+        st: 3,
+        ag: 2,
+        pa: 2,
+        av: 9,
+        cost: 90000,
+        max: 2,
+        skills: ["Hail Mary Pass", "Pass", "Safe Pass"]
+      }
+    ]
   },
 
   khorne: {
@@ -873,8 +1339,45 @@ export const bb2025Teams: TeamMap = {
     name: "Khorne",
     tier: 2,
     rerollCost: 70000,
-    apothecary: true,
-    players: []
+    apothecary: false,
+    players: [
+      {
+        id: "bloodletter-lineman",
+        name: "Bloodletter Lineman",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 70000,
+        max: 16,
+        skills: ["Horns", "Regeneration"]
+      },
+      {
+        id: "bloodletter-blocker",
+        name: "Bloodletter Blocker",
+        ma: 5,
+        st: 4,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 90000,
+        max: 4,
+        skills: ["Frenzy", "Horns", "Juggernaut"]
+      },
+      {
+        id: "bloodthirster",
+        name: "Bloodthirster",
+        ma: 6,
+        st: 5,
+        ag: 5,
+        pa: 5,
+        av: 10,
+        cost: 180000,
+        max: 1,
+        skills: ["Claw", "Frenzy", "Horns", "Juggernaut", "Loner (4+)", "Regeneration", "Unchannelled Fury"]
+      }
+    ]
   },
 
   necromanticHorrors: {
@@ -883,16 +1386,126 @@ export const bb2025Teams: TeamMap = {
     tier: 2,
     rerollCost: 70000,
     apothecary: false,
-    players: []
+    players: [
+      {
+        id: "zombie-lineman",
+        name: "Zombie Lineman",
+        ma: 4,
+        st: 3,
+        ag: 4,
+        pa: 6,
+        av: 8,
+        cost: 40000,
+        max: 16,
+        skills: ["Regeneration", "Unsteady"]
+      },
+      {
+        id: "skeleton-lineman",
+        name: "Skeleton Lineman",
+        ma: 5,
+        st: 3,
+        ag: 4,
+        pa: 6,
+        av: 8,
+        cost: 50000,
+        max: 16,
+        skills: ["Regeneration", "Thick Skull"]
+      },
+      {
+        id: "ghoul-runner",
+        name: "Ghoul Runner",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 3,
+        av: 8,
+        cost: 75000,
+        max: 2,
+        skills: ["Dodge", "Regeneration"]
+      },
+      {
+        id: "mummy",
+        name: "Mummy",
+        ma: 3,
+        st: 5,
+        ag: 5,
+        pa: 6,
+        av: 10,
+        cost: 130000,
+        max: 2,
+        skills: ["Mighty Blow", "Regeneration"]
+      }
+    ]
   },
 
   norses: {
     id: "norses",
-    name: "Norses",
+    name: "Norse",
     tier: 1,
     rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "norse-lineman",
+        name: "Norse Lineman",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 60000,
+        max: 16,
+        skills: []
+      },
+      {
+        id: "ulfwerener",
+        name: "Ulfwerener",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 5,
+        av: 9,
+        cost: 70000,
+        max: 2,
+        skills: ["Block", "Dodge", "Frenzy"]
+      },
+      {
+        id: "berserker",
+        name: "Berserker",
+        ma: 6,
+        st: 4,
+        ag: 3,
+        pa: 4,
+        av: 10,
+        cost: 85000,
+        max: 2,
+        skills: ["Block", "Frenzy", "Thick Skull"]
+      },
+      {
+        id: "thrower",
+        name: "Thrower",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 3,
+        av: 9,
+        cost: 80000,
+        max: 2,
+        skills: ["Pass", "Sure Hands"]
+      },
+      {
+        id: "troll-slayer",
+        name: "Troll Slayer",
+        ma: 5,
+        st: 3,
+        ag: 4,
+        pa: 5,
+        av: 9,
+        cost: 90000,
+        max: 2,
+        skills: ["Block", "Dauntless", "Frenzy", "Hatred (Troll)", "Thick Skull"]
+      }
+    ]
   },
 
   nurgle: {
@@ -900,8 +1513,57 @@ export const bb2025Teams: TeamMap = {
     name: "Nurgle",
     tier: 2,
     rerollCost: 70000,
-    apothecary: true,
-    players: []
+    apothecary: false,
+    players: [
+      {
+        id: "nurgle-lineman",
+        name: "Nurgle Lineman",
+        ma: 5,
+        st: 3,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 60000,
+        max: 16,
+        skills: ["Regeneration", "Unsteady"]
+      },
+      {
+        id: "pestigor",
+        name: "Pestigor",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 70000,
+        max: 4,
+        skills: ["Horns", "Regeneration"]
+      },
+      {
+        id: "rot-fly",
+        name: "Rot Fly",
+        ma: 7,
+        st: 2,
+        ag: 3,
+        pa: 3,
+        av: 8,
+        cost: 65000,
+        max: 2,
+        skills: ["Dodge", "Regeneration", "Right Stuff", "Stunty"]
+      },
+      {
+        id: "beast-of-nurgle",
+        name: "Beast of Nurgle",
+        ma: 6,
+        st: 4,
+        ag: 5,
+        pa: 6,
+        av: 10,
+        cost: 110000,
+        max: 1,
+        skills: ["Frenzy", "Loner (4+)", "Mighty Blow", "Prehensile Tail", "Regeneration"]
+      }
+    ]
   },
 
   ogres: {
@@ -910,7 +1572,32 @@ export const bb2025Teams: TeamMap = {
     tier: 3,
     rerollCost: 70000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "ogre-lineman",
+        name: "Ogre Lineman",
+        ma: 5,
+        st: 5,
+        ag: 3,
+        pa: 5,
+        av: 10,
+        cost: 130000,
+        max: 12,
+        skills: ["Bone Head", "Loner (4+)", "Mighty Blow", "Thick Skull", "Throw Team Mate"]
+      },
+      {
+        id: "snotling-lineman",
+        name: "Snotling Lineman",
+        ma: 5,
+        st: 1,
+        ag: 3,
+        pa: 4,
+        av: 6,
+        cost: 15000,
+        max: 12,
+        skills: ["Dodge", "Insignificant", "Right Stuff", "Side Step", "Stunty", "Titchy"]
+      }
+    ]
   },
 
   oldWorldAlliance: {
@@ -919,7 +1606,56 @@ export const bb2025Teams: TeamMap = {
     tier: 2,
     rerollCost: 70000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "alliance-lineman",
+        name: "Alliance Lineman",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 50000,
+        max: 16,
+        skills: []
+      },
+      {
+        id: "dwarf-ally",
+        name: "Dwarf Ally",
+        ma: 4,
+        st: 3,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 70000,
+        max: 4,
+        skills: ["Block", "Defensive", "Thick Skull"]
+      },
+      {
+        id: "elf-ally",
+        name: "Elf Ally",
+        ma: 7,
+        st: 3,
+        ag: 2,
+        pa: 3,
+        av: 9,
+        cost: 85000,
+        max: 2,
+        skills: ["Dodge"]
+      },
+      {
+        id: "ogre-ally",
+        name: "Ogre Ally",
+        ma: 5,
+        st: 5,
+        ag: 3,
+        pa: 5,
+        av: 10,
+        cost: 130000,
+        max: 1,
+        skills: ["Bone Head", "Loner (4+)", "Mighty Blow", "Thick Skull", "Throw Team Mate"]
+      }
+    ]
   },
 
   shamblingUndead: {
@@ -994,11 +1730,72 @@ export const bb2025Teams: TeamMap = {
 
   skavens: {
     id: "skavens",
-    name: "Skavens",
+    name: "Skaven",
     tier: 1,
-    rerollCost: 60000,
+    rerollCost: 70000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "skaven-lineman",
+        name: "Skaven Lineman",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 50000,
+        max: 16,
+        skills: ["Animosity (Clan Rats)"]
+      },
+      {
+        id: "skaven-blitzer",
+        name: "Skaven Blitzer",
+        ma: 8,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 85000,
+        max: 4,
+        skills: ["Animosity (Clan Rats)", "Block", "Strip Ball"]
+      },
+      {
+        id: "gutter-runner",
+        name: "Gutter Runner",
+        ma: 9,
+        st: 2,
+        ag: 2,
+        pa: 4,
+        av: 8,
+        cost: 85000,
+        max: 2,
+        skills: ["Animosity (Clan Rats)", "Dodge", "Stab"]
+      },
+      {
+        id: "skaven-thrower",
+        name: "Skaven Thrower",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 2,
+        av: 8,
+        cost: 80000,
+        max: 2,
+        skills: ["Animosity (Clan Rats)", "Pass", "Sure Hands"]
+      },
+      {
+        id: "rat-ogre",
+        name: "Rat Ogre",
+        ma: 6,
+        st: 5,
+        ag: 4,
+        pa: 6,
+        av: 9,
+        cost: 150000,
+        max: 1,
+        skills: ["Animal Savagery", "Frenzy", "Loner (4+)", "Mighty Blow", "Prehensile Tail"]
+      }
+    ]
   },
 
   slaanesh: {
@@ -1006,26 +1803,149 @@ export const bb2025Teams: TeamMap = {
     name: "Slaanesh",
     tier: 2,
     rerollCost: 70000,
-    apothecary: true,
-    players: []
+    apothecary: false,
+    players: [
+      {
+        id: "seeker-lineman",
+        name: "Seeker Lineman",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 65000,
+        max: 16,
+        skills: ["Dodge"]
+      },
+      {
+        id: "seeker-blitzer",
+        name: "Seeker Blitzer",
+        ma: 8,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 95000,
+        max: 4,
+        skills: ["Block", "Dodge", "Side Step"]
+      },
+      {
+        id: "daemonette",
+        name: "Daemonette",
+        ma: 8,
+        st: 2,
+        ag: 2,
+        pa: 3,
+        av: 8,
+        cost: 80000,
+        max: 2,
+        skills: ["Dodge", "Frenzy", "Hypnotic Gaze", "Stab"]
+      },
+      {
+        id: "fiend",
+        name: "Fiend",
+        ma: 6,
+        st: 4,
+        ag: 4,
+        pa: 5,
+        av: 9,
+        cost: 115000,
+        max: 1,
+        skills: ["Frenzy", "Loner (4+)", "Mighty Blow", "Ward Save (6+)"]
+      }
+    ]
   },
 
   slann: {
     id: "slann",
     name: "Slann",
     tier: 2,
-    rerollCost: 70000,
+    rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "slann-lineman",
+        name: "Slann Lineman",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 60000,
+        max: 16,
+        skills: ["Dodge", "Stunty"]
+      },
+      {
+        id: "slann-catcher",
+        name: "Slann Catcher",
+        ma: 8,
+        st: 2,
+        ag: 3,
+        pa: 4,
+        av: 8,
+        cost: 75000,
+        max: 2,
+        skills: ["Catch", "Dodge", "Diving Catch", "Stunty"]
+      },
+      {
+        id: "slann-blitzer",
+        name: "Slann Blitzer",
+        ma: 7,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 85000,
+        max: 2,
+        skills: ["Block", "Dodge", "Side Step", "Stunty"]
+      },
+      {
+        id: "kroxigor",
+        name: "Kroxigor",
+        ma: 6,
+        st: 5,
+        ag: 5,
+        pa: 6,
+        av: 10,
+        cost: 140000,
+        max: 1,
+        skills: ["Bone Head", "Loner (4+)", "Mighty Blow", "Prehensile Tail", "Thick Skull"]
+      }
+    ]
   },
 
   snotlings: {
     id: "snotlings",
-    name: "Snotlings",
+    name: "Snotling",
     tier: 3,
     rerollCost: 60000,
     apothecary: false,
-    players: []
+    players: [
+      {
+        id: "snotling-lineman",
+        name: "Snotling Lineman",
+        ma: 5,
+        st: 1,
+        ag: 3,
+        pa: 4,
+        av: 6,
+        cost: 15000,
+        max: 16,
+        skills: ["Dodge", "Insignificant", "Right Stuff", "Side Step", "Stunty", "Titchy"]
+      },
+      {
+        id: "ogre-lineman",
+        name: "Ogre Lineman",
+        ma: 5,
+        st: 5,
+        ag: 3,
+        pa: 5,
+        av: 10,
+        cost: 130000,
+        max: 4,
+        skills: ["Bone Head", "Loner (4+)", "Mighty Blow", "Thick Skull", "Throw Team Mate"]
+      }
+    ]
   },
 
   tombKings: {
@@ -1034,7 +1954,56 @@ export const bb2025Teams: TeamMap = {
     tier: 2,
     rerollCost: 70000,
     apothecary: false,
-    players: []
+    players: [
+      {
+        id: "skeleton-lineman",
+        name: "Skeleton Lineman",
+        ma: 5,
+        st: 3,
+        ag: 4,
+        pa: 6,
+        av: 8,
+        cost: 40000,
+        max: 16,
+        skills: ["Regeneration", "Thick Skull"]
+      },
+      {
+        id: "tomb-guard",
+        name: "Tomb Guard",
+        ma: 4,
+        st: 4,
+        ag: 4,
+        pa: 5,
+        av: 9,
+        cost: 85000,
+        max: 4,
+        skills: ["Block", "Regeneration", "Tackle", "Thick Skull"]
+      },
+      {
+        id: "scarab-swarm",
+        name: "Scarab Swarm",
+        ma: 6,
+        st: 2,
+        ag: 3,
+        pa: 3,
+        av: 8,
+        cost: 65000,
+        max: 2,
+        skills: ["Dodge", "Regeneration", "Swarm"]
+      },
+      {
+        id: "khemri-warrior",
+        name: "Khemri Warrior",
+        ma: 5,
+        st: 4,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 110000,
+        max: 1,
+        skills: ["Block", "Jump Up", "Regeneration", "Stand Firm", "Thick Skull", "Unsteady"]
+      }
+    ]
   },
 
   underworldDenizens: {
@@ -1159,20 +2128,106 @@ export const bb2025Teams: TeamMap = {
 
   vampires: {
     id: "vampires",
-    name: "Vampires",
+    name: "Vampire",
     tier: 2,
     rerollCost: 70000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "thrall",
+        name: "Thrall",
+        ma: 6,
+        st: 3,
+        ag: 3,
+        pa: 4,
+        av: 9,
+        cost: 50000,
+        max: 16,
+        skills: []
+      },
+      {
+        id: "vampire-blitzer",
+        name: "Vampire Blitzer",
+        ma: 7,
+        st: 4,
+        ag: 3,
+        pa: 4,
+        av: 10,
+        cost: 115000,
+        max: 2,
+        skills: ["Block", "Bloodlust", "Jump Up", "Side Step"]
+      },
+      {
+        id: "varghulf",
+        name: "Varghulf",
+        ma: 6,
+        st: 5,
+        ag: 4,
+        pa: 5,
+        av: 10,
+        cost: 140000,
+        max: 1,
+        skills: ["Bloodlust", "Frenzy", "Loner (4+)", "Mighty Blow", "Regeneration"]
+      }
+    ]
   },
 
   woodElf: {
     id: "wood-elf",
     name: "Wood Elf",
     tier: 1,
-    rerollCost: 50000,
+    rerollCost: 60000,
     apothecary: true,
-    players: []
+    players: [
+      {
+        id: "wood-elf-lineman",
+        name: "Wood Elf Lineman",
+        ma: 7,
+        st: 3,
+        ag: 2,
+        pa: 3,
+        av: 8,
+        cost: 70000,
+        max: 16,
+        skills: ["Dodge"]
+      },
+      {
+        id: "wood-elf-catcher",
+        name: "Wood Elf Catcher",
+        ma: 8,
+        st: 3,
+        ag: 2,
+        pa: 4,
+        av: 8,
+        cost: 85000,
+        max: 2,
+        skills: ["Catch", "Dodge", "Side Step"]
+      },
+      {
+        id: "wood-elf-blitzer",
+        name: "Wood Elf Blitzer",
+        ma: 7,
+        st: 3,
+        ag: 2,
+        pa: 3,
+        av: 9,
+        cost: 95000,
+        max: 2,
+        skills: ["Block", "Dodge", "Side Step"]
+      },
+      {
+        id: "astromancer",
+        name: "Astromancer",
+        ma: 6,
+        st: 3,
+        ag: 2,
+        pa: 2,
+        av: 9,
+        cost: 85000,
+        max: 2,
+        skills: ["Magic", "Pass", "Sure Hands"]
+      }
+    ]
   }
 };
 
