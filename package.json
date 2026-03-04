@@ -1,5 +1,6 @@
 {
 	"name": "bb-companion",
+	"homepage": "https://guttmar.github.io/bb-companion",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",

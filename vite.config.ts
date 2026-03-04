@@ -12,11 +12,12 @@ export default defineConfig({
 			registerType: 'autoUpdate',
 			manifest: {
 				name: 'BB Companion',
-				short_name: 'BB Companion',
-				description: 'Blood Bowl Companion app',
+				short_name: 'bb-companion',
+				description: 'Blood Bowl Companion',
 				theme_color: '#ffffff',
 				background_color: '#f9fafb',
-				display: 'standalone',
+				start_url: '/',
+				display: 'fullscreen',
 				icons: [
 					{
 						src: 'pwa-64x64.png',
