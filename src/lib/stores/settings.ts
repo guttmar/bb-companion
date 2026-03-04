@@ -10,8 +10,8 @@ type Settings = {
 const SETTINGS_STORAGE_KEY = "bb-companion:settings";
 
 const DEFAULT_SETTINGS: Settings = {
-  ruleset: "2020",
-  theme: "light"
+  ruleset: "2025",
+  theme: "dark"
 };
 
 function createSettingsStore() {
