@@ -48,6 +48,10 @@
     text-align: center;
   }
 
+  .roster-table td:first-child {
+    min-width: 12rem;
+  }
+
   .roster-table th {
     background-color: #3d8c40;
     color: white;
