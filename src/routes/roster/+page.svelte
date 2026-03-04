@@ -102,8 +102,10 @@
 
   main {
     max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -225,9 +227,21 @@
   :global(.dark) .save-message a {
     color: #60a5fa;
   }
+
+  .fixed-header {
+    flex-shrink: 0;
+    padding: 1rem;
+  }
+
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 1rem 1rem 1rem;
+  }
 </style>
 
 <main>
+  <div class="fixed-header">
   <label for="team-select">Choose a team:</label>
   <select id="team-select" bind:value={$selectedTeamId}>
     {#each teamIds as teamId}
@@ -235,20 +249,6 @@
     {/each}
   </select>
 
-  <RosterTable />
-  <p>Treasury left: {$treasuryLeft}</p>
-  <p>Total players: {totalPlayers}</p>
-  <RosterWarnings />
-
-  <h2>Save team</h2>
-  <p class="save-hint">
-    {#if editingId}
-      You are editing a saved team. Give it a name or modify the roster and
-      click update.
-    {:else}
-      Optionally give the team a name, then save to access it from Saved teams.
-    {/if}
-  </p>
   <div class="save-row">
     <label for="team-name">Team name (optional)</label>
     <input
@@ -270,11 +270,18 @@
     <button type="button" class="save-btn" on:click={handleSave}>
       {editingId ? 'Update team' : 'Save team'}
     </button>
+    <p>Treasury left: {$treasuryLeft}</p>
+    <p>Total players: {totalPlayers}</p>
   </div>
   {#if saveMessage}
     <p class="save-message">{saveMessage} <a href="{base + '/saved-teams'}">View saved teams</a></p>
   {/if}
+  </div>
+  <div class="scrollable-content">
+  <RosterTable />
+  <RosterWarnings />
 
   <h2>Other</h2>
   <OtherTable />
+  </div>
 </main>
