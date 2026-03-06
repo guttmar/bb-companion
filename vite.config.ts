@@ -14,8 +14,8 @@ export default defineConfig({
 				name: 'BB Companion',
 				short_name: 'bb-companion',
 				description: 'Blood Bowl Companion',
-				theme_color: '#ffffff',
-				background_color: '#f9fafb',
+				theme_color: '#029215ff',
+				background_color: '#000000ff',
 				start_url: '/',
 				display: 'fullscreen',
 				icons: [
