@@ -29,13 +29,13 @@
   table.roster-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1rem 0;
+    margin: 0.5rem 0; /* tightened vertical spacing */
   }
 
   .roster-table th,
   .roster-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 6px; /* less padding overall */
     text-align: center;
   }
 
@@ -230,6 +230,37 @@
   .close-icon :global(svg) {
     width: 1.25rem;
     height: 1.25rem;
+  }
+
+  /* responsive tweaks for mobile phones */
+  @media (max-width: 640px) {
+    .roster-table {
+      margin: 0.25rem 0;
+    }
+
+    .roster-table th,
+    .roster-table td {
+      padding: 4px;
+      font-size: 0.85rem;
+    }
+
+    .roster-table td > span {
+      width: 2.5rem;
+    }
+
+    .roster-table td:first-child {
+      min-width: 8rem;
+    }
+
+    .roster-table button {
+      padding: 3px 6px;
+    }
+
+    .skill-btn {
+      padding: 2px 4px;
+      margin: 1px;
+      font-size: 0.75rem;
+    }
   }
 </style>
 
