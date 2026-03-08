@@ -1,9 +1,16 @@
 import type { TeamMap } from "./types";
-import { bb2020Teams } from "./bb2020";
 
+// 2025 teams used to spread the 2020 definitions so that only changed
+// entries had to be re‑defined.  that shortcut means any team or value
+// not listed below still comes from the 2020 file, which is why you
+// would see old stats on the roster page even with the 2025 ruleset
+// selected.  drop the spread and explicitly provide the 2025 data so
+// there is no accidental bleed through.
 export const bb2025Teams: TeamMap = {
-  ...bb2020Teams,
-
+  // begin with an empty object; add every team that exists under the
+  // 2025 ruleset (override the ones that have changed, or include them
+  // verbatim if they are identical).  teams omitted here will not be
+  // available when 2025 is active.
   amazon: {
     id: "amazon",
     name: "Amazon",
