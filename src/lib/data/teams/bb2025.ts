@@ -1569,33 +1569,45 @@ export const bb2025Teams: TeamMap = {
   ogres: {
     id: "ogres",
     name: "Ogres",
-    tier: 3,
+    tier: 4,
     rerollCost: 70000,
     apothecary: true,
     players: [
       {
-        id: "ogre-lineman",
-        name: "Ogre Lineman",
-        ma: 5,
-        st: 5,
-        ag: 3,
-        pa: 5,
-        av: 10,
-        cost: 130000,
-        max: 12,
-        skills: ["Bone Head", "Loner (4+)", "Mighty Blow", "Thick Skull", "Throw Team Mate"]
-      },
-      {
-        id: "snotling-lineman",
-        name: "Snotling Lineman",
+        id: "gnoblar",
+        name: "Gnoblar",
         ma: 5,
         st: 1,
         ag: 3,
         pa: 4,
         av: 6,
         cost: 15000,
-        max: 12,
-        skills: ["Dodge", "Insignificant", "Right Stuff", "Side Step", "Stunty", "Titchy"]
+        max: 16,
+        skills: ["Dodge", "Right Stuff", "Sidestep", "Stunty", "Titchy"]
+      },
+      {
+        id: "ogre-blocker",
+        name: "Ogre Blocker",
+        ma: 5,
+        st: 5,
+        ag: 3,
+        pa: 5,
+        av: 10,
+        cost: 140000,
+        max: 5,
+        skills: ["Bone Head", "Mighty Blow", "Thick Skull", "Throw Team-Mate"]
+      },
+            {
+        id: "ogre-runt-punter",
+        name: "Ogre Runt Punter",
+        ma: 5,
+        st: 5,
+        ag: 3,
+        pa: 4,
+        av: 10,
+        cost: 140000,
+        max: 1,
+        skills: ["Bone Head", "Mighty Blow", "Thick Skull", "Kick Team-Mate"]
       }
     ]
   },

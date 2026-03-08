@@ -19,7 +19,7 @@ export interface PlayerType {
 export interface Team {
   id: string;
   name: string;
-  tier?: 1 | 2 | 3;
+  tier?: 1 | 2 | 3 | 4;
 
   rerollCost: number;
   apothecary: boolean;
