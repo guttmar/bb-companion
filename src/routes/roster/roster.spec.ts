@@ -51,4 +51,13 @@ describe('roster page save behavior', () => {
     expect(list[0].id).toBe(id);
     expect(list[0].name).toBe('bar');
   });
+
+  it('sorts the team select options alphabetically by name', async () => {
+    render(Page);
+    // read actual options text
+    const options = screen.getAllByRole('option').map((opt) => opt.textContent?.trim() ?? '');
+    // verify sorted order
+    const sorted = [...options].sort((a, b) => a.localeCompare(b));
+    expect(options).toEqual(sorted);
+  });
 });

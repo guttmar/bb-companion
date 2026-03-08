@@ -31,7 +31,14 @@
 
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
 
-  $: teamIds = Object.keys($teams ?? {});
+  // derive an array of team ids sorted by the team's display name so the
+  // dropdown is alphabetical.  We can't rely on the raw object order since
+  // the files defining the teams don't guarantee any particular sorting.
+  $: teamIds = Object.keys($teams ?? {}).sort((a, b) => {
+    const nameA = $teams?.[a]?.name ?? "";
+    const nameB = $teams?.[b]?.name ?? "";
+    return nameA.localeCompare(nameB);
+  });
 
   $: if ($selectedTeamId) {
     currentRoster.set({ players: {}, reRolls: 0, apothecary: 0 });

@@ -2,7 +2,7 @@ import { writable, derived } from "svelte/store";
 import { getTeams } from "$lib/data/teams";
 import { settings } from "$lib/stores/settings";
 
-export const selectedTeamId = writable<string>("human");
+export const selectedTeamId = writable<string>("amazon");
 
 export const teams = derived(settings, ($settings) => getTeams($settings.ruleset));
 
