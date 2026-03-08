@@ -1612,7 +1612,7 @@ export const bb2025Teams: TeamMap = {
         ag: 3,
         pa: 4,
         av: 10,
-        cost: 140000,
+        cost: 145000,
         max: 1,
         skills: ["Bone Head", "Mighty Blow", "Thick Skull", "Kick Team-Mate"]
       }
