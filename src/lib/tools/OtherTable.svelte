@@ -1,5 +1,6 @@
 <script lang="ts">
   import { selectedTeam, currentRoster } from "$lib/stores/roster";
+  import { formatCost } from "$lib/tools/format";
 </script>
 
 <style>
@@ -84,7 +85,7 @@
             return r;
         })}>+</button>
       </td>
-        <td>{$selectedTeam.rerollCost}</td>
+        <td>{formatCost($selectedTeam.rerollCost)}</td>
       <td>Team Re-rolls</td>
     </tr>
     <tr>
@@ -99,7 +100,7 @@
             return r;
         })}>+</button>
       </td>
-      <td>50000</td>
+      <td>{formatCost(50000)}</td>
       <td>Apothecary</td>
     </tr>
   </tbody>

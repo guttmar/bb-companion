@@ -2,6 +2,7 @@
   import { selectedTeam, currentRoster } from "$lib/stores/roster";
   import { bb2025Skills, type Skill } from "$lib/data/skills/bb2025";
   import DismissRegular from 'fluentui-icons-svelte/DismissRegular.svelte';
+  import { formatCost } from "$lib/tools/format";
 
   let openSkill: Skill | null = null;
 
@@ -252,7 +253,7 @@
           return r;
         })}>+</button>
       </td>
-      <td>{p.cost}</td>
+      <td>{formatCost(p.cost)}</td>
       <td>{p.name}</td>
       <td>
         {#each p.skills ?? [] as s}

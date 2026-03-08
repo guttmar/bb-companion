@@ -7,10 +7,10 @@
   import RosterTable from "$lib/tools/RosterTable.svelte";
   import OtherTable from "$lib/tools/OtherTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
+  import { formatCost } from "$lib/tools/format";
   import {
     treasuryLeft,
     currentRoster,
-    selectedTeam,
     selectedTeamId,
     teams,
     startingTreasury
@@ -24,6 +24,10 @@
   // keep track of the template that was used when loading the team so
   // we can clear editing state if the user switches to a different base
   let loadedTemplateId: string | undefined;
+
+  let startingTreasuryInput = Math.floor($startingTreasury / 1000);
+
+  $: startingTreasuryInput = Math.floor($startingTreasury / 1000);
 
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
 
@@ -39,6 +43,14 @@
   $: if (loadedTemplateId && $selectedTeamId !== loadedTemplateId) {
     editingId = undefined;
     loadedTemplateId = undefined;
+  }
+
+  function handleStartingTreasuryChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const num = parseInt(target.value, 10);
+    if (!isNaN(num)) {
+      startingTreasury.set(num * 1000);
+    }
   }
 
   onMount(() => {
@@ -188,9 +200,25 @@
     width: 10rem;
   }
 
+  .treasury-input-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .treasury-input-container span {
+    margin-left: 0.5rem;
+    font-weight: bold;
+    color: inherit; /* match surrounding text color */
+  }
+
   :global(.dark) .team-name-input {
     border-color: #525252;
     background: #262626;
+    color: #e5e5e5;
+  }
+
+  /* ensure the treasury input unit inherits correct color in dark mode */
+  :global(.dark) .treasury-input-container span {
     color: #e5e5e5;
   }
 
@@ -259,18 +287,22 @@
       class="team-name-input"
     />
     <label for="starting-treasury">Starting treasury</label>
-    <input
-      id="starting-treasury"
-      type="number"
-      min="0"
-      step="1"
-      class="treasury-input"
-      bind:value={$startingTreasury}
-    />
+    <div class="treasury-input-container">
+      <input
+        id="starting-treasury"
+        type="number"
+        min="0"
+        class="treasury-input"
+        value={startingTreasuryInput}
+        on:input={handleStartingTreasuryChange}
+        placeholder="1000"
+      />
+      <span>k</span>
+    </div>
     <button type="button" class="save-btn" on:click={handleSave}>
       {editingId ? 'Update team' : 'Save team'}
     </button>
-    <p>Treasury left: {$treasuryLeft}</p>
+    <p>Treasury left: {formatCost($treasuryLeft)}</p>
     <p>Total players: {totalPlayers}</p>
   </div>
   {#if saveMessage}
