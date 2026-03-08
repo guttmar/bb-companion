@@ -147,6 +147,8 @@
     background: #f9fafb;
     border: 1px solid #e5e7eb;
     text-align: left;
+    /* ensure text is readable in light mode */
+    color: #111827;
   }
 
   .skill-header {
@@ -157,6 +159,10 @@
 
   .skill-desc {
     color: #374151;
+  }
+
+  :global(.dark) .skill-desc {
+    color: #d1d5db;
   }
 
   .badge {
@@ -181,6 +187,8 @@
   :global(.dark) .skill-card {
     background: #0b1220;
     border-color: #222;
+    /* light text for dark mode */
+    color: #f9fafb;
   }
 
   /* Modal overlay */
@@ -282,7 +290,7 @@
       <div class="skill-card">
         <div class="skill-header">
           <div>
-            <strong>{openSkill.name}</strong>
+            <strong class="text-gray-900 dark:text-white">{openSkill.name}</strong>
             <span class="badge">{openSkill.type}</span>
             {#if openSkill.elite}
               <span class="elite">Elite</span>
