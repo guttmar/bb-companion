@@ -230,6 +230,11 @@
     <tr>
       <th>#</th>
       <th>Cost</th>
+      <th>MA</th>
+      <th>ST</th>
+      <th>AG</th>
+      <th>PA</th>
+      <th>AV</th>
       <th>Name</th>
       <th>Skills</th>
     </tr>
@@ -254,6 +259,11 @@
         })}>+</button>
       </td>
       <td>{formatCost(p.cost)}</td>
+      <td>{p.ma}</td>
+      <td>{p.st}</td>
+      <td>{p.ag + '+'}</td>
+      <td>{p.pa + '+'}</td>
+      <td>{p.av + '+'}</td>
       <td>{p.name}</td>
       <td>
         {#each p.skills ?? [] as s}

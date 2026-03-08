@@ -60,4 +60,14 @@ describe('roster page save behavior', () => {
     const sorted = [...options].sort((a, b) => a.localeCompare(b));
     expect(options).toEqual(sorted);
   });
+
+  it('renders numeric stat columns on roster table', async () => {
+    render(Page);
+    // basic header labels added for stats
+    expect(screen.getByText('MA')).toBeInTheDocument();
+    expect(screen.getByText('ST')).toBeInTheDocument();
+    expect(screen.getByText('AG')).toBeInTheDocument();
+    expect(screen.getByText('PA')).toBeInTheDocument();
+    expect(screen.getByText('AV')).toBeInTheDocument();
+  });
 });
