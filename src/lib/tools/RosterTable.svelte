@@ -17,7 +17,8 @@
   }
 
   function showSkill(name: string) {
-    openSkill = resolveSkill(name) ?? { id: name, name, type: "passive", description: "No description available." } as Skill;
+    const cleanedName = name.replace(/\s*\([^)]*\)\s*/g, '').trim();
+    openSkill = resolveSkill(cleanedName) ?? { id: cleanedName, name: cleanedName, type: "passive", description: "No description available." } as Skill;
   }
 
   function closeSkill() {

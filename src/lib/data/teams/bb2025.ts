@@ -509,7 +509,7 @@ export const bb2025Teams: TeamMap = {
         skills: [
           "Always Hungry",
           "Loner (4+)",
-          "Mighty Blow (+1)",
+          "Mighty Blow",
           "Projectile Vomit",
           "Really Stupid",
           "Regeneration",
@@ -526,7 +526,7 @@ export const bb2025Teams: TeamMap = {
         av: 10,
         cost: 140000,
         max: 1,
-        skills: ["Bone Head", "Loner (4+)", "Mighty Blow (+1)", "Thick Skull", "Throw Team Mate"]
+        skills: ["Bone Head", "Loner (4+)", "Mighty Blow", "Thick Skull", "Throw Team Mate"]
       },
       {
         id: "minotaur",
@@ -542,7 +542,7 @@ export const bb2025Teams: TeamMap = {
           "Loner (4+)",
           "Frenzy",
           "Horns",
-          "Mighty Blow (+1)",
+          "Mighty Blow",
           "Thick Skull",
           "Unchannelled Fury"
         ]
@@ -590,7 +590,7 @@ export const bb2025Teams: TeamMap = {
         av: 10,
         cost: 70000,
         max: 4,
-        skills: ["Block", "Iron-hard Skin", "Thick Skull"]
+        skills: ["Block", "Iron Hard Skin", "Thick Skull"]
       },
       {
         id: "flamesmith",
@@ -730,7 +730,7 @@ export const bb2025Teams: TeamMap = {
         skills: [
           "Always Hungry",
           "Loner (4+)",
-          "Mighty Blow (+1)",
+          "Mighty Blow",
           "Projectile Vomit",
           "Really Stupid",
           "Regeneration",
@@ -747,7 +747,7 @@ export const bb2025Teams: TeamMap = {
         av: 10,
         cost: 140000,
         max: 1,
-        skills: ["Bone Head", "Loner (4+)", "Mighty Blow (+1)", "Thick Skull", "Throw Team Mate"]
+        skills: ["Bone Head", "Loner (4+)", "Mighty Blow", "Thick Skull", "Throw Team Mate"]
       },
       {
         id: "renegade-minotaur",
@@ -763,7 +763,7 @@ export const bb2025Teams: TeamMap = {
           "Loner (4+)",
           "Frenzy",
           "Horns",
-          "Mighty Blow (+1)",
+          "Mighty Blow",
           "Thick Skull",
           "Unchannelled Fury"
         ]
@@ -782,7 +782,7 @@ export const bb2025Teams: TeamMap = {
           "Animal Savagery",
           "Frenzy",
           "Loner (4+)",
-          "Mighty Blow (+1)",
+          "Mighty Blow",
           "Prehensile Tail"
         ]
       }
@@ -1009,7 +1009,7 @@ export const bb2025Teams: TeamMap = {
         av: 8,
         cost: 65000,
         max: 16,
-        skills: ["Fumblerooskie"]
+        skills: ["Fumblerooski"]
       },
       {
         id: "elf-thrower",
@@ -1045,7 +1045,7 @@ export const bb2025Teams: TeamMap = {
         av: 9,
         cost: 115000,
         max: 2,
-        skills: ["Block", "Side Step"]
+        skills: ["Block", "Sidestep"]
       }
     ]
   },
@@ -1078,7 +1078,7 @@ export const bb2025Teams: TeamMap = {
         av: 6,
         cost: 50000,
         max: 2,
-        skills: ["Dodge", "My Ball", "Side Step", "Stunty"]
+        skills: ["Dodge", "My Ball", "Sidestep", "Stunty"]
       },
       {
         id: "gnome-illustionist",
@@ -1266,7 +1266,7 @@ export const bb2025Teams: TeamMap = {
         av: 7,
         cost: 45000,
         max: 2,
-        skills: ["Catch", "Dodge", "Right Stuff", "Side Step", "Stunty"]
+        skills: ["Catch", "Dodge", "Right Stuff", "Sidestep", "Stunty"]
       },
       {
         id: "halfling-blitzer",
@@ -1880,7 +1880,7 @@ export const bb2025Teams: TeamMap = {
         av: 9,
         cost: 95000,
         max: 4,
-        skills: ["Block", "Dodge", "Side Step"]
+        skills: ["Block", "Dodge", "Sidestep"]
       },
       {
         id: "daemonette",
@@ -1950,7 +1950,7 @@ export const bb2025Teams: TeamMap = {
         av: 9,
         cost: 85000,
         max: 2,
-        skills: ["Block", "Dodge", "Side Step", "Stunty"]
+        skills: ["Block", "Dodge", "Sidestep", "Stunty"]
       },
       {
         id: "kroxigor",
@@ -2136,7 +2136,7 @@ export const bb2025Teams: TeamMap = {
         av: 6,
         cost: 15000,
         max: 6,
-        skills: ["Dodge", "Insignificant", "Right Stuff", "Side Step", "Stunty", "Titchy"]
+        skills: ["Dodge", "Insignificant", "Right Stuff", "Sidestep", "Stunty", "Titchy"]
       },
       {
         id: "skaven-clanrat",
@@ -2199,7 +2199,7 @@ export const bb2025Teams: TeamMap = {
         skills: [
           "Always Hungry",
           "Loner (4+)",
-          "Mighty Blow (+1)",
+          "Mighty Blow",
           "Projectile Vomit",
           "Really Stupid",
           "Regeneration",
@@ -2220,7 +2220,7 @@ export const bb2025Teams: TeamMap = {
           "Animal Savagery",
           "Frenzy",
           "Loner (4+)",
-          "Mighty Blow (+1)",
+          "Mighty Blow",
           "Prehensile Tail"
         ]
       }
@@ -2326,7 +2326,7 @@ export const bb2025Teams: TeamMap = {
         av: 8,
         cost: 85000,
         max: 2,
-        skills: ["Catch", "Dodge", "Side Step"]
+        skills: ["Catch", "Dodge", "Sidestep"]
       },
       {
         id: "wood-elf-blitzer",
@@ -2338,7 +2338,7 @@ export const bb2025Teams: TeamMap = {
         av: 9,
         cost: 95000,
         max: 2,
-        skills: ["Block", "Dodge", "Side Step"]
+        skills: ["Block", "Dodge", "Sidestep"]
       },
       {
         id: "astromancer",
