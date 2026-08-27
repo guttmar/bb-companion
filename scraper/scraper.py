@@ -219,6 +219,12 @@ def parse_special_rules(soup):
     return [r.strip() for r in m.group(1).split("\n") if r.strip()]
 
 
+def parse_reroll_cost(soup):
+    txt = soup.get_text("\n")
+    m = re.search(r"(?:Team\s+)?Re-?rolls?\s*[-:]\s*([^\n]+)", txt, re.IGNORECASE)
+    return cost_to_int(m.group(1)) if m else None
+
+
 # -----------------------------
 # Star player detail page
 # -----------------------------
@@ -274,6 +280,9 @@ def parse_team(url):
     name = title.get_text(strip=True)
 
     players = parse_players(s)
+    reroll_cost = parse_reroll_cost(s)
+    if reroll_cost is None:
+        raise ValueError(f"Could not find reroll cost for {url}")
 
     league = parse_league(s)
     special = parse_special_rules(s)
@@ -296,6 +305,7 @@ def parse_team(url):
 
     return {
         "name": name,
+        "reroll_cost": reroll_cost,
         "league": league,
         "special_rules": special,
         "players": players,
