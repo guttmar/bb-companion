@@ -27,7 +27,7 @@ function createSettingsStore() {
         if (
           parsed &&
           typeof parsed.ruleset === "string" &&
-          ["2016", "2020", "2025"].includes(parsed.ruleset)
+          ["2020", "2025"].includes(parsed.ruleset)
         ) {
           initial = {
             ruleset: parsed.ruleset as RulesetId,

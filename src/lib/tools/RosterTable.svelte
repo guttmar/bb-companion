@@ -317,8 +317,14 @@
 </table>
 
 {#if openSkill}
-  <div class="modal-overlay" on:click={closeSkill}>
-    <div class="modal" on:click|stopPropagation>
+  <div
+    class="modal-overlay"
+    role="presentation"
+    tabindex="-1"
+    on:click={(event) => event.target === event.currentTarget && closeSkill()}
+    on:keydown={(event) => event.key === 'Escape' && closeSkill()}
+  >
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Skill details">
       <div class="skill-card">
         <div class="skill-header">
           <div>

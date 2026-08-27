@@ -1,17 +1,16 @@
+import teams2020Data from "../../../../scraper/teams_2020.json";
+import teams2025Data from "../../../../scraper/teams_2025.json";
+import { adaptScrapedTeams } from "./scraped";
 import type { Ruleset, TeamMap } from "./types";
-import { bb2020Teams } from "./bb2020";
-import { bb2025Teams } from "./bb2025";
 
 const teamsByRuleset: Record<Ruleset, TeamMap> = {
-  "2016": bb2020Teams,
-  "2020": bb2020Teams,
-  "2025": bb2025Teams
+  "2020": adaptScrapedTeams(teams2020Data),
+  "2025": adaptScrapedTeams(teams2025Data)
 };
 
 export function getTeams(ruleset: Ruleset): TeamMap {
   const teams = teamsByRuleset[ruleset];
 
-  // Map `players` to `roster` for compatibility
   return Object.fromEntries(
     Object.entries(teams).map(([id, team]) => [
       id,

@@ -35,7 +35,6 @@
   <div>
     <label for="ruleset-select" class="block font-medium text-gray-900 dark:text-gray-100 mb-1">Ruleset</label>
     <select id="ruleset-select" bind:value={$settings.ruleset} class="block w-full max-w-xs p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-      <option value="2016">2016</option>
       <option value="2020">2020</option>
       <option value="2025">2025</option>
     </select>

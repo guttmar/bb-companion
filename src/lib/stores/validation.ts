@@ -7,5 +7,5 @@ import { validateRoster } from "$lib/domain/validateRoster";
 export const rosterValidation = derived(
   [currentRoster, selectedTeam, treasuryLeft, settings],
   ([$r, $t, $m, $s]) =>
-    $t ? validateRoster({ players: $r.players, treasuryLeft: $m }, $t, RULESETS[$s.ruleset]) : []
+    $t ? validateRoster({ players: $r.players, treasuryLeft: $m }, { roster: $t.players }, RULESETS[$s.ruleset]) : []
 );

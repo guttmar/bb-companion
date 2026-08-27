@@ -18,6 +18,8 @@ export type SavedTeam = {
 export type SaveTeamPayload = Omit<SavedTeam, "id"> & { name?: string };
 
 const STORAGE_KEY = "bb-companion:saved-teams";
+const STORAGE_VERSION_KEY = "bb-companion:saved-teams-version";
+const STORAGE_VERSION = 2;
 
 function isSavedTeamRoster(v: unknown): v is SavedTeamRoster {
   if (!v || typeof v !== "object") return false;
@@ -45,6 +47,13 @@ function isSavedTeam(v: unknown): v is SavedTeam {
 function loadFromStorage(): SavedTeam[] {
   if (!browser) return [];
   try {
+    const version = Number(localStorage.getItem(STORAGE_VERSION_KEY));
+    if (version !== STORAGE_VERSION) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.setItem(STORAGE_VERSION_KEY, String(STORAGE_VERSION));
+      return [];
+    }
+
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
@@ -59,6 +68,7 @@ function persist(teams: SavedTeam[]) {
   if (!browser) return;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(teams));
+    localStorage.setItem(STORAGE_VERSION_KEY, String(STORAGE_VERSION));
   } catch {
     // Ignore write errors
   }

@@ -1,10 +1,17 @@
 import tailwindcss from '@tailwindcss/vite';
+import { resolve } from 'node:path';
 import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 
 export default defineConfig({
+	server: {
+		fs: {
+			allow: [resolve('scraper')]
+		}
+	},
+
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
