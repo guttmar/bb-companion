@@ -6,15 +6,31 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-BASE = "https://bloodbowlbase.ru"
-TEAM_INDEX = f"{BASE}/bb2025/core_rules/the_teams/"
-
 DELAY = 1
 
 session = requests.Session()
 
 
-def soup(url):
+# default years to scrape
+DEFAULT_YEARS = ["2025"]
+
+
+def year_base(year: str) -> str:
+    """Return the base URL for a given Blood Bowl year.
+
+    Examples:
+        2025 -> https://bloodbowlbase.ru/bb2025
+        2020 -> https://bloodbowlbase.ru/bb2020
+    """
+    return f"https://bloodbowlbase.ru/bb{year}"
+
+
+def team_index(year: str) -> str:
+    """Return the team index URL for a given year."""
+    return f"{year_base(year)}/core_rules/the_teams/"
+
+
+def soup(url: str) -> BeautifulSoup:
     r = session.get(url)
     r.raise_for_status()
     # print(f"Fetched {url} (status: {r.status_code})")
@@ -85,7 +101,11 @@ def parse_players(soup):
     rows = table.find_all("tr")[1:]
 
     for row in rows:
-        cols = [c.get_text(strip=True) for c in row.find_all("td")]
+        cols = []
+        for cell in row.find_all("td"):
+            for deleted in cell.find_all("del"):
+                deleted.extract()
+            cols.append(cell.get_text(strip=True))
 
         if len(cols) < 11:
             continue
@@ -289,19 +309,19 @@ def parse_team(url):
 # Discover teams
 # -----------------------------
 
-def discover_teams():
-    print(TEAM_INDEX)
-    s = soup(TEAM_INDEX)
+def discover_teams(year: str):
+    url = team_index(year)
+    print(url)
+    s = soup(url)
     links = []
-    # print(s)
     for a in s.find_all("a", href=True):
         href = a["href"]
         print("Found link:", href)
         if "/teams/" in href:
-            url = urljoin(BASE, href.replace("../..", "bb2025"))
+            # fix relative paths by joining against the year-specific base
+            url = urljoin(year_base(year), href.replace("../..", f"bb{year}"))
             print("Resolved URL:", url)
             name = a.get_text(strip=True)
-
             if name and (name, url) not in links:
                 links.append((name, url))
     return links
@@ -322,28 +342,46 @@ def _test_split_list():
     print("split_list tests passed")
 
 
-def main():
+def scrape_year(year: str) -> list:
+    """Scrape and return list of teams for the given year."""
     teams = []
-    team_links = discover_teams()
-    print("Found", len(team_links), "teams")
+    team_links = discover_teams(year)
+    print("Found", len(team_links), "teams for", year)
 
     for name, url in team_links:
         print("Scraping team:", name)
-
         try:
             team = parse_team(url)
             teams.append(team)
         except Exception as e:
             print("Error:", e)
         time.sleep(DELAY)
-    data = {
-        "teams": teams
-    }
+    return teams
 
-    with open("teams.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
 
-    print("Saved teams.json")
+def main(years=None):
+    if years is None:
+        years = DEFAULT_YEARS
+    all_data = {}
+    for year in years:
+        teams = scrape_year(year)
+        filename = f"teams_{year}.json"
+        data = {"teams": teams}
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        print(f"Saved {filename}")
+        all_data[year] = teams
+    return all_data
+
+
+if __name__ == "__main__":
+    # _test_split_list()
+    # allow specifying comma-separated years via command line
+    import sys
+    years = None
+    if len(sys.argv) > 1:
+        years = sys.argv[1].split(",")
+    main(years)
 
 if __name__ == "__main__":
     # _test_split_list()

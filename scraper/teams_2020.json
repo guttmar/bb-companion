@@ -1,0 +1,4243 @@
+{
+  "teams": [
+    {
+      "name": "Teams",
+      "league": null,
+      "special_rules": [],
+      "players": [],
+      "staff": {},
+      "star_players": [],
+      "inducements": []
+    },
+    {
+      "name": "Teams",
+      "league": null,
+      "special_rules": [],
+      "players": [],
+      "staff": {},
+      "star_players": [],
+      "inducements": []
+    },
+    {
+      "name": "Amazon",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Eagle Warrior Linewoman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Python Warrior Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "On the Ball",
+            "Pass",
+            "Safe Pass"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Piranha Warrior Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Hit and Run",
+            "Jump Up"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Jaguar Warrior Blocker",
+          "tags": [],
+          "MA": "6",
+          "ST": "4",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "9+",
+          "skills": [
+            "Defensive",
+            "Dodge"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 110000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Black Orc",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Goblin Bruiser Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Stunty",
+            "Thick Skull"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "P",
+            "S"
+          ],
+          "cost": 45000
+        },
+        {
+          "max_quantity": 6,
+          "position": "Black Orc",
+          "tags": [],
+          "MA": "4",
+          "ST": "4",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Brawler",
+            "Grab"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Trained Troll",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Always Hungry",
+            "Loner(3+)",
+            "Mighty Blow(+1)",
+            "Projectile Vomit",
+            "Really Stupid",
+            "Regeneration",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 115000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Chaos Chosen",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Beastman Runner Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Horns"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 60000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Chosen Blocker",
+          "tags": [],
+          "MA": "5",
+          "ST": "4",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [],
+          "primary": [
+            "G",
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 100000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Chaos Troll*",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Always Hungry",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Projectile Vomit",
+            "Really Stupid",
+            "Regeneration",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 115000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Chaos Ogre*",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 140000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Minotaur*",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Frenzy",
+            "Horns",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Unchannelled Fury"
+          ],
+          "primary": [
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 150000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Chaos Dwarf",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Hobgoblin Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Hobgoblin Sneaky Stabba",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Shadowing",
+            "Stab"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Chaos Dwarf Blocker",
+          "tags": [],
+          "MA": "4",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "10+",
+          "skills": [
+            "Block",
+            "Iron Hard Skin",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "M"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Chaos Dwarf Flamesmith",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "10+",
+          "skills": [
+            "Brawler",
+            "Breathe Fire",
+            "Disturbing Presence",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "M"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Bull Centaur Blitzer",
+          "tags": [],
+          "MA": "6",
+          "ST": "4",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "10+",
+          "skills": [
+            "Sprint",
+            "Sure Feet",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "M"
+          ],
+          "cost": 130000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Minotaur",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "—",
+          "AV": "9+",
+          "skills": [
+            "Frenzy",
+            "Horns",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Unchannelled Fury"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "cost": 150000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Chaos Renegades",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Renegade Human Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [],
+          "primary": [
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Human Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "9+",
+          "skills": [
+            "Animosity(All)",
+            "Pass",
+            "Safe Pair of Hands"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Goblin",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Animosity(All)",
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A",
+            "M"
+          ],
+          "secondary": [
+            "G",
+            "P"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Orc",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Animosity(All)"
+          ],
+          "primary": [
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Skaven",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Animosity(All)"
+          ],
+          "primary": [
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Dark Elf",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "3+",
+          "AV": "9+",
+          "skills": [
+            "Animosity(All)"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Troll*",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Always Hungry",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Projectile Vomit",
+            "Really Stupid",
+            "Regeneration",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "cost": 115000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Ogre*",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "cost": 140000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Minotaur*",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Frenzy",
+            "Horns",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Unchannelled Fury"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "cost": 150000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Renegade Rat Ogre*",
+          "tags": [],
+          "MA": "6",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Animal Savagery",
+            "Frenzy",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Prehensile Tail"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "cost": 150000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Dark Elf",
+      "league": "Staff",
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Dark Elf Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Runner",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "3+",
+          "AV": "8+",
+          "skills": [
+            "Dump-Off"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Block"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 100000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Assassin",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Shadowing",
+            "Stab"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Witch Elf",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Frenzy",
+            "Jump Up"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 110000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Dwarf",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Dwarf Blocker Lineman",
+          "tags": [],
+          "MA": "4",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Block",
+            "Tackle",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Runner",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Sure Hands",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Blitzer",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "10+",
+          "skills": [
+            "Block",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Troll Slayer",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Block",
+            "Dauntless",
+            "Frenzy",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 95000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Deathroller",
+          "tags": [],
+          "MA": "4",
+          "ST": "7",
+          "AG": "5+",
+          "PA": "-",
+          "AV": "11+",
+          "skills": [
+            "Break Tackle",
+            "Dirty Player(+2)",
+            "Juggernaut",
+            "Loner(5+)",
+            "Mighty Blow(+1)",
+            "No Hands",
+            "Secret Weapon",
+            "Stand Firm"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 170000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Elven Union",
+      "league": "Staff",
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 60000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "2+",
+          "AV": "8+",
+          "skills": [
+            "Pass"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Catcher",
+          "tags": [],
+          "MA": "8",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Catch",
+            "Nerves of Steel"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 100000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "3+",
+          "AV": "9+",
+          "skills": [
+            "Block",
+            "Sidestep"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 115000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Gnome",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Gnome Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "7+",
+          "skills": [
+            "Jump Up",
+            "Right Stuff",
+            "Stunty",
+            "Wrestle"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Gnome Beastmaster",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Guard",
+            "Jump Up",
+            "Stunty",
+            "Wrestle"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 55000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Gnome Illusionist",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "7+",
+          "skills": [
+            "Jump Up",
+            "Stunty",
+            "Trickster",
+            "Wrestle"
+          ],
+          "primary": [
+            "A",
+            "P"
+          ],
+          "secondary": [
+            "G"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Woodland Fox",
+          "tags": [],
+          "MA": "7",
+          "ST": "2",
+          "AG": "2+",
+          "PA": "-",
+          "AV": "6+",
+          "skills": [
+            "Dodge",
+            "My Ball",
+            "Sidestep",
+            "Stunty"
+          ],
+          "primary": [
+            "-"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Altern Forest Treeman",
+          "tags": [],
+          "MA": "2",
+          "ST": "6",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "11+",
+          "skills": [
+            "Mighty Blow(+1)",
+            "Stand Firm",
+            "Strong Arm",
+            "Take Root",
+            "Thick Skull",
+            "Throw Team-mate",
+            "Timmm-ber!"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 120000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Goblin",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Goblin Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "P",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Bomma",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Bombardier",
+            "Dodge",
+            "Secret Weapon",
+            "Stunty"
+          ],
+          "primary": [
+            "A",
+            "P"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 45000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Looney",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "-",
+          "AV": "8+",
+          "skills": [
+            "Chainsaw",
+            "Secret Weapon",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Fanatic",
+          "tags": [],
+          "MA": "3",
+          "ST": "7",
+          "AG": "3+",
+          "PA": "-",
+          "AV": "8+",
+          "skills": [
+            "Ball and Chain",
+            "No Hands",
+            "Secret Weapon",
+            "Stunty"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Pogoer",
+          "tags": [],
+          "MA": "7",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Pogo Stick",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "P",
+            "S"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 1,
+          "position": "'Ooligan",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "6+",
+          "AV": "8+",
+          "skills": [
+            "Dirty Player(+1)",
+            "Disturbing Presence",
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "P",
+            "S"
+          ],
+          "cost": 65000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Doom Diver",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "6+",
+          "AV": "8+",
+          "skills": [
+            "Right Stuff",
+            "Stunty",
+            "Swoop"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 60000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Trained Troll",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Always Hungry",
+            "Loner(3+)",
+            "Mighty Blow(+1)",
+            "Projectile Vomit",
+            "Really Stupid",
+            "Regeneration",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 115000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Halfling",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Halfling Hopeful Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "7+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 30000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Halfling Hefty",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Fend",
+            "Stunty"
+          ],
+          "primary": [
+            "A",
+            "P"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Halfling Catcher",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "7+",
+          "skills": [
+            "Catch",
+            "Dodge",
+            "Right Stuff",
+            "Sprint",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 55000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Altern Forest Treeman",
+          "tags": [],
+          "MA": "2",
+          "ST": "6",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "11+",
+          "skills": [
+            "Mighty Blow(+1)",
+            "Stand Firm",
+            "Strong Arm",
+            "Take Root",
+            "Thick Skull",
+            "Throw Team-mate",
+            "Timmm-ber!"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 120000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "High Elf",
+      "league": "Staff",
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Catcher",
+          "tags": [],
+          "MA": "8",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Catch"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "2+",
+          "AV": "9+",
+          "skills": [
+            "Cloud Burster",
+            "Pass",
+            "Safe Pass"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 100000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Block"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 100000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Human",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Human Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "2+",
+          "AV": "9+",
+          "skills": [
+            "Pass",
+            "Sure Hands"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Catcher",
+          "tags": [],
+          "MA": "8",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Catch",
+            "Dodge"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 65000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Block"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 3,
+          "position": "Halfling Hopeful",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "7+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 30000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Ogre",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 140000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Imperial Nobility",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Imperial Retainer Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Fend"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 45000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Imperial Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "9+",
+          "skills": [
+            "Pass",
+            "Running Pass"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Noble Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Block",
+            "Catch"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 105000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Bodyguard",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "9+",
+          "skills": [
+            "Stand Firm",
+            "Wrestle"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Ogre",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 140000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Khorne",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Bloodborn Marauder Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Frenzy"
+          ],
+          "primary": [
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Khorngor",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Horns",
+            "Juggernaut"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Bloodseeker",
+          "tags": [],
+          "MA": "5",
+          "ST": "4",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "10+",
+          "skills": [
+            "Frenzy"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 110000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Bloodspawn",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Claws",
+            "Frenzy",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Unchannelled Fury"
+          ],
+          "primary": [
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 160000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Lizardmen",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Skink Runner Lineman",
+          "tags": [],
+          "MA": "8",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "P",
+            "S"
+          ],
+          "cost": 60000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Chameleon Skink",
+          "tags": [],
+          "MA": "7",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "On the Ball",
+            "Shadowing",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "P",
+            "S"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 6,
+          "position": "Saurus Blocker",
+          "tags": [],
+          "MA": "6",
+          "ST": "4",
+          "AG": "5+",
+          "PA": "6+",
+          "AV": "10+",
+          "skills": [],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Kroxigor",
+          "tags": [],
+          "MA": "6",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "-",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Prehensile Tail",
+            "Thick Skull"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 140000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Necromantic Horror",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Zombie Lineman",
+          "tags": [],
+          "MA": "4",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Regeneration"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Ghoul Runner",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Wraith",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Block",
+            "Foul Appearance",
+            "No Hands",
+            "Regeneration",
+            "Sidestep"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 95000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Werewolf",
+          "tags": [],
+          "MA": "8",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Claws",
+            "Frenzy",
+            "Regeneration"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 125000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Flesh Golem",
+          "tags": [],
+          "MA": "4",
+          "ST": "4",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "10+",
+          "skills": [
+            "Regeneration",
+            "Stand Firm",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 115000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Norse",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Norse Raider Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Block",
+            "Drunkard",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "P",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Beer Boar",
+          "tags": [],
+          "MA": "5",
+          "ST": "1",
+          "AG": "3+",
+          "PA": "-",
+          "AV": "6+",
+          "skills": [
+            "Dodge",
+            "No Hands",
+            "Pick-me-up",
+            "Stunty",
+            "Titchy"
+          ],
+          "primary": [],
+          "secondary": [
+            "A"
+          ],
+          "cost": 20000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Norse Berzerker",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Block",
+            "Frenzy",
+            "Jump up"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Valkyrie",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "8+",
+          "skills": [
+            "Catch",
+            "Dauntless",
+            "Pass",
+            "Strip ball"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 95000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Ulfwerener",
+          "tags": [],
+          "MA": "6",
+          "ST": "4",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Frenzy"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 105000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Yhetee",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Claws",
+            "Disturbing Presence",
+            "Frenzy",
+            "Loner(4+)",
+            "Unchannelled Fury"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 140000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Nurgle",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Rotter Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "9+",
+          "skills": [
+            "Decay",
+            "Plague Ridden"
+          ],
+          "primary": [
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 35000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Pestigor",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Horns",
+            "Plague Ridden",
+            "Regeneration"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Bloater",
+          "tags": [],
+          "MA": "4",
+          "ST": "4",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "10+",
+          "skills": [
+            "Disturbing Presence",
+            "Foul Appearance",
+            "Plague Ridden",
+            "Regeneration"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 115000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Rotspawn",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "-",
+          "AV": "10+",
+          "skills": [
+            "Disturbing Presence",
+            "Foul Appearance",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Plague Ridden",
+            "Really Stupid",
+            "Regeneration",
+            "Tentacles"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "cost": 140000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Ogre",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Gnoblar Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "1",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "6+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Sidestep",
+            "Stunty",
+            "Titchy"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G"
+          ],
+          "cost": 15000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Ogre Runt Punter",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "4+",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Kick Team-mate",
+            "Mighty Blow(+1)",
+            "Thick Skull"
+          ],
+          "primary": [
+            "P",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 145000
+        },
+        {
+          "max_quantity": 5,
+          "position": "Ogre Blocker",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 140000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Old World Alliance",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Old World Human Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Old World Human Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "9+",
+          "skills": [
+            "Animosity(Dwarfs and Halflings)",
+            "Pass",
+            "Sure Hands"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Old World Human Catcher",
+          "tags": [],
+          "MA": "8",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "8+",
+          "skills": [
+            "Animosity(Dwarfs and Halflings)",
+            "Catch",
+            "Dodge"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 65000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Old World Dwarf Blitzer",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "10+",
+          "skills": [
+            "Block",
+            "Loner(3+)",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Old World Dwarf Blocker",
+          "tags": [],
+          "MA": "4",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Arm Bar",
+            "Brawler",
+            "Loner(3+)",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Old World Dwarf Runner",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Loner(3+)",
+            "Sure Hands",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Old World Human Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "9+",
+          "skills": [
+            "Animosity(Dwarfs and Halflings)",
+            "Block"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Old World Dwarf Troll Slayer",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Block",
+            "Dauntless",
+            "Frenzy",
+            "Loner(3+)",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 95000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Old World Halfling Hopefuls",
+          "tags": [],
+          "MA": "5",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "7+",
+          "skills": [
+            "Animosity(Dwarfs and Humans)",
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 30000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Ogre*",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Bone Head",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Thick Skull",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 140000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Altern Forest Treeman*",
+          "tags": [],
+          "MA": "2",
+          "ST": "6",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "11+",
+          "skills": [
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Stand Firm",
+            "Strong Arm",
+            "Take Root",
+            "Thick Skull",
+            "Throw Team-mate",
+            "Timmm-ber!"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 120000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Orc",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Orc Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "10+",
+          "skills": [
+            "Animosity(Orc Linemen)"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Thrower",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "3+",
+          "AV": "9+",
+          "skills": [
+            "Animosity(All)",
+            "Pass",
+            "Sure Hands"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 65000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Blitzer",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "10+",
+          "skills": [
+            "Animosity(All)",
+            "Block"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 80000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Big Un",
+          "tags": [],
+          "MA": "5",
+          "ST": "4",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "10+",
+          "skills": [
+            "Animosity(Big Uns)"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Goblin",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Untrained Troll",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Always Hungry",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Projectile Vomit",
+            "Really Stupid",
+            "Regeneration",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 115000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Shambling Undead",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Skeleton Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "8+",
+          "skills": [
+            "Regeneration",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 12,
+          "position": "Zombie Lineman",
+          "tags": [],
+          "MA": "4",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Regeneration"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Ghoul Runner",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 75000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Wight Blitzer",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "9+",
+          "skills": [
+            "Block",
+            "Regeneration"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Mummy",
+          "tags": [],
+          "MA": "3",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "-",
+          "AV": "10+",
+          "skills": [
+            "Mighty Blow(+1)",
+            "Regeneration"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 125000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Skaven",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Skaven Clanrat Lineman",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "M",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Thrower",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "2+",
+          "AV": "8+",
+          "skills": [
+            "Pass",
+            "Sure Hands"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "M",
+            "S"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Gutter Runner",
+          "tags": [],
+          "MA": "9",
+          "ST": "2",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "M",
+            "P",
+            "S"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "9+",
+          "skills": [
+            "Block"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "M",
+            "P"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Rat Ogre",
+          "tags": [],
+          "MA": "6",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Animal Savagery",
+            "Frenzy",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Prehensile Tail"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "cost": 150000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Snotling",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Snotling Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "1",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "6+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Sidestep",
+            "Stunty",
+            "Swarming",
+            "Titchy"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G"
+          ],
+          "cost": 15000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Fungus Flinga",
+          "tags": [],
+          "MA": "5",
+          "ST": "1",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "6+",
+          "skills": [
+            "Bombardier",
+            "Dodge",
+            "Right Stuff",
+            "Secret Weapon",
+            "Sidestep",
+            "Stunty"
+          ],
+          "primary": [
+            "A",
+            "P"
+          ],
+          "secondary": [
+            "G"
+          ],
+          "cost": 30000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Fun-Hoppa",
+          "tags": [],
+          "MA": "6",
+          "ST": "1",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "6+",
+          "skills": [
+            "Dodge",
+            "Pogo Stick",
+            "Right Stuff",
+            "Sidestep",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G"
+          ],
+          "cost": 20000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Stilty Runna",
+          "tags": [],
+          "MA": "6",
+          "ST": "1",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "6+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Sidestep",
+            "Sprint",
+            "Stunty"
+          ],
+          "primary": [
+            "A"
+          ],
+          "secondary": [
+            "G"
+          ],
+          "cost": 20000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Pump Wagon",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Dirty Player(+1)",
+            "Juggernaut",
+            "Mighty Blow(+1)",
+            "Really Stupid",
+            "Secret Weapon",
+            "Stand Firm"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 105000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Trained Troll",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Always Hungry",
+            "Loner(3+)",
+            "Mighty Blow(+1)",
+            "Projectile Vomit",
+            "Really Stupid",
+            "Regeneration",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 115000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Tomb Kings",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Skeleton Lineman",
+          "tags": [],
+          "MA": "5",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "8+",
+          "skills": [
+            "Regeneration",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Tomb Guardian",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "-",
+          "AV": "10+",
+          "skills": [
+            "Decay",
+            "Regeneration"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 100000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Anointed Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "3+",
+          "AV": "8+",
+          "skills": [
+            "Pass",
+            "Regeneration",
+            "Sure Hands",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "A"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Anointed Blitzer",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "4+",
+          "PA": "6+",
+          "AV": "9+",
+          "skills": [
+            "Block",
+            "Regeneration",
+            "Thick Skull"
+          ],
+          "primary": [
+            "G",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 90000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Underworld Denizens",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Underworld Goblin Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "2",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Stunty"
+          ],
+          "primary": [
+            "A",
+            "M"
+          ],
+          "secondary": [
+            "G",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 6,
+          "position": "Underworld Snotling",
+          "tags": [],
+          "MA": "5",
+          "ST": "1",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "6+",
+          "skills": [
+            "Dodge",
+            "Right Stuff",
+            "Sidestep",
+            "Stunty",
+            "Titchy"
+          ],
+          "primary": [
+            "A",
+            "M"
+          ],
+          "secondary": [
+            "G"
+          ],
+          "cost": 15000
+        },
+        {
+          "max_quantity": 3,
+          "position": "Skaven Clanrat",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Animosity(Underworld Goblin Linemen)"
+          ],
+          "primary": [
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 50000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Skaven Thrower",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "2+",
+          "AV": "8+",
+          "skills": [
+            "Animosity(Underworld Goblin Linemen)",
+            "Pass",
+            "Sure Hands"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "P"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Gutter Runner",
+          "tags": [],
+          "MA": "9",
+          "ST": "2",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Animosity(Underworld Goblin Linemen)",
+            "Dodge"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "M"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 85000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Skaven Blitzer",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "5+",
+          "AV": "9+",
+          "skills": [
+            "Animosity(Underworld Goblin Linemen)",
+            "Block"
+          ],
+          "primary": [
+            "G",
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "P"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Underworld Troll*",
+          "tags": [],
+          "MA": "4",
+          "ST": "5",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "10+",
+          "skills": [
+            "Always Hungry",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Projectile Vomit",
+            "Really Stupid",
+            "Regeneration",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "cost": 115000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Mutant Rat Ogre*",
+          "tags": [],
+          "MA": "6",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "9+",
+          "skills": [
+            "Animal Savagery",
+            "Frenzy",
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Prehensile Tail"
+          ],
+          "primary": [
+            "M",
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 150000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Vampire",
+      "league": null,
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 16,
+          "position": "Thrall Lineman",
+          "tags": [],
+          "MA": "6",
+          "ST": "3",
+          "AG": "3+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [],
+          "primary": [
+            "G"
+          ],
+          "secondary": [
+            "A",
+            "S"
+          ],
+          "cost": 40000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Vampire Runner",
+          "tags": [],
+          "MA": "8",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Bloodlust(2+)",
+            "Hypnotic Gaze",
+            "Regeneration"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S",
+            "P"
+          ],
+          "cost": 100000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Vampire Blitzer",
+          "tags": [],
+          "MA": "6",
+          "ST": "4",
+          "AG": "2+",
+          "PA": "5+",
+          "AV": "9+",
+          "skills": [
+            "Bloodlust(3+)",
+            "Hypnotic Gaze",
+            "Juggernaut",
+            "Regeneration"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "S"
+          ],
+          "secondary": [],
+          "cost": 110000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Vampire Thrower",
+          "tags": [],
+          "MA": "6",
+          "ST": "4",
+          "AG": "2+",
+          "PA": "2+",
+          "AV": "9+",
+          "skills": [
+            "Bloodlust(2+)",
+            "Hypnotic Gaze",
+            "Pass",
+            "Regeneration"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 110000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Vargheist",
+          "tags": [],
+          "MA": "5",
+          "ST": "5",
+          "AG": "4+",
+          "PA": "-",
+          "AV": "10+",
+          "skills": [
+            "Bloodlust(3+)",
+            "Claws",
+            "Frenzy",
+            "Loner(4+)",
+            "Regeneration"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 150000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Part",
+          "cost": 20000
+        }
+      ]
+    },
+    {
+      "name": "Wood Elf",
+      "league": "Staff",
+      "special_rules": [
+        "Staff"
+      ],
+      "players": [
+        {
+          "max_quantity": 12,
+          "position": "Wood Elf Lineman",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 70000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Thrower",
+          "tags": [],
+          "MA": "7",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "2+",
+          "AV": "8+",
+          "skills": [
+            "Pass"
+          ],
+          "primary": [
+            "A",
+            "G",
+            "P"
+          ],
+          "secondary": [
+            "S"
+          ],
+          "cost": 95000
+        },
+        {
+          "max_quantity": 4,
+          "position": "Catcher",
+          "tags": [],
+          "MA": "8",
+          "ST": "2",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Catch",
+            "Dodge"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 90000
+        },
+        {
+          "max_quantity": 2,
+          "position": "Wardancer",
+          "tags": [],
+          "MA": "8",
+          "ST": "3",
+          "AG": "2+",
+          "PA": "4+",
+          "AV": "8+",
+          "skills": [
+            "Block",
+            "Dodge",
+            "Leap"
+          ],
+          "primary": [
+            "A",
+            "G"
+          ],
+          "secondary": [
+            "P",
+            "S"
+          ],
+          "cost": 125000
+        },
+        {
+          "max_quantity": 1,
+          "position": "Loren Forest Treeman",
+          "tags": [],
+          "MA": "2",
+          "ST": "6",
+          "AG": "5+",
+          "PA": "5+",
+          "AV": "11+",
+          "skills": [
+            "Loner(4+)",
+            "Mighty Blow(+1)",
+            "Stand Firm",
+            "Strong Arm",
+            "Take Root",
+            "Thick Skull",
+            "Throw Team-mate"
+          ],
+          "primary": [
+            "S"
+          ],
+          "secondary": [
+            "A",
+            "G"
+          ],
+          "cost": 120000
+        }
+      ],
+      "staff": {
+        "cheerleader": 10000
+      },
+      "star_players": [],
+      "inducements": [
+        {
+          "name": "Temp Agency Cheerleaders",
+          "cost": 20000
+        }
+      ]
+    }
+  ]
+}
