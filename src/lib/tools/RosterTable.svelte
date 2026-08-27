@@ -82,7 +82,16 @@
 				<td>{p.ag + '+'}</td>
 				<td>{p.pa + '+'}</td>
 				<td>{p.av + '+'}</td>
-				<td>{p.name}</td>
+				<td class="player-name-cell">
+					<div class="player-name">{p.name}</div>
+					{#if p.tags?.length}
+						<div class="player-tags">
+							{#each p.tags as tag}
+								<div>{tag}</div>
+							{/each}
+						</div>
+					{/if}
+				</td>
 				<td>{p.primary?.join('') || '—'}</td>
 				<td>{p.secondary?.join('') || '—'}</td>
 				<td>
@@ -143,6 +152,21 @@
 		min-width: auto;
 	}
 
+	.player-name-cell {
+		text-align: left;
+	}
+
+	.player-name {
+		font-weight: 600;
+	}
+
+	.player-tags {
+		margin-top: 0.15rem;
+		color: #6b7280;
+		font-size: 0.8rem;
+		font-weight: 400;
+	}
+
 	.roster-table td > span {
 		display: inline-block;
 		width: 3.5rem;
@@ -188,6 +212,10 @@
 
 	:global(.dark) .roster-table td {
 		color: #a3a3a3;
+	}
+
+	:global(.dark) .player-tags {
+		color: #9ca3af;
 	}
 
 	:global(.dark) .roster-table th {
