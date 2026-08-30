@@ -87,6 +87,88 @@ def parse_position(text):
     return name, tags
 
 
+def normalize_whitespace(text):
+    """Normalize spacing while preserving intentional line breaks from the source."""
+    if not text:
+        return ""
+
+    cleaned = str(text).replace("\xa0", " ").replace("\r\n", "\n").replace("\r", "\n")
+    cleaned = re.sub(r"[ \t]+", " ", cleaned)
+    cleaned = re.sub(r" *\n *", "\n", cleaned)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned.strip()
+
+
+def display_name(name):
+    """Convert all-caps rule headings into display-friendly title case."""
+    text = name.strip().rstrip("*")
+    if not text:
+        return text
+
+    parts = []
+    for chunk in re.split(r"(\s+|&|-|\()", text):
+        if not chunk:
+            continue
+        if chunk.isspace() or chunk in {"&", "-", "("}:
+            parts.append(chunk)
+            continue
+        if chunk.endswith(")"):
+            body = chunk[:-1]
+            if body:
+                literal = body if body.isdigit() else body[0].upper() + body[1:].lower()
+                parts.append(literal + ")")
+            continue
+        lowered = chunk.lower()
+        if lowered in {"and", "or", "of"}:
+            parts.append(lowered)
+        else:
+            parts.append(chunk[0].upper() + chunk[1:].lower())
+
+    return "".join(parts).strip()
+
+
+def parse_skill_heading(text):
+    """Parse a heading like 'STAB (ACTIVE)' or 'ANIMOSITY (X)* (ACTIVE)'"""
+    cleaned = normalize_whitespace(text)
+    match = re.search(r"\((ACTIVE|PASSIVE)\)\s*$", cleaned, flags=re.IGNORECASE)
+    if not match:
+        return cleaned, None
+
+    name = cleaned[:match.start()].strip().rstrip("*").strip()
+    return display_name(name), match.group(1).lower()
+
+
+def extract_skill_entries(doc):
+    """Collect skill/trait entries from the rules page, preserving wrapped text."""
+    entries = []
+
+    for heading in doc.find_all(["h3", "h4"]):
+        raw_heading = heading.get_text(" ", strip=True)
+        name, skill_type = parse_skill_heading(raw_heading)
+
+        if not skill_type or not name:
+            continue
+
+        description_parts = []
+        sibling = heading.find_next_sibling()
+
+        while sibling is not None and sibling.name not in ["h1", "h2", "h3", "h4"]:
+            text = normalize_whitespace(sibling.get_text("\n", strip=True))
+            if text:
+                description_parts.append(text)
+            sibling = sibling.find_next_sibling()
+
+        description = "\n\n".join(part for part in description_parts if part)
+        if description:
+            entries.append({
+                "name": name,
+                "type": skill_type,
+                "description": description
+            })
+
+    return entries
+
+
 # -----------------------------
 # Player Table
 # -----------------------------
@@ -369,6 +451,18 @@ def scrape_year(year: str) -> list:
     return teams
 
 
+def scrape_skills(year: str):
+    """Scrape the Skills & Traits page for the given year."""
+    url = f"{year_base(year)}/core_rules/skills_and_traits/"
+    page = soup(url)
+    entries = extract_skill_entries(page)
+    return {
+        "year": year,
+        "url": url,
+        "skills": entries,
+    }
+
+
 def main(years=None):
     if years is None:
         years = DEFAULT_YEARS
@@ -381,6 +475,13 @@ def main(years=None):
             json.dump(data, f, indent=2, ensure_ascii=False)
         print(f"Saved {filename}")
         all_data[year] = teams
+
+        skills_data = scrape_skills(year)
+        skills_filename = f"skills_{year}.json"
+        with open(skills_filename, "w", encoding="utf-8") as f:
+            json.dump(skills_data, f, indent=2, ensure_ascii=False)
+        print(f"Saved {skills_filename}")
+        all_data[f"{year}_skills"] = skills_data
     return all_data
 
 
@@ -392,7 +493,3 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         years = sys.argv[1].split(",")
     main(years)
-
-if __name__ == "__main__":
-    # _test_split_list()
-    main()

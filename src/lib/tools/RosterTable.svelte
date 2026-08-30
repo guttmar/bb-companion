@@ -218,6 +218,12 @@
 		color: #9ca3af;
 	}
 
+	.skill-desc {
+		white-space: pre-line;
+		line-height: 1.5;
+		color: #1f2937;
+	}
+
 	:global(.dark) .roster-table th {
 		background-color: #166534;
 	}
