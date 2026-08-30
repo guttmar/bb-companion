@@ -2,7 +2,7 @@
 	import { selectedTeam, currentRoster } from '$lib/stores/roster';
 	import { bb2025Skills, type Skill } from '$lib/data/skills/bb2025';
 	import DismissRegular from 'fluentui-icons-svelte/DismissRegular.svelte';
-	import { formatCost } from '$lib/tools/format';
+	import { formatCost, formatStat } from '$lib/tools/format';
 
 	let openSkill: Skill | null = null;
 
@@ -79,9 +79,9 @@
 				<td>{formatCost(p.cost)}</td>
 				<td>{p.ma}</td>
 				<td>{p.st}</td>
-				<td>{p.ag + '+'}</td>
-				<td>{p.pa + '+'}</td>
-				<td>{p.av + '+'}</td>
+				<td>{formatStat(p.ag, '+')}</td>
+				<td>{formatStat(p.pa, '+')}</td>
+				<td>{formatStat(p.av, '+')}</td>
 				<td class="player-name-cell">
 					<div class="player-name">{p.name}</div>
 					{#if p.tags?.length}

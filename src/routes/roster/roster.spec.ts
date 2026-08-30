@@ -4,6 +4,7 @@ import { render } from 'vitest-browser-svelte';
 import { screen } from '@testing-library/dom';
 import { get } from 'svelte/store';
 import Page from './+page.svelte';
+import { formatStat } from '$lib/tools/format';
 import { savedTeams, saveTeam, updateTeam } from '$lib/stores/savedTeams';
 
 // helpers for making a minimal payload
@@ -75,5 +76,10 @@ describe('roster page save behavior', () => {
 		expect(screen.getByText('G')).toBeInTheDocument();
 		expect(screen.getByText('AS')).toBeInTheDocument();
 		expect(screen.getByText('—')).toBeInTheDocument();
+	});
+
+	it('renders undefined stat values as an em dash instead of undefined+', () => {
+		expect(formatStat(undefined, '+')).toBe('—');
+		expect(formatStat(3, '+')).toBe('3+');
 	});
 });
