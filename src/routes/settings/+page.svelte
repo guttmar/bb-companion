@@ -1,8 +1,32 @@
 <script>
   import { settings } from "$lib/stores/settings";
 
+  let defaultTreasuryInput = Math.floor($settings.treasuryDefaults[$settings.ruleset][$settings.mode] / 1000);
+
   $: if ($settings.ruleset !== "2025") {
     $settings.mode = "11s";
+  }
+
+  $: defaultTreasuryInput = Math.floor(
+    $settings.treasuryDefaults[$settings.ruleset][$settings.mode] / 1000
+  );
+
+  function handleDefaultTreasuryChange(event) {
+    const target = event.currentTarget;
+    const num = parseInt(target.value, 10);
+
+    if (!isNaN(num)) {
+      settings.update((current) => ({
+        ...current,
+        treasuryDefaults: {
+          ...current.treasuryDefaults,
+          [current.ruleset]: {
+            ...current.treasuryDefaults[current.ruleset],
+            [current.mode]: num * 1000
+          }
+        }
+      }));
+    }
   }
 </script>
 
@@ -42,6 +66,26 @@
       <option value="2020">2020</option>
       <option value="2025">2025</option>
     </select>
+  </div>
+  <div>
+    <label for="default-treasury" class="block font-medium text-gray-900 dark:text-gray-100 mb-1">
+      Default treasury
+    </label>
+    <div class="flex items-center gap-2">
+      <input
+        id="default-treasury"
+        type="number"
+        min="0"
+        step="50"
+        value={defaultTreasuryInput}
+        on:input={handleDefaultTreasuryChange}
+        class="block w-full max-w-xs p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+      />
+      <span class="text-sm text-gray-600 dark:text-gray-300">k</span>
+    </div>
+    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+      Saved separately for {$settings.ruleset} {$settings.mode}.
+    </p>
   </div>
   {#if $settings.ruleset === '2025'}
     <div>

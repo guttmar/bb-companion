@@ -23,31 +23,39 @@ export const currentRoster = writable<{
 });
 
 export const startingTreasury = writable(
-  getDefaultStartingTreasury(get(settings).ruleset, get(settings).mode)
+  getDefaultStartingTreasury(get(settings).ruleset, get(settings).mode, get(settings).treasuryDefaults)
 );
 
-let previousSettings = { ruleset: get(settings).ruleset, mode: get(settings).mode };
+let previousSettings = {
+  ruleset: get(settings).ruleset,
+  mode: get(settings).mode,
+  treasuryDefaults: get(settings).treasuryDefaults
+};
 
 settings.subscribe(($settings) => {
-  const desiredDefault = getDefaultStartingTreasury($settings.ruleset, $settings.mode);
-  const previousDefault = getDefaultStartingTreasury(previousSettings.ruleset, previousSettings.mode);
+  const desiredDefault = getDefaultStartingTreasury($settings.ruleset, $settings.mode, $settings.treasuryDefaults);
+  const previousDefault = getDefaultStartingTreasury(previousSettings.ruleset, previousSettings.mode, previousSettings.treasuryDefaults);
 
   startingTreasury.update((current) => {
-    const isDefaultValue = current === 1000000 || current === 600000;
-    const changedMode = previousSettings.mode !== $settings.mode;
+    const changedCombo = previousSettings.ruleset !== $settings.ruleset || previousSettings.mode !== $settings.mode;
+    const stillUsingPreviousDefault = current === previousDefault;
 
-    if (changedMode && isDefaultValue && current === previousDefault) {
+    if (changedCombo && stillUsingPreviousDefault) {
       return desiredDefault;
     }
 
-    if (current === 1000000 || current === 600000) {
+    if (!changedCombo && (current === previousDefault || current === 1000000 || current === 600000)) {
       return desiredDefault;
     }
 
     return current;
   });
 
-  previousSettings = { ruleset: $settings.ruleset, mode: $settings.mode };
+  previousSettings = {
+    ruleset: $settings.ruleset,
+    mode: $settings.mode,
+    treasuryDefaults: $settings.treasuryDefaults
+  };
 });
 
 export const treasuryLeft = derived(
