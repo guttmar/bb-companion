@@ -15,6 +15,7 @@
     teams,
     startingTreasury
   } from "$lib/stores/roster";
+  import { settings } from "$lib/stores/settings";
   import { getSavedTeam, saveTeam, updateTeam } from "$lib/stores/savedTeams";
 
   let teamName = "";
@@ -172,11 +173,6 @@
 
   :global(.dark) main p {
     color: #a3a3a3;
-  }
-
-  .save-hint {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
   }
 
   .save-row {

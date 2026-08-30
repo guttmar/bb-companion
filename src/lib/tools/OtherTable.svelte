@@ -1,6 +1,12 @@
 <script lang="ts">
   import { selectedTeam, currentRoster } from "$lib/stores/roster";
+  import { settings } from "$lib/stores/settings";
+  import { getRulesetConfig } from "$lib/domain/rulesets";
   import { formatCost } from "$lib/tools/format";
+
+  $: rules = getRulesetConfig($settings.ruleset, $settings.mode);
+  $: rerollCost = $settings.ruleset === "2025" && $settings.mode === "7s" ? rules.rerollCost : ($selectedTeam?.rerollCost ?? 0);
+  $: apothecaryCost = $settings.ruleset === "2025" && $settings.mode === "7s" ? rules.apothecaryCost : 50000;
 </script>
 
 <style>
@@ -85,7 +91,7 @@
             return r;
         })}>+</button>
       </td>
-        <td>{formatCost($selectedTeam.rerollCost)}</td>
+        <td>{formatCost(rerollCost)}</td>
       <td>Team Re-rolls</td>
     </tr>
     <tr>
@@ -100,7 +106,7 @@
             return r;
         })}>+</button>
       </td>
-      <td>{formatCost(50000)}</td>
+      <td>{formatCost(apothecaryCost)}</td>
       <td>Apothecary</td>
     </tr>
   </tbody>

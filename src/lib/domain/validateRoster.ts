@@ -4,7 +4,12 @@ import type { PlayerType } from "./types";
 export function validateRoster(
   roster: { players: Record<string, number>; treasuryLeft: number },
   team: { roster: PlayerType[] },
-  rules: { minPlayers: number; maxPlayers: number; allowNegativeTreasury: boolean }
+  rules: {
+    minPlayers: number;
+    maxPlayers: number;
+    allowNegativeTreasury: boolean;
+    maxNonLinemanPlayers?: number;
+  }
 ): ValidationWarning[] {
   const warnings: ValidationWarning[] = [];
 
@@ -15,6 +20,20 @@ export function validateRoster(
 
   if (total > rules.maxPlayers)
     warnings.push({ id: "max", level: "error", message: "Too many players" });
+
+  if (rules.maxNonLinemanPlayers !== undefined) {
+    const nonLinemanCount = team.roster.reduce((sum, p) => {
+      const count = roster.players[p.id] ?? 0;
+      return sum + (p.tags?.includes("Lineman") ? 0 : count);
+    }, 0);
+
+    if (nonLinemanCount > rules.maxNonLinemanPlayers)
+      warnings.push({
+        id: "max-non-lineman",
+        level: "error",
+        message: `Too many non-Lineman players (max ${rules.maxNonLinemanPlayers})`
+      });
+  }
 
   for (const p of team.roster) {
     const count = roster.players[p.id] ?? 0;

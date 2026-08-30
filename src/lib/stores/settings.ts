@@ -1,9 +1,10 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/environment";
-import type { RulesetId } from "$lib/domain/rulesets";
+import type { GameMode, RulesetId } from "$lib/domain/rulesets";
 
 type Settings = {
   ruleset: RulesetId;
+  mode: GameMode;
   theme: "light" | "dark";
 };
 
@@ -11,6 +12,7 @@ const SETTINGS_STORAGE_KEY = "bb-companion:settings";
 
 const DEFAULT_SETTINGS: Settings = {
   ruleset: "2025",
+  mode: "11s",
   theme: "dark"
 };
 
@@ -24,19 +26,22 @@ function createSettingsStore() {
       try {
         const parsed = JSON.parse(stored) as Partial<Settings>;
 
-        if (
-          parsed &&
-          typeof parsed.ruleset === "string" &&
-          ["2020", "2025"].includes(parsed.ruleset)
-        ) {
-          initial = {
-            ruleset: parsed.ruleset as RulesetId,
-            theme:
-              parsed.theme === "dark" || parsed.theme === "light"
-                ? parsed.theme
-                : DEFAULT_SETTINGS.theme
-          };
-        }
+        const ruleset = parsed && typeof parsed.ruleset === "string" && ["2020", "2025"].includes(parsed.ruleset)
+          ? (parsed.ruleset as RulesetId)
+          : DEFAULT_SETTINGS.ruleset;
+
+        const mode = parsed && typeof parsed.mode === "string" && ["11s", "7s"].includes(parsed.mode)
+          ? (parsed.mode as GameMode)
+          : DEFAULT_SETTINGS.mode;
+
+        initial = {
+          ruleset,
+          mode: ruleset === "2025" ? mode : "11s",
+          theme:
+            parsed.theme === "dark" || parsed.theme === "light"
+              ? parsed.theme
+              : DEFAULT_SETTINGS.theme
+        };
       } catch {
         // Ignore invalid JSON and fall back to defaults
       }
