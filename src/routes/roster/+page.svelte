@@ -8,6 +8,8 @@
   import OtherTable from "$lib/tools/OtherTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
   import { formatCost, formatStat } from "$lib/tools/format";
+  import { bb2025Skills, type Skill } from "$lib/data/skills/bb2025";
+  import DismissRegular from "fluentui-icons-svelte/DismissRegular.svelte";
   import {
     treasuryLeft,
     currentRoster,
@@ -21,6 +23,8 @@
 
   let teamName = "";
   let saveMessage = "";
+  let expandedStarId: string | null = null;
+  let openSkill: Skill | null = null;
   // currently-editing saved team id (undefined when creating new)
   export let editingId: string | undefined;
   // keep track of the template that was used when loading the team so
@@ -45,6 +49,7 @@
 
   $: if ($selectedTeamId) {
     currentRoster.set({ players: {}, stars: {}, reRolls: 0, apothecary: 0 });
+    expandedStarId = null;
   }
 
   // if the user switches teams while editing a saved roster clear the
@@ -61,6 +66,37 @@
     if (!isNaN(num)) {
       startingTreasury.set(num * 1000);
     }
+  }
+
+  function toggleStar(starId: string) {
+    expandedStarId = expandedStarId === starId ? null : starId;
+  }
+
+  function resolveSkill(name: string): Skill | null {
+    const normalized = name.toLowerCase();
+    for (const category of bb2025Skills) {
+      const skill = category.skills.find(
+        (candidate) => candidate.name.toLowerCase() === normalized || candidate.id.toLowerCase() === normalized
+      );
+      if (skill) return skill;
+    }
+    return null;
+  }
+
+  function showSkill(name: string) {
+    const cleanedName = name.replace(/\s*\([^)]*\)\s*/g, '').trim();
+    openSkill =
+      resolveSkill(cleanedName) ??
+      ({
+        id: cleanedName,
+        name: cleanedName,
+        type: 'passive',
+        description: 'No description available.'
+      } as Skill);
+  }
+
+  function closeSkill() {
+    openSkill = null;
   }
 
   onMount(() => {
@@ -339,13 +375,26 @@
     color: white;
   }
 
-  .star-details {
+  .star-row-toggle {
+    cursor: pointer;
+  }
+
+  .star-cost-toggle {
+    text-align: center;
+  }
+
+  .star-name-toggle {
     text-align: left;
   }
 
-  .star-details summary {
-    cursor: pointer;
-    color: #166534;
+  .star-row-toggle:hover {
+    background: #e6f7ed;
+  }
+
+  .star-detail-row td {
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    text-align: left;
   }
 
   .star-profile + .star-profile {
@@ -358,12 +407,44 @@
     margin: 0.2rem 0;
   }
 
-  :global(.dark) .star-details summary {
-    color: #86efac;
+  .star-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .star-stat {
+    min-width: 3.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .star-skill-btn {
+    margin: 0.15rem;
+    padding: 0.25rem 0.45rem;
+    border: 1px solid #c7f0d6;
+    border-radius: 4px;
+    background: transparent;
+    color: #064e3b;
+    cursor: pointer;
+  }
+
+  .star-skill-btn:hover {
+    background: #e6f7ed;
   }
 
   :global(.dark) .star-profile + .star-profile {
     border-color: #404040;
+  }
+
+  :global(.dark) .star-row-toggle:hover,
+  :global(.dark) .star-detail-row td {
+    background: #262626;
+  }
+
+  :global(.dark) .star-skill-btn {
+    border-color: #14532d;
+    color: #86efac;
   }
 
   .star-table button {
@@ -406,6 +487,55 @@
     flex: 1;
     overflow-y: auto;
     padding: 0 1rem 1rem 1rem;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: rgb(0 0 0 / 45%);
+  }
+
+  .skill-card {
+    width: min(32rem, 100%);
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: #f9fafb;
+    color: #111827;
+  }
+
+  .skill-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .skill-desc {
+    margin-top: 0.75rem;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+
+  .close-icon {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  :global(.dark) .skill-card {
+    border-color: #404040;
+    background: #262626;
+    color: #e5e5e5;
   }
 </style>
 
@@ -484,7 +614,6 @@
                 <th>Count</th>
                 <th>Cost</th>
                 <th>Name</th>
-                <th>Details</th>
               </tr>
               {#each $selectedStarPlayers as star}
                 <tr>
@@ -507,25 +636,51 @@
                       disabled={($currentRoster.stars?.[star.name] ?? 0) >= 1}>+</button
                     >
                   </td>
-                  <td>{formatCost(star.cost)}</td>
-                  <td>{star.name}</td>
-                  <td>
-                    <details class="star-details">
-                      <summary>Stats &amp; skills</summary>
-                      {#each star.profiles as profile}
-                        <div class="star-profile">
-                          <strong>{profile.name}</strong>
-                          <p>
-                            MA {profile.displayStats.ma}, ST {profile.displayStats.st},
-                            AG {profile.displayStats.ag}, PA {profile.displayStats.pa ?? formatStat(profile.pa, '+')},
-                            AV {profile.displayStats.av}
-                          </p>
-                          <p>{profile.skills.join(', ')}</p>
-                        </div>
-                      {/each}
-                    </details>
+                  <td
+                    class="star-row-toggle star-cost-toggle"
+                    role="button"
+                    tabindex="0"
+                    aria-expanded={expandedStarId === star.id}
+                    aria-label={`Expand ${star.name}`}
+                    on:click={() => toggleStar(star.id)}
+                    on:keydown={(event) => (event.key === 'Enter' || event.key === ' ') && toggleStar(star.id)}
+                  >
+                    {formatCost(star.cost)}
+                  </td>
+                  <td
+                    class="star-row-toggle star-name-toggle"
+                    role="button"
+                    tabindex="0"
+                    aria-expanded={expandedStarId === star.id}
+                    aria-label={`Expand ${star.name}`}
+                    on:click={() => toggleStar(star.id)}
+                    on:keydown={(event) => (event.key === 'Enter' || event.key === ' ') && toggleStar(star.id)}
+                  >
+                    {star.name}
                   </td>
                 </tr>
+                {#if expandedStarId === star.id}
+                  <tr class="star-detail-row">
+                    <td colspan="3">
+                      {#each star.profiles as profile}
+                        <div class="star-profile">
+                          <div class="star-stats">
+                            <span class="star-stat">MA {profile.displayStats.ma}</span>
+                            <span class="star-stat">ST {profile.displayStats.st}</span>
+                            <span class="star-stat">AG {profile.displayStats.ag}</span>
+                            <span class="star-stat">PA {profile.displayStats.pa ?? formatStat(profile.pa, '+')}</span>
+                            <span class="star-stat">AV {profile.displayStats.av}</span>
+                          </div>
+                          <p>
+                            {#each profile.skills as skill}
+                              <button type="button" class="star-skill-btn" on:click={() => showSkill(skill)}>{skill}</button>
+                            {/each}
+                          </p>
+                        </div>
+                      {/each}
+                    </td>
+                  </tr>
+                {/if}
               {/each}
             </tbody>
           </table>
@@ -543,3 +698,23 @@
     </details>
   </div>
 </main>
+
+{#if openSkill}
+  <div
+    class="modal-overlay"
+    role="presentation"
+    tabindex="-1"
+    on:click={(event) => event.target === event.currentTarget && closeSkill()}
+    on:keydown={(event) => event.key === 'Escape' && closeSkill()}
+  >
+    <div class="skill-card" role="dialog" aria-modal="true" aria-label="Skill details">
+      <div class="skill-header">
+        <strong>{openSkill.name}</strong>
+        <button type="button" class="close-icon" on:click={closeSkill} aria-label="Close">
+          <DismissRegular />
+        </button>
+      </div>
+      <div class="skill-desc">{openSkill.description}</div>
+    </div>
+  </div>
+{/if}
