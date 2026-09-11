@@ -1,4 +1,5 @@
 import type { Team, TeamMap, PlayerType } from './types';
+import type { StarPlayerCatalog } from '$lib/data/stars/types';
 
 type ScrapedPlayer = {
 	max_quantity: number;
@@ -22,7 +23,7 @@ type ScrapedTeam = {
 	special_rules?: string[];
 	players?: ScrapedPlayer[];
 	staff?: Record<string, number | undefined>;
-	star_players?: Array<{ name: string; cost: number }>;
+	star_players?: string[];
 	inducements?: Array<{ name: string; cost: number }>;
 };
 
@@ -85,7 +86,7 @@ function adaptPlayer(player: ScrapedPlayer, usedIds: Set<string>): PlayerType {
 	};
 }
 
-export function adaptScrapedTeams(data: ScrapedData): TeamMap {
+export function adaptScrapedTeams(data: ScrapedData, starCatalog?: StarPlayerCatalog): TeamMap {
 	const teams: TeamMap = {};
 
 	for (const scraped of data.teams) {
@@ -97,6 +98,12 @@ export function adaptScrapedTeams(data: ScrapedData): TeamMap {
 		const id = slug(scraped.name);
 		if (!id || teams[id]) continue;
 		const playerIds = new Set<string>();
+		const starPlayers = scraped.star_players ?? [];
+		const unknownStars = starCatalog ? starPlayers.filter((id) => !starCatalog[id]) : [];
+		if (unknownStars.length) {
+			throw new Error(`Unknown star players for ${scraped.name}: ${unknownStars.join(", ")}`);
+		}
+
 		const team: Team = {
 			id,
 			name: scraped.name,
@@ -107,7 +114,7 @@ export function adaptScrapedTeams(data: ScrapedData): TeamMap {
 			league: scraped.league ?? undefined,
 			specialRules: scraped.special_rules ?? [],
 			staff: staffValues(scraped.staff),
-			starPlayers: scraped.star_players ?? [],
+			starPlayers,
 			inducements: scraped.inducements ?? []
 		};
 

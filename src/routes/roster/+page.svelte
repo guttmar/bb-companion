@@ -7,11 +7,12 @@
   import RosterTable from "$lib/tools/RosterTable.svelte";
   import OtherTable from "$lib/tools/OtherTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
-  import { formatCost } from "$lib/tools/format";
+  import { formatCost, formatStat } from "$lib/tools/format";
   import {
     treasuryLeft,
     currentRoster,
     selectedTeamId,
+    selectedStarPlayers,
     teams,
     startingTreasury
   } from "$lib/stores/roster";
@@ -31,6 +32,7 @@
   $: startingTreasuryInput = Math.floor($startingTreasury / 1000);
 
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
+  $: totalStars = Object.values($currentRoster.stars ?? {}).reduce((sum, count) => sum + count, 0);
 
   // derive an array of team ids sorted by the team's display name so the
   // dropdown is alphabetical.  We can't rely on the raw object order since
@@ -42,7 +44,7 @@
   });
 
   $: if ($selectedTeamId) {
-    currentRoster.set({ players: {}, reRolls: 0, apothecary: 0 });
+    currentRoster.set({ players: {}, stars: {}, reRolls: 0, apothecary: 0 });
   }
 
   // if the user switches teams while editing a saved roster clear the
@@ -75,7 +77,7 @@
         selectedTeamId.set(saved.selectedTeamId);
         loadedTemplateId = saved.selectedTeamId;
         tick().then(() => {
-          currentRoster.set({ ...saved.roster });
+          currentRoster.set({ ...saved.roster, stars: saved.roster.stars ?? {} });
           const url = new URL($page.url);
           url.searchParams.delete("load");
           goto(url.pathname + url.search, { replaceState: true });
@@ -88,7 +90,7 @@
     const payload = {
       name: teamName.trim() || undefined,
       selectedTeamId: $selectedTeamId,
-      roster: { ...$currentRoster },
+      roster: { ...$currentRoster, stars: { ...$currentRoster.stars } },
       startingTreasury: $startingTreasury
     };
 
@@ -158,16 +160,6 @@
   :global(.dark) main select {
     border-color: #525252;
     background: #262626;
-    color: #e5e5e5;
-  }
-
-  h2 {
-    margin-top: 2rem;
-    font-size: 1.5rem;
-    color: #333;
-  }
-
-  :global(.dark) main h2 {
     color: #e5e5e5;
   }
 
@@ -264,6 +256,152 @@
     padding: 1rem;
   }
 
+  .summary-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .summary-bar p {
+    margin: 0;
+  }
+
+  .summary-bar .treasury-summary {
+    margin-left: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-weight: bold;
+  }
+
+  .treasury-value {
+    min-width: 5ch;
+    text-align: right;
+  }
+
+  .summary-bar .total-summary {
+    font-weight: bold;
+  }
+
+  .summary-separator {
+    color: #6b7280;
+    font-weight: bold;
+  }
+
+  :global(.dark) .summary-bar {
+    background: #171717;
+    border-color: #404040;
+  }
+
+  :global(.dark) .summary-separator {
+    color: #d1d5db;
+  }
+
+  .roster-section {
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+  }
+
+  .roster-section summary {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .roster-section-content {
+    padding: 0 1rem 1rem;
+  }
+
+  .star-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .star-table th,
+  .star-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .star-table th {
+    background: #3d8c40;
+    color: white;
+  }
+
+  .star-details {
+    text-align: left;
+  }
+
+  .star-details summary {
+    cursor: pointer;
+    color: #166534;
+  }
+
+  .star-profile + .star-profile {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #d1d5db;
+  }
+
+  .star-profile p {
+    margin: 0.2rem 0;
+  }
+
+  :global(.dark) .star-details summary {
+    color: #86efac;
+  }
+
+  :global(.dark) .star-profile + .star-profile {
+    border-color: #404040;
+  }
+
+  .star-table button {
+    padding: 0.25rem 0.6rem;
+    border: 0;
+    border-radius: 4px;
+    background: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+
+  .star-table button:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+
+  :global(.dark) .roster-section summary {
+    color: #e5e5e5;
+  }
+
+  :global(.dark) .roster-section {
+    border-color: #404040;
+  }
+
+  :global(.dark) .star-table th,
+  :global(.dark) .star-table td {
+    border-color: #404040;
+  }
+
+  :global(.dark) .star-table th {
+    background: #166534;
+  }
+
+  :global(.dark) .star-table td {
+    color: #a3a3a3;
+  }
+
   .scrollable-content {
     flex: 1;
     overflow-y: auto;
@@ -273,50 +411,135 @@
 
 <main>
   <div class="fixed-header">
-  <label for="team-select">Choose a team:</label>
-  <select id="team-select" bind:value={$selectedTeamId}>
-    {#each teamIds as teamId}
-      <option value={teamId}>{$teams[teamId].name}</option>
-    {/each}
-  </select>
-
-  <div class="save-row">
-    <label for="team-name">Team name (optional)</label>
-    <input
-      id="team-name"
-      type="text"
-      placeholder="My team"
-      bind:value={teamName}
-      class="team-name-input"
-    />
-    <label for="starting-treasury">Starting treasury</label>
-    <div class="treasury-input-container">
-      <input
-        id="starting-treasury"
-        type="number"
-        min="0"
-        class="treasury-input"
-        value={startingTreasuryInput}
-        on:input={handleStartingTreasuryChange}
-        placeholder="1000"
-      />
-      <span>k</span>
+    <div class="summary-bar">
+      <button type="button" class="save-btn" on:click={handleSave}>
+        {editingId ? 'Update team' : 'Save team'}
+      </button>
+      <p class="total-summary">Total players: {totalPlayers}</p>
+      {#if totalStars > 0}
+        <span class="summary-separator" aria-hidden="true">&middot;</span>
+        <p class="total-summary">{totalStars} stars</p>
+      {/if}
+      <p class="treasury-summary">
+        <span>Treasury left:</span>
+        <span class="treasury-value">{formatCost($treasuryLeft)}</span>
+      </p>
     </div>
-    <button type="button" class="save-btn" on:click={handleSave}>
-      {editingId ? 'Update team' : 'Save team'}
-    </button>
-    <p>Treasury left: {formatCost($treasuryLeft)}</p>
-    <p>Total players: {totalPlayers}</p>
-  </div>
-  {#if saveMessage}
-    <p class="save-message">{saveMessage} <a href="{base + '/saved-teams'}">View saved teams</a></p>
-  {/if}
+
+    <details class="roster-section">
+      <summary>Choose team, name, and starting treasury</summary>
+      <div class="roster-section-content">
+        <label for="team-select">Choose a team:</label>
+        <select id="team-select" bind:value={$selectedTeamId}>
+          {#each teamIds as teamId}
+            <option value={teamId}>{$teams[teamId].name}</option>
+          {/each}
+        </select>
+
+        <div class="save-row">
+          <label for="team-name">Team name (optional)</label>
+          <input
+            id="team-name"
+            type="text"
+            placeholder="My team"
+            bind:value={teamName}
+            class="team-name-input"
+          />
+          <label for="starting-treasury">Starting treasury</label>
+          <div class="treasury-input-container">
+            <input
+              id="starting-treasury"
+              type="number"
+              min="0"
+              class="treasury-input"
+              value={startingTreasuryInput}
+              on:input={handleStartingTreasuryChange}
+              placeholder="1000"
+            />
+            <span>k</span>
+          </div>
+        </div>
+      </div>
+    </details>
+    {#if saveMessage}
+      <p class="save-message">{saveMessage} <a href="{base + '/saved-teams'}">View saved teams</a></p>
+    {/if}
   </div>
   <div class="scrollable-content">
-  <RosterTable />
-  <RosterWarnings />
+    <details class="roster-section" open>
+      <summary>Current roster</summary>
+      <div class="roster-section-content">
+        <RosterTable />
+        <RosterWarnings />
+      </div>
+    </details>
 
-  <h2>Other</h2>
-  <OtherTable />
+    <details class="roster-section">
+      <summary>Star players</summary>
+      <div class="roster-section-content">
+        {#if $selectedStarPlayers.length}
+          <table class="star-table">
+            <tbody>
+              <tr>
+                <th>Count</th>
+                <th>Cost</th>
+                <th>Name</th>
+                <th>Details</th>
+              </tr>
+              {#each $selectedStarPlayers as star}
+                <tr>
+                  <td>
+                    <button
+                      type="button"
+                      on:click={() => currentRoster.update((roster) => ({
+                        ...roster,
+                        stars: { ...roster.stars, [star.name]: 0 }
+                      }))}
+                      disabled={!($currentRoster.stars?.[star.name] ?? 0)}>-</button
+                    >
+                    <span>{$currentRoster.stars?.[star.name] ?? 0} / 1</span>
+                    <button
+                      type="button"
+                      on:click={() => currentRoster.update((roster) => ({
+                        ...roster,
+                        stars: { ...roster.stars, [star.name]: 1 }
+                      }))}
+                      disabled={($currentRoster.stars?.[star.name] ?? 0) >= 1}>+</button
+                    >
+                  </td>
+                  <td>{formatCost(star.cost)}</td>
+                  <td>{star.name}</td>
+                  <td>
+                    <details class="star-details">
+                      <summary>Stats &amp; skills</summary>
+                      {#each star.profiles as profile}
+                        <div class="star-profile">
+                          <strong>{profile.name}</strong>
+                          <p>
+                            MA {profile.displayStats.ma}, ST {profile.displayStats.st},
+                            AG {profile.displayStats.ag}, PA {profile.displayStats.pa ?? formatStat(profile.pa, '+')},
+                            AV {profile.displayStats.av}
+                          </p>
+                          <p>{profile.skills.join(', ')}</p>
+                        </div>
+                      {/each}
+                    </details>
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        {:else}
+          <p>No star players available.</p>
+        {/if}
+      </div>
+    </details>
+
+    <details class="roster-section">
+      <summary>Other</summary>
+      <div class="roster-section-content">
+        <OtherTable />
+      </div>
+    </details>
   </div>
 </main>

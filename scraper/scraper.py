@@ -216,7 +216,12 @@ def parse_players(soup):
 # Generic section parser
 # -----------------------------
 
-def parse_dash_list(start):
+def star_id(name):
+    """Return the stable catalog ID used for a star-player name."""
+    return re.sub(r"^-+|-+$", "", re.sub(r"[^a-z0-9]+", "-", name.lower()))
+
+
+def parse_dash_list(start, base_url=None):
     """
     Parses:
     Name - Cost
@@ -225,16 +230,24 @@ def parse_dash_list(start):
     items = []
     el = start.find_next_sibling()
 
-    while el and el.name not in ["h1", "h2", "h3"]:
-        txt = el.get_text(strip=True)
+    while el and el.name not in ["h1", "h2", "h3", "strong", "b"]:
+        entries = el.find_all("li") if el.name in ["ul", "ol"] else [el]
+        for entry in entries:
+            text = entry.get_text(" ", strip=True)
+            match = re.match(r"^(.*?)\s+-\s+(\d[\d,]*)\s*[Kk]?\s*$", text)
+            if not match:
+                continue
 
-        if "-" in txt:
-            name, cost = txt.split("-", 1)
-
-            items.append({
-                "name": name.strip(),
-                "cost": cost_to_int(cost)
-            })
+            name = match.group(1).strip()
+            item = {
+                "id": star_id(name),
+                "name": name,
+                "cost": cost_to_int(match.group(2))
+            }
+            link = entry.find("a", href=True)
+            if link and base_url:
+                item["url"] = urljoin(base_url, link["href"])
+            items.append(item)
 
         el = el.find_next_sibling()
 
@@ -319,34 +332,65 @@ def parse_star_player_page(url):
 
     name = title.get_text(strip=True) if title else None
 
-    table = s.find("table")
+    def stat_value(value):
+        match = re.search(r"\d+", value)
+        return int(match.group(0)) if match else None
 
-    stats = {}
+    tables = s.find_all("table")
+    if not tables:
+        raise ValueError(f"Missing stats table for star player at {url}")
 
-    if table:
-
+    cost = None
+    profiles = []
+    for table in tables:
+        headers = [cell.get_text(" ", strip=True).lower() for cell in table.find_all("th")]
         rows = table.find_all("tr")
+        if len(rows) < 2:
+            continue
+        cells = [c.get_text(" ", strip=True) for c in rows[1].find_all("td")]
+        if len(cells) < 5:
+            continue
 
-        if len(rows) > 1:
+        has_cost = headers and headers[0] == "cost"
+        if has_cost:
+            cost = cost_to_int(cells[0])
+            stat_cells = cells[1:]
+        else:
+            stat_cells = cells
 
-            cells = [c.get_text(strip=True) for c in rows[1].find_all("td")]
+        profile_heading = table.find_previous(["h3", "h4"])
+        profile_name = profile_heading.get_text(" ", strip=True) if profile_heading else name
+        skill_list = table.find_next("ul")
+        skills = [li.get_text(" ", strip=True) for li in skill_list.find_all("li")] if skill_list else []
+        profiles.append({
+            "name": profile_name,
+            "ma": stat_value(stat_cells[0]),
+            "st": stat_value(stat_cells[1]),
+            "ag": stat_value(stat_cells[2]),
+            "pa": stat_value(stat_cells[3]),
+            "av": stat_value(stat_cells[4]),
+            "displayStats": {
+                "ma": stat_cells[0],
+                "st": stat_cells[1],
+                "ag": stat_cells[2],
+                "pa": stat_cells[3],
+                "av": stat_cells[4]
+            },
+            "skills": skills
+        })
 
-            if len(cells) >= 7:
-
-                stats = {
-                    "MA": int(cells[0]),
-                    "ST": int(cells[1]),
-                    "AG": cells[2],
-                    "PA": cells[3],
-                    "AV": cells[4],
-                    "skills": split_list(cells[5]),
-                    "cost": cost_to_int(cells[6])
-                }
+    if cost is None:
+        first_table = tables[0]
+        cost_text = first_table.find_previous("p")
+        cost = cost_to_int(cost_text.get_text(" ", strip=True)) if cost_text else None
+    if cost is None or not profiles:
+        raise ValueError(f"Incomplete stats for star player at {url}")
 
     return {
         "name": name,
         "url": url,
-        "stats": stats
+        "cost": cost,
+        "profiles": profiles
     }
 
 
@@ -379,11 +423,11 @@ def parse_team(url):
 
     star_h = find_header(s, "Star Players")
     if star_h:
-        stars = parse_dash_list(star_h)
+        stars = parse_dash_list(star_h, url)
 
     ind_h = find_header(s, "Inducements")
     if ind_h:
-        inducements = parse_dash_list(ind_h)
+        inducements = parse_dash_list(ind_h, url)
 
     return {
         "name": name,
@@ -434,9 +478,10 @@ def _test_split_list():
     print("split_list tests passed")
 
 
-def scrape_year(year: str) -> list:
-    """Scrape and return list of teams for the given year."""
+def scrape_year(year: str) -> dict:
+    """Scrape teams and one canonical star-player record per edition."""
     teams = []
+    star_links = {}
     team_links = discover_teams(year)
     print("Found", len(team_links), "teams for", year)
 
@@ -445,10 +490,23 @@ def scrape_year(year: str) -> list:
         try:
             team = parse_team(url)
             teams.append(team)
+            for star in team["star_players"]:
+                if star.get("url"):
+                    star_links[star["id"]] = star
         except Exception as e:
             print("Error:", e)
         time.sleep(DELAY)
-    return teams
+    stars = []
+    for star in star_links.values():
+        print("Scraping star player:", star["name"])
+        detail = parse_star_player_page(star["url"])
+        stars.append({"id": star["id"], **detail, "url": star["url"]})
+        time.sleep(DELAY)
+
+    for team in teams:
+        team["star_players"] = [star["id"] for star in team["star_players"]]
+
+    return {"teams": teams, "star_players": stars}
 
 
 def scrape_skills(year: str):
@@ -468,13 +526,20 @@ def main(years=None):
         years = DEFAULT_YEARS
     all_data = {}
     for year in years:
-        teams = scrape_year(year)
+        scraped = scrape_year(year)
+        teams = scraped["teams"]
         filename = f"teams_{year}.json"
         data = {"teams": teams}
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         print(f"Saved {filename}")
         all_data[year] = teams
+
+        stars_filename = f"star_players_{year}.json"
+        with open(stars_filename, "w", encoding="utf-8") as f:
+            json.dump({"star_players": scraped["star_players"]}, f, indent=2, ensure_ascii=False)
+        print(f"Saved {stars_filename}")
+        all_data[f"{year}_star_players"] = scraped["star_players"]
 
         skills_data = scrape_skills(year)
         skills_filename = f"skills_{year}.json"

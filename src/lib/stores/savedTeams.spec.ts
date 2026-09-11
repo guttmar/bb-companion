@@ -5,7 +5,6 @@ import {
   saveTeam,
   updateTeam,
   deleteTeam,
-  getSavedTeam,
   type SavedTeam
 } from './savedTeams';
 
@@ -31,6 +30,15 @@ describe('savedTeams store', () => {
     expect(list).toHaveLength(1);
     expect(list[0].id).toBe(id);
     expect(list[0].name).toBe('foo');
+  });
+
+  it('preserves selected star players when saving a roster', () => {
+    const id = saveTeam({
+      ...makePayload('stars'),
+      roster: { players: {}, stars: { 'Akhorne the Squirrel': 1 }, reRolls: 0, apothecary: 0 }
+    });
+
+    expect(get(savedTeams)[0].roster.stars).toEqual({ 'Akhorne the Squirrel': 1 });
   });
 
   it('updateTeam modifies an existing team without adding a second item', () => {

@@ -3,6 +3,7 @@ import { browser } from "$app/environment";
 
 export type SavedTeamRoster = {
   players: Record<string, number>;
+  stars?: Record<string, number>;
   reRolls: number;
   apothecary: number;
 };
@@ -28,6 +29,12 @@ function isSavedTeamRoster(v: unknown): v is SavedTeamRoster {
   if (!o.players || typeof o.players !== "object" || Array.isArray(o.players)) return false;
   for (const val of Object.values(o.players as Record<string, unknown>)) {
     if (typeof val !== "number") return false;
+  }
+  if (o.stars !== undefined) {
+    if (!o.stars || typeof o.stars !== "object" || Array.isArray(o.stars)) return false;
+    for (const val of Object.values(o.stars as Record<string, unknown>)) {
+      if (typeof val !== "number") return false;
+    }
   }
   return true;
 }

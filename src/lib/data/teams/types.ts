@@ -40,7 +40,7 @@ export interface Team {
   league?: string;
   specialRules?: string[];
   staff?: Record<string, number>;
-  starPlayers?: Array<{ name: string; cost: number }>;
+  starPlayers?: string[];
   inducements?: Array<{ name: string; cost: number }>;
 }
 

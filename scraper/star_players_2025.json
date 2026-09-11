@@ -1,0 +1,2116 @@
+{
+  "star_players": [
+    {
+      "id": "akhorne-the-squirrel",
+      "name": "Akhorne The Squirrel",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Akhorne_The_Squirrel/",
+      "cost": 80000,
+      "profiles": [
+        {
+          "name": "Akhorne The Squirrel",
+          "ma": 7,
+          "st": 1,
+          "ag": 2,
+          "pa": null,
+          "av": 6,
+          "displayStats": {
+            "ma": "7",
+            "st": "1",
+            "ag": "2+",
+            "pa": "-",
+            "av": "6+"
+          },
+          "skills": [
+            "Claws",
+            "Dauntless",
+            "Dodge",
+            "Frenzy",
+            "Jump Up",
+            "Loner (4+)",
+            "No Ball",
+            "Sidestep",
+            "Stunty",
+            "Titchy",
+            "Blind Rage"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boa-kon-ssstriktr",
+      "name": "Boa Kon'ssstriktr",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Boa_Kon%27ssstriktr/",
+      "cost": 180000,
+      "profiles": [
+        {
+          "name": "Boa Kon'ssstriktr",
+          "ma": 6,
+          "st": 3,
+          "ag": 3,
+          "pa": 4,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "9+"
+          },
+          "skills": [
+            "Dodge",
+            "Fend",
+            "Hypnotic Gaze",
+            "Loner (4+)",
+            "Prehensile Tail",
+            "Safe Pair of Hands",
+            "Sidestep",
+            "Look Into My Eyes"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "estelle-la-veneaux",
+      "name": "Estelle la Veneaux",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Estelle_la_Veneaux/",
+      "cost": 190000,
+      "profiles": [
+        {
+          "name": "Estelle la Veneaux",
+          "ma": 6,
+          "st": 3,
+          "ag": 3,
+          "pa": 4,
+          "av": 8,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "8+"
+          },
+          "skills": [
+            "Disturbing Presence",
+            "Dodge",
+            "Guard",
+            "Loner (4+)",
+            "Sidestep",
+            "Baleful Hex"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "anqi-panqi",
+      "name": "Anqi Panqi",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Anqi_Panqi/",
+      "cost": 190000,
+      "profiles": [
+        {
+          "name": "Anqi Panqi",
+          "ma": 7,
+          "st": 4,
+          "ag": 5,
+          "pa": 6,
+          "av": 10,
+          "displayStats": {
+            "ma": "7",
+            "st": "4",
+            "ag": "5+",
+            "pa": "6+",
+            "av": "10+"
+          },
+          "skills": [
+            "Block",
+            "Grab",
+            "Loner (4+)",
+            "Stand Firm",
+            "Unsteady",
+            "Savage Blow"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "karla-von-kill",
+      "name": "Karla von Kill",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Karla_von_Kill/",
+      "cost": 210000,
+      "profiles": [
+        {
+          "name": "Karla von Kill",
+          "ma": 6,
+          "st": 4,
+          "ag": 3,
+          "pa": 3,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "4",
+            "ag": "3+",
+            "pa": "3+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Dauntless",
+            "Dodge",
+            "Jump Up",
+            "Loner (4+)",
+            "Indomitable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zolcath-the-zoat",
+      "name": "Zolcath the Zoat",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Zolcath_the_Zoat/",
+      "cost": 220000,
+      "profiles": [
+        {
+          "name": "Zolcath the Zoat",
+          "ma": 5,
+          "st": 5,
+          "ag": 4,
+          "pa": 5,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "5",
+            "ag": "4+",
+            "pa": "5+",
+            "av": "10+"
+          },
+          "skills": [
+            "Disturbing Presence",
+            "Juggernaut",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Prehensile Tail",
+            "Regeneration",
+            "Sure Feet",
+            "\"Excuse me, are you a Zoat?\""
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dribl-and-drull",
+      "name": "Dribl and Drull",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Dribl_and_Drull/",
+      "cost": 230000,
+      "profiles": [
+        {
+          "name": "Dribl",
+          "ma": 8,
+          "st": 2,
+          "ag": 3,
+          "pa": 4,
+          "av": 8,
+          "displayStats": {
+            "ma": "8",
+            "st": "2",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "8+"
+          },
+          "skills": [
+            "Dirty Player",
+            "Dodge",
+            "Loner (4+)",
+            "Quick Foul",
+            "Sidestep",
+            "Sneaky Git",
+            "Stunty",
+            "A Sneaky Pair"
+          ]
+        },
+        {
+          "name": "Drull",
+          "ma": 8,
+          "st": 2,
+          "ag": 3,
+          "pa": 4,
+          "av": 8,
+          "displayStats": {
+            "ma": "8",
+            "st": "2",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "8+"
+          },
+          "skills": [
+            "Dodge",
+            "Loner (4+)",
+            "Sidestep",
+            "Stab",
+            "Stunty",
+            "A Sneaky Pair"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grak-and-crumbleberry",
+      "name": "Grak and Crumbleberry",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Grak_and_Crumbleberry/",
+      "cost": 250000,
+      "profiles": [
+        {
+          "name": "Grak",
+          "ma": 5,
+          "st": 5,
+          "ag": 4,
+          "pa": 4,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "5",
+            "ag": "4+",
+            "pa": "4+",
+            "av": "10+"
+          },
+          "skills": [
+            "Bone Head",
+            "Kick Team-mate",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Thick Skull",
+            "I'll Carry You"
+          ]
+        },
+        {
+          "name": "Crumbleberry",
+          "ma": 5,
+          "st": 2,
+          "ag": 3,
+          "pa": 5,
+          "av": 7,
+          "displayStats": {
+            "ma": "5",
+            "st": "2",
+            "ag": "3+",
+            "pa": "5+",
+            "av": "7+"
+          },
+          "skills": [
+            "Dodge",
+            "Lethal Flight",
+            "Loner (4+)",
+            "Right Stuff",
+            "Stunty",
+            "Sure Hands",
+            "I'll Carry You"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "glotl-stop",
+      "name": "Glotl Stop",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Glotl_Stop/",
+      "cost": 260000,
+      "profiles": [
+        {
+          "name": "Glotl Stop",
+          "ma": 6,
+          "st": 6,
+          "ag": 5,
+          "pa": 6,
+          "av": 10,
+          "displayStats": {
+            "ma": "6",
+            "st": "6",
+            "ag": "5+",
+            "pa": "6+",
+            "av": "10+"
+          },
+          "skills": [
+            "Animal Savagery",
+            "Frenzy",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Prehensile Tail",
+            "Stand Firm",
+            "Thick Skull",
+            "Primal Savagery"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "morg-n-thorg",
+      "name": "Morg 'n' Thorg",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Morg_%27n%27_Thorg/",
+      "cost": 340000,
+      "profiles": [
+        {
+          "name": "Morg 'n' Thorg",
+          "ma": 6,
+          "st": 6,
+          "ag": 3,
+          "pa": 4,
+          "av": 11,
+          "displayStats": {
+            "ma": "6",
+            "st": "6",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "11+"
+          },
+          "skills": [
+            "Block",
+            "Bullseye",
+            "Hatred (Undead)",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Thick Skull",
+            "Throw Team-mate",
+            "The Ballista"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fungus-the-loon",
+      "name": "Fungus the Loon",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Fungus_the_Loon/",
+      "cost": 80000,
+      "profiles": [
+        {
+          "name": "Fungus the Loon",
+          "ma": 4,
+          "st": 7,
+          "ag": 3,
+          "pa": null,
+          "av": 8,
+          "displayStats": {
+            "ma": "4",
+            "st": "7",
+            "ag": "3+",
+            "pa": "-",
+            "av": "8+"
+          },
+          "skills": [
+            "Ball & Chain",
+            "Loner (4+)",
+            "Mighty Blow",
+            "No Ball",
+            "Secret Weapon",
+            "Stunty",
+            "Whirling Dervish"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bomber-dribblesnot",
+      "name": "Bomber Dribblesnot",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Bomber_Dribblesnot/",
+      "cost": 80000,
+      "profiles": [
+        {
+          "name": "Bomber Dribblesnot",
+          "ma": 6,
+          "st": 2,
+          "ag": 3,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "6",
+            "st": "2",
+            "ag": "3+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Accurate",
+            "Bombardier",
+            "Dodge",
+            "Loner (4+)",
+            "Right Stuff",
+            "Secret Weapon",
+            "Stunty",
+            "Kaboom! Once per game, if an opposition player catches a bomb thrown by Bomber, you can choose to have it explode rather than the opposition player immediately attempting to throw it again."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nobbla-blackwart",
+      "name": "Nobbla Blackwart",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Nobbla_Blackwart/",
+      "cost": 120000,
+      "profiles": [
+        {
+          "name": "Nobbla Blackwart",
+          "ma": 6,
+          "st": 2,
+          "ag": 3,
+          "pa": null,
+          "av": 8,
+          "displayStats": {
+            "ma": "6",
+            "st": "2",
+            "ag": "3+",
+            "pa": "-",
+            "av": "8+"
+          },
+          "skills": [
+            "Block",
+            "Chainsaw",
+            "Dodge",
+            "Loner (4+)",
+            "No Ball",
+            "Saboteur",
+            "Secret Weapon",
+            "Stunty",
+            "Kick 'em While They're Down!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scrappa-sorehead",
+      "name": "Scrappa Sorehead",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Scrappa_Sorehead/",
+      "cost": 120000,
+      "profiles": [
+        {
+          "name": "Scrappa Sorehead",
+          "ma": 7,
+          "st": 2,
+          "ag": 3,
+          "pa": 4,
+          "av": 8,
+          "displayStats": {
+            "ma": "7",
+            "st": "2",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "8+"
+          },
+          "skills": [
+            "Dirty Player",
+            "Dodge",
+            "Loner (4+)",
+            "Pogo",
+            "Right Stuff",
+            "Sprint",
+            "Stunty",
+            "Sure Feet",
+            "Yoink!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rashnak-backstabber",
+      "name": "Rashnak Backstabber",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Rashnak_Backstabber/",
+      "cost": 130000,
+      "profiles": [
+        {
+          "name": "Rashnak Backstabber",
+          "ma": 7,
+          "st": 3,
+          "ag": 3,
+          "pa": 5,
+          "av": 8,
+          "displayStats": {
+            "ma": "7",
+            "st": "3",
+            "ag": "3+",
+            "pa": "5+",
+            "av": "8+"
+          },
+          "skills": [
+            "Loner (4+)",
+            "Shadowing",
+            "Sidestep",
+            "Sneaky Git",
+            "Stab",
+            "Toxin Connoisseur"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "the-black-gobbo",
+      "name": "The Black Gobbo",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/The_Black_Gobbo/",
+      "cost": 210000,
+      "profiles": [
+        {
+          "name": "The Black Gobbo",
+          "ma": 6,
+          "st": 2,
+          "ag": 3,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "6",
+            "st": "2",
+            "ag": "3+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Bombardier",
+            "Disturbing Presence",
+            "Dodge",
+            "Loner (3+)",
+            "Sidestep",
+            "Sneaky Git",
+            "Stab",
+            "Sneakiest of the Lot"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ripper-bolgrot",
+      "name": "Ripper Bolgrot",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Ripper_Bolgrot/",
+      "cost": 250000,
+      "profiles": [
+        {
+          "name": "Ripper Bolgrot",
+          "ma": 5,
+          "st": 6,
+          "ag": 5,
+          "pa": 4,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "6",
+            "ag": "5+",
+            "pa": "4+",
+            "av": "10+"
+          },
+          "skills": [
+            "Bullseye",
+            "Grab",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Regeneration",
+            "Throw Team-mate",
+            "Thinking Man's Troll"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "varag-ghoul-chewer",
+      "name": "Varag Ghoul-Chewer",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Varag_Ghoul-Chewer/",
+      "cost": 260000,
+      "profiles": [
+        {
+          "name": "Varag Ghoul-Chewer",
+          "ma": 6,
+          "st": 5,
+          "ag": 3,
+          "pa": 5,
+          "av": 10,
+          "displayStats": {
+            "ma": "6",
+            "st": "5",
+            "ag": "3+",
+            "pa": "5+",
+            "av": "10+"
+          },
+          "skills": [
+            "Block",
+            "Hatred (Undead)",
+            "Jump Up",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Thick Skull",
+            "Unsteady",
+            "Krump and Smash"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "h-thark-the-unstoppable",
+      "name": "H'thark the Unstoppable",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/H%27thark_the_Unstoppable/",
+      "cost": 300000,
+      "profiles": [
+        {
+          "name": "H'thark the Unstoppable",
+          "ma": 6,
+          "st": 6,
+          "ag": 4,
+          "pa": 6,
+          "av": 10,
+          "displayStats": {
+            "ma": "6",
+            "st": "6",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "10+"
+          },
+          "skills": [
+            "Block",
+            "Break Tackle",
+            "Defensive",
+            "Juggernaut",
+            "Loner (4+)",
+            "Sprint",
+            "Sure Feet",
+            "Thick Skull",
+            "Unsteady",
+            "Unstoppable Momentum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "barik-farblast",
+      "name": "Barik Farblast",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Barik_Farblast/",
+      "cost": 80000,
+      "profiles": [
+        {
+          "name": "Barik Farblast",
+          "ma": 6,
+          "st": 3,
+          "ag": 4,
+          "pa": 3,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "4+",
+            "pa": "3+",
+            "av": "9+"
+          },
+          "skills": [
+            "Cannoneer",
+            "Hail Mary Pass",
+            "Loner (4+)",
+            "Pass",
+            "Secret Weapon",
+            "Sure Hands",
+            "Thick Skull",
+            "Blast It!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cindy-piewhistle",
+      "name": "Cindy Piewhistle",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Cindy_Piewhistle/",
+      "cost": 100000,
+      "profiles": [
+        {
+          "name": "Cindy Piewhistle",
+          "ma": 5,
+          "st": 2,
+          "ag": 3,
+          "pa": 3,
+          "av": 7,
+          "displayStats": {
+            "ma": "5",
+            "st": "2",
+            "ag": "3+",
+            "pa": "3+",
+            "av": "7+"
+          },
+          "skills": [
+            "Accurate",
+            "Bombardier",
+            "Dodge",
+            "Loner (4+)",
+            "Secret Weapon",
+            "Stunty",
+            "All You Can Eat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "puggy-baconbreath",
+      "name": "Puggy Baconbreath",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Puggy_Baconbreath/",
+      "cost": 130000,
+      "profiles": [
+        {
+          "name": "Puggy Baconbreath",
+          "ma": 5,
+          "st": 3,
+          "ag": 3,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "5",
+            "st": "3",
+            "ag": "3+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Block",
+            "Dodge",
+            "Loner (3+)",
+            "Nerves of Steel",
+            "Right Stuff",
+            "Stunty",
+            "Halfling Luck"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "helmut-wulf",
+      "name": "Helmut Wulf",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Helmut_Wulf/",
+      "cost": 140000,
+      "profiles": [
+        {
+          "name": "Helmut Wulf",
+          "ma": 6,
+          "st": 3,
+          "ag": 3,
+          "pa": null,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "3+",
+            "pa": "-",
+            "av": "9+"
+          },
+          "skills": [
+            "Chainsaw",
+            "Loner (4+)",
+            "No Ball",
+            "Pro",
+            "Secret Weapon",
+            "Stand Firm",
+            "Old Pro"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grombrindal",
+      "name": "Grombrindal",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Grombrindal/",
+      "cost": 170000,
+      "profiles": [
+        {
+          "name": "Grombrindal",
+          "ma": 5,
+          "st": 3,
+          "ag": 3,
+          "pa": 4,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "3",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "10+"
+          },
+          "skills": [
+            "Block",
+            "Break Tackle",
+            "Dauntless",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Stand Firm",
+            "Sure Feet",
+            "Thick Skull",
+            "Wisdom of the White Dwarf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thorsson-stoutmead",
+      "name": "Thorsson Stoutmead",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Thorsson_Stoutmead/",
+      "cost": 170000,
+      "profiles": [
+        {
+          "name": "Thorsson Stoutmead",
+          "ma": 6,
+          "st": 3,
+          "ag": 4,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "4+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Block",
+            "Drunkard",
+            "Loner (4+)",
+            "Thick Skull",
+            "Beer Barrel Bash"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "josef-bugman",
+      "name": "Josef Bugman",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Josef_Bugman/",
+      "cost": 180000,
+      "profiles": [
+        {
+          "name": "Josef Bugman",
+          "ma": 5,
+          "st": 3,
+          "ag": 3,
+          "pa": 4,
+          "av": 9,
+          "displayStats": {
+            "ma": "5",
+            "st": "3",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Drunkard",
+            "Fend",
+            "Loner (3+)",
+            "Tackle",
+            "Taunt",
+            "Thick Skull",
+            "Dwarfen Grit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ivar-eriksson",
+      "name": "Ivar Eriksson",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Ivar_Eriksson/",
+      "cost": 215000,
+      "profiles": [
+        {
+          "name": "Ivar Eriksson",
+          "ma": 6,
+          "st": 4,
+          "ag": 3,
+          "pa": 4,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "4",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Guard",
+            "Loner (4+)",
+            "Tackle",
+            "Raiding Party"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "the-mighty-zug",
+      "name": "The Mighty Zug",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/The_Mighty_Zug/",
+      "cost": 220000,
+      "profiles": [
+        {
+          "name": "The Mighty Zug",
+          "ma": 5,
+          "st": 5,
+          "ag": 4,
+          "pa": 6,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "5",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "10+"
+          },
+          "skills": [
+            "Block",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Unsteady",
+            "Crushing Blow"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skrorg-snowpelt",
+      "name": "Skrorg Snowpelt",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Skrorg_Snowpelt/",
+      "cost": 240000,
+      "profiles": [
+        {
+          "name": "Skrorg Snowpelt",
+          "ma": 5,
+          "st": 5,
+          "ag": 4,
+          "pa": 6,
+          "av": 9,
+          "displayStats": {
+            "ma": "5",
+            "st": "5",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Claws",
+            "Disturbing Presence",
+            "Juggernaut",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Pump Up the Crowd"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "griff-oberwald",
+      "name": "Griff Oberwald",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Griff_Oberwald/",
+      "cost": 300000,
+      "profiles": [
+        {
+          "name": "Griff Oberwald",
+          "ma": 7,
+          "st": 4,
+          "ag": 2,
+          "pa": 3,
+          "av": 9,
+          "displayStats": {
+            "ma": "7",
+            "st": "4",
+            "ag": "2+",
+            "pa": "3+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Dodge",
+            "Fend",
+            "Loner (3+)",
+            "Sprint",
+            "Sure Feet",
+            "Consummate Professional"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grashnak-blackhoof",
+      "name": "Grashnak Blackhoof",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Grashnak_Blackhoof/",
+      "cost": 240000,
+      "profiles": [
+        {
+          "name": "Grashnak Blackhoof",
+          "ma": 6,
+          "st": 6,
+          "ag": 4,
+          "pa": 6,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "6",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "9+"
+          },
+          "skills": [
+            "Frenzy",
+            "Horns",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Thick Skull",
+            "Unchannelled Fury",
+            "Gored by the Bull"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lord-borak-the-despoiler",
+      "name": "Lord Borak the Despoiler",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Lord_Borak_the_Despoiler/",
+      "cost": 270000,
+      "profiles": [
+        {
+          "name": "Lord Borak the Despoiler",
+          "ma": 5,
+          "st": 5,
+          "ag": 3,
+          "pa": 5,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "5",
+            "ag": "3+",
+            "pa": "5+",
+            "av": "10+"
+          },
+          "skills": [
+            "Block",
+            "Dirty Player",
+            "Leader",
+            "Loner (3+)",
+            "Mighty Blow",
+            "Put the Boot In",
+            "Sneaky Git",
+            "Lord of Chaos"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zzharg-madeye",
+      "name": "Zzharg Madeye",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Zzharg_Madeye/",
+      "cost": 130000,
+      "profiles": [
+        {
+          "name": "Zzharg Madeye",
+          "ma": 4,
+          "st": 4,
+          "ag": 4,
+          "pa": 3,
+          "av": 10,
+          "displayStats": {
+            "ma": "4",
+            "st": "4",
+            "ag": "4+",
+            "pa": "3+",
+            "av": "10+"
+          },
+          "skills": [
+            "Cannoneer",
+            "Hail Mary Pass",
+            "Loner (4+)",
+            "Nerves of Steel",
+            "Secret Weapon",
+            "Thick Skull",
+            "\"Blastin' Solves Everything\""
+          ]
+        }
+      ]
+    },
+    {
+      "id": "max-spleenripper",
+      "name": "Max Spleenripper",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Max_Spleenripper/",
+      "cost": 130000,
+      "profiles": [
+        {
+          "name": "Max Spleenripper",
+          "ma": 5,
+          "st": 4,
+          "ag": 4,
+          "pa": null,
+          "av": 9,
+          "displayStats": {
+            "ma": "5",
+            "st": "4",
+            "ag": "4+",
+            "pa": "-",
+            "av": "9+"
+          },
+          "skills": [
+            "Chainsaw",
+            "Loner (4+)",
+            "No Ball",
+            "Secret Weapon",
+            "Maximum Carnage"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scyla-anfingrimm",
+      "name": "Scyla Anfingrimm",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Scyla_Anfingrimm/",
+      "cost": 200000,
+      "profiles": [
+        {
+          "name": "Scyla Anfingrimm",
+          "ma": 5,
+          "st": 5,
+          "ag": 4,
+          "pa": 6,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "5",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "10+"
+          },
+          "skills": [
+            "Claws",
+            "Frenzy",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Prehensile Tail",
+            "Thick Skull",
+            "Unchannelled Fury",
+            "Fury of the Blood God"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guffle-pusmaw",
+      "name": "Guffle Pusmaw",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Guffle_Pusmaw/",
+      "cost": 150000,
+      "profiles": [
+        {
+          "name": "Guffle Pusmaw",
+          "ma": 5,
+          "st": 4,
+          "ag": 4,
+          "pa": 6,
+          "av": 10,
+          "displayStats": {
+            "ma": "5",
+            "st": "4",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "10+"
+          },
+          "skills": [
+            "Foul Appearance",
+            "Loner (4+)",
+            "Monstrous Mouth",
+            "Nerves of Steel",
+            "On the Ball",
+            "Plague Ridden",
+            "Quick Bite"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withergrasp-doubledrool",
+      "name": "Withergrasp Doubledrool",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Withergrasp_Doubledrool/",
+      "cost": 170000,
+      "profiles": [
+        {
+          "name": "Withergrasp Doubledrool",
+          "ma": 6,
+          "st": 3,
+          "ag": 3,
+          "pa": 4,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "9+"
+          },
+          "skills": [
+            "Foul Appearance",
+            "Loner (4+)",
+            "Prehensile Tail",
+            "Tackle",
+            "Tentacles",
+            "Two Heads",
+            "Wrestle",
+            "Watch Out!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bilerot-vomitflesh",
+      "name": "Bilerot Vomitflesh",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Bilerot_Vomitflesh/",
+      "cost": 180000,
+      "profiles": [
+        {
+          "name": "Bilerot Vomitflesh",
+          "ma": 4,
+          "st": 5,
+          "ag": 4,
+          "pa": 6,
+          "av": 10,
+          "displayStats": {
+            "ma": "4",
+            "st": "5",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "10+"
+          },
+          "skills": [
+            "Dirty Player",
+            "Disturbing Presence",
+            "Foul Appearance",
+            "Lone Fouler",
+            "Loner (4+)",
+            "Regeneration",
+            "Unsteady",
+            "Putrid Regurgitation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gloriel-summerbloom",
+      "name": "Gloriel Summerbloom",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Gloriel_Summerbloom/",
+      "cost": 150000,
+      "profiles": [
+        {
+          "name": "Gloriel Summerbloom",
+          "ma": 7,
+          "st": 2,
+          "ag": 2,
+          "pa": 2,
+          "av": 8,
+          "displayStats": {
+            "ma": "7",
+            "st": "2",
+            "ag": "2+",
+            "pa": "2+",
+            "av": "8+"
+          },
+          "skills": [
+            "Accurate",
+            "Dodge",
+            "Loner (3+)",
+            "Pass",
+            "Sidestep",
+            "Sure Hands",
+            "Shot to Nothing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kiroth-krakeneye",
+      "name": "Kiroth Krakeneye",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Kiroth_Krakeneye/",
+      "cost": 160000,
+      "profiles": [
+        {
+          "name": "Kiroth Krakeneye",
+          "ma": 7,
+          "st": 3,
+          "ag": 2,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "7",
+            "st": "3",
+            "ag": "2+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Disturbing Presence",
+            "Foul Appearance",
+            "Loner (4+)",
+            "On the Ball",
+            "Tackle",
+            "Tentacles",
+            "Black Ink"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eldril-sidewinder",
+      "name": "Eldril Sidewinder",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Eldril_Sidewinder/",
+      "cost": 220000,
+      "profiles": [
+        {
+          "name": "Eldril Sidewinder",
+          "ma": 8,
+          "st": 3,
+          "ag": 2,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "8",
+            "st": "3",
+            "ag": "2+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Catch",
+            "Dodge",
+            "Hypnotic Gaze",
+            "Loner (4+)",
+            "Nerves of Steel",
+            "On the Ball",
+            "Mesmerising Dance"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jordell-freshbreeze",
+      "name": "Jordell Freshbreeze",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Jordell_Freshbreeze/",
+      "cost": 280000,
+      "profiles": [
+        {
+          "name": "Jordell Freshbreeze",
+          "ma": 8,
+          "st": 3,
+          "ag": 1,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "8",
+            "st": "3",
+            "ag": "1+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Block",
+            "Diving Catch",
+            "Dodge",
+            "Leap",
+            "Loner (4+)",
+            "Sidestep",
+            "Steady Footing",
+            "Swift as the Breeze"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roxanna-darknail",
+      "name": "Roxanna Darknail",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Roxanna_Darknail/",
+      "cost": 270000,
+      "profiles": [
+        {
+          "name": "Roxanna Darknail",
+          "ma": 8,
+          "st": 3,
+          "ag": 1,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "8",
+            "st": "3",
+            "ag": "1+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Dodge",
+            "Frenzy",
+            "Jump Up",
+            "Juggernaut",
+            "Leap",
+            "Loner (4+)",
+            "Slashing Nails"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "the-swift-twins",
+      "name": "The Swift Twins",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/The_Swift_Twins/",
+      "cost": 300000,
+      "profiles": [
+        {
+          "name": "Lucien Swift",
+          "ma": 7,
+          "st": 3,
+          "ag": 2,
+          "pa": 3,
+          "av": 9,
+          "displayStats": {
+            "ma": "7",
+            "st": "3",
+            "ag": "2+",
+            "pa": "3+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Tackle",
+            "Working In Tandem"
+          ]
+        },
+        {
+          "name": "Valen Swift",
+          "ma": 7,
+          "st": 3,
+          "ag": 2,
+          "pa": 2,
+          "av": 9,
+          "displayStats": {
+            "ma": "7",
+            "st": "3",
+            "ag": "2+",
+            "pa": "2+",
+            "av": "9+"
+          },
+          "skills": [
+            "Accurate",
+            "Loner (4+)",
+            "Nerves of Steel",
+            "Pass",
+            "Safe Pass",
+            "Sure Hands",
+            "Working In Tandem"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jeremiah-kool",
+      "name": "Jeremiah Kool",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Jeremiah_Kool/",
+      "cost": 300000,
+      "profiles": [
+        {
+          "name": "Jeremiah Kool",
+          "ma": 8,
+          "st": 3,
+          "ag": 1,
+          "pa": 2,
+          "av": 9,
+          "displayStats": {
+            "ma": "8",
+            "st": "3",
+            "ag": "1+",
+            "pa": "2+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Dodge",
+            "Diving Catch",
+            "Dump-off",
+            "Loner (4+)",
+            "Nerves of Steel",
+            "On the Ball",
+            "Pass",
+            "Sidestep",
+            "The Flashing Blade"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skrull-halfheight",
+      "name": "Skrull Halfheight",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Skrull_Halfheight/",
+      "cost": 150000,
+      "profiles": [
+        {
+          "name": "Skrull Halfheight",
+          "ma": 6,
+          "st": 3,
+          "ag": 4,
+          "pa": 3,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "4+",
+            "pa": "3+",
+            "av": "9+"
+          },
+          "skills": [
+            "Accurate",
+            "Loner (4+)",
+            "Nerves of Steel",
+            "Pass",
+            "Regeneration",
+            "Sure Hands",
+            "Thick Skull",
+            "Strong Passing Game"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grim-ironjaw",
+      "name": "Grim Ironjaw",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Grim_Ironjaw/",
+      "cost": 190000,
+      "profiles": [
+        {
+          "name": "Grim Ironjaw",
+          "ma": 5,
+          "st": 4,
+          "ag": 3,
+          "pa": 6,
+          "av": 9,
+          "displayStats": {
+            "ma": "5",
+            "st": "4",
+            "ag": "3+",
+            "pa": "6+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Dauntless",
+            "Frenzy",
+            "Hatred (Big Guy)",
+            "Loner (4+)",
+            "Multiple Block",
+            "Thick Skull",
+            "Slayer"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rumbelow-sheepskin",
+      "name": "Rumbelow Sheepskin",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Rumbelow_Sheepskin/",
+      "cost": 170000,
+      "profiles": [
+        {
+          "name": "Rumbelow Sheepskin",
+          "ma": 6,
+          "st": 3,
+          "ag": 3,
+          "pa": 5,
+          "av": 8,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "3+",
+            "pa": "5+",
+            "av": "8+"
+          },
+          "skills": [
+            "Block",
+            "Horns",
+            "Juggernaut",
+            "Loner (4+)",
+            "Tackle",
+            "Thick Skull",
+            "Ram"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rodney-roachbait",
+      "name": "Rodney Roachbait",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Rodney_Roachbait/",
+      "cost": 70000,
+      "profiles": [
+        {
+          "name": "Rodney Roachbait",
+          "ma": 6,
+          "st": 2,
+          "ag": 3,
+          "pa": 4,
+          "av": 7,
+          "displayStats": {
+            "ma": "6",
+            "st": "2",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "7+"
+          },
+          "skills": [
+            "Catch",
+            "Diving Catch",
+            "Jump Up",
+            "Loner (4+)",
+            "On the Ball",
+            "Sidestep",
+            "Stunty",
+            "Wrestle",
+            "Catch of the Day"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "swiftvine-glimmershard",
+      "name": "Swiftvine Glimmershard",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Swiftvine_Glimmershard/",
+      "cost": 110000,
+      "profiles": [
+        {
+          "name": "Swiftvine Glimmershard",
+          "ma": 7,
+          "st": 2,
+          "ag": 3,
+          "pa": 5,
+          "av": 7,
+          "displayStats": {
+            "ma": "7",
+            "st": "2",
+            "ag": "3+",
+            "pa": "5+",
+            "av": "7+"
+          },
+          "skills": [
+            "Disturbing Presence",
+            "Fend",
+            "Loner (4+)",
+            "Sidestep",
+            "Stab",
+            "Stunty",
+            "Furious Outburst"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "willow-rosebark",
+      "name": "Willow Rosebark",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Willow_Rosebark/",
+      "cost": 160000,
+      "profiles": [
+        {
+          "name": "Willow Rosebark",
+          "ma": 6,
+          "st": 4,
+          "ag": 3,
+          "pa": 5,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "4",
+            "ag": "3+",
+            "pa": "5+",
+            "av": "9+"
+          },
+          "skills": [
+            "Dauntless",
+            "Loner (4+)",
+            "Sidestep",
+            "Thick Skull",
+            "Woodland Fury"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rowana-forestfoot",
+      "name": "Rowana Forestfoot",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Rowana_Forestfoot/",
+      "cost": 160000,
+      "profiles": [
+        {
+          "name": "Rowana Forestfoot",
+          "ma": 6,
+          "st": 3,
+          "ag": 3,
+          "pa": 4,
+          "av": 8,
+          "displayStats": {
+            "ma": "6",
+            "st": "3",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "8+"
+          },
+          "skills": [
+            "Dodge",
+            "Dump-off",
+            "Guard",
+            "Horns",
+            "Jump Up",
+            "Leap",
+            "Loner (4+)",
+            "Bounding Leap"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "maple-highgrove",
+      "name": "Maple Highgrove",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Maple_Highgrove/",
+      "cost": 210000,
+      "profiles": [
+        {
+          "name": "Maple Highgrove",
+          "ma": 3,
+          "st": 5,
+          "ag": 5,
+          "pa": 5,
+          "av": 11,
+          "displayStats": {
+            "ma": "3",
+            "st": "5",
+            "ag": "5+",
+            "pa": "5+",
+            "av": "11+"
+          },
+          "skills": [
+            "Brawler",
+            "Grab",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Stand Firm",
+            "Tentacles",
+            "Thick Skull",
+            "Vicious Vines"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deeproot-strongbranch",
+      "name": "Deeproot Strongbranch",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Deeproot_Strongbranch/",
+      "cost": 280000,
+      "profiles": [
+        {
+          "name": "Deeproot Strongbranch",
+          "ma": 2,
+          "st": 7,
+          "ag": 5,
+          "pa": 4,
+          "av": 11,
+          "displayStats": {
+            "ma": "2",
+            "st": "7",
+            "ag": "5+",
+            "pa": "4+",
+            "av": "11+"
+          },
+          "skills": [
+            "Block",
+            "Bullseye",
+            "Loner (4+)",
+            "Mighty Blow",
+            "Stand Firm",
+            "Strong Arm",
+            "Thick Skull",
+            "Throw Team-mate",
+            "Timmm-ber!",
+            "Reliable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skitter-stab-stab",
+      "name": "Skitter Stab-Stab",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Skitter_Stab-stab/",
+      "cost": 170000,
+      "profiles": [
+        {
+          "name": "Skitter Stab-Stab",
+          "ma": 9,
+          "st": 2,
+          "ag": 2,
+          "pa": 4,
+          "av": 8,
+          "displayStats": {
+            "ma": "9",
+            "st": "2",
+            "ag": "2+",
+            "pa": "4+",
+            "av": "8+"
+          },
+          "skills": [
+            "Dodge",
+            "Loner (4+)",
+            "Prehensile Tail",
+            "Shadowing",
+            "Stab",
+            "Master Assassin"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "glart-smashrip",
+      "name": "Glart Smashrip",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Glart_Smashrip/",
+      "cost": 175000,
+      "profiles": [
+        {
+          "name": "Glart Smashrip",
+          "ma": 5,
+          "st": 4,
+          "ag": 4,
+          "pa": 6,
+          "av": 9,
+          "displayStats": {
+            "ma": "5",
+            "st": "4",
+            "ag": "4+",
+            "pa": "6+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Claws",
+            "Grab",
+            "Juggernaut",
+            "Loner (4+)",
+            "Stand Firm",
+            "Frenzied Rush"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kreek-rustgouger",
+      "name": "Kreek Rustgouger",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Kreek_Rustgouger/",
+      "cost": 180000,
+      "profiles": [
+        {
+          "name": "Kreek Rustgouger",
+          "ma": 4,
+          "st": 7,
+          "ag": 4,
+          "pa": null,
+          "av": 10,
+          "displayStats": {
+            "ma": "4",
+            "st": "7",
+            "ag": "4+",
+            "pa": "-",
+            "av": "10+"
+          },
+          "skills": [
+            "Ball & Chain",
+            "Loner (4+)",
+            "Mighty Blow",
+            "No Ball",
+            "Prehensile Tail",
+            "Secret Weapon",
+            "I'll Be Back!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hakflem-skuttlespike",
+      "name": "Hakflem Skuttlespike",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Hakflem_Skuttlespike/",
+      "cost": 200000,
+      "profiles": [
+        {
+          "name": "Hakflem Skuttlespike",
+          "ma": 8,
+          "st": 3,
+          "ag": 2,
+          "pa": 3,
+          "av": 8,
+          "displayStats": {
+            "ma": "8",
+            "st": "3",
+            "ag": "2+",
+            "pa": "3+",
+            "av": "8+"
+          },
+          "skills": [
+            "Dodge",
+            "Extra Arms",
+            "Loner (4+)",
+            "Prehensile Tail",
+            "Two Heads",
+            "Treacherous"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gretchen-w-chter",
+      "name": "Gretchen Wächter",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Gretchen_W%C3%A4chter/",
+      "cost": 180000,
+      "profiles": [
+        {
+          "name": "Gretchen Wächter",
+          "ma": 7,
+          "st": 3,
+          "ag": 2,
+          "pa": null,
+          "av": 9,
+          "displayStats": {
+            "ma": "7",
+            "st": "3",
+            "ag": "2+",
+            "pa": "-",
+            "av": "9+"
+          },
+          "skills": [
+            "Disturbing Presence",
+            "Dodge",
+            "Foul Appearance",
+            "Jump Up",
+            "Loner (4+)",
+            "No Ball",
+            "Regeneration",
+            "Shadowing",
+            "Sidestep",
+            "Incorporeal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ivan-the-animal-deathshroud",
+      "name": "Ivan 'the Animal' Deathshroud",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Ivan_%27the_Animal%27_Deathshroud/",
+      "cost": 210000,
+      "profiles": [
+        {
+          "name": "Ivan 'the Animal' Deathshroud",
+          "ma": 6,
+          "st": 4,
+          "ag": 4,
+          "pa": 5,
+          "av": 9,
+          "displayStats": {
+            "ma": "6",
+            "st": "4",
+            "ag": "4+",
+            "pa": "5+",
+            "av": "9+"
+          },
+          "skills": [
+            "Block",
+            "Disturbing Presence",
+            "Hatred (Dwarf)",
+            "Juggernaut",
+            "Loner (4+)",
+            "Regeneration",
+            "Strip Ball",
+            "Tackle",
+            "Dwarven Scourge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wilhelm-chaney",
+      "name": "Wilhelm Chaney",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Wilhelm_Chaney/",
+      "cost": 220000,
+      "profiles": [
+        {
+          "name": "Wilhelm Chaney",
+          "ma": 8,
+          "st": 4,
+          "ag": 3,
+          "pa": 4,
+          "av": 9,
+          "displayStats": {
+            "ma": "8",
+            "st": "4",
+            "ag": "3+",
+            "pa": "4+",
+            "av": "9+"
+          },
+          "skills": [
+            "Catch",
+            "Claws",
+            "Frenzy",
+            "Loner (4+)",
+            "Regeneration",
+            "Wrestle",
+            "Savage Mauling"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "captain-karina-von-riesz",
+      "name": "Captain Karina von Riesz",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Captain_Karina_von_Riesz/",
+      "cost": 230000,
+      "profiles": [
+        {
+          "name": "Captain Karina von Riesz",
+          "ma": 7,
+          "st": 4,
+          "ag": 2,
+          "pa": 3,
+          "av": 9,
+          "displayStats": {
+            "ma": "7",
+            "st": "4",
+            "ag": "2+",
+            "pa": "3+",
+            "av": "9+"
+          },
+          "skills": [
+            "Bloodlust (2+)",
+            "Dodge",
+            "Hypnotic Gaze",
+            "Jump Up",
+            "Loner (4+)",
+            "Regeneration",
+            "Tasty Morsel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "count-luthor-von-drakenborg",
+      "name": "Count Luthor von Drakenborg",
+      "url": "https://bloodbowlbase.ru/bb2025/starplayers/Count_Luthor_von_Drakenborg/",
+      "cost": 300000,
+      "profiles": [
+        {
+          "name": "Count Luthor von Drakenborg",
+          "ma": 6,
+          "st": 5,
+          "ag": 2,
+          "pa": 3,
+          "av": 10,
+          "displayStats": {
+            "ma": "6",
+            "st": "5",
+            "ag": "2+",
+            "pa": "3+",
+            "av": "10+"
+          },
+          "skills": [
+            "Block",
+            "Hypnotic Gaze",
+            "Loner (4+)",
+            "Regeneration",
+            "Sidestep",
+            "Star of the Show"
+          ]
+        }
+      ]
+    }
+  ]
+}

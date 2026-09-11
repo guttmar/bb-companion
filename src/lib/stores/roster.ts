@@ -2,6 +2,7 @@ import { writable, derived, get } from "svelte/store";
 import { getTeams } from "$lib/data/teams";
 import { getDefaultStartingTreasury, getRulesetConfig } from "$lib/domain/rulesets";
 import { settings } from "$lib/stores/settings";
+import { getStarPlayers, type StarPlayer } from "$lib/data/stars";
 
 export const selectedTeamId = writable<string>("amazon");
 
@@ -12,12 +13,22 @@ export const selectedTeam = derived(
   ([$id, $teams]) => $teams?.[$id]
 );
 
+export const selectedStarPlayers = derived(
+  [selectedTeam, settings],
+  ([$team, $settings]): StarPlayer[] =>
+    ($team?.starPlayers ?? [])
+      .map((id) => getStarPlayers($settings.ruleset)[id])
+      .filter((star): star is StarPlayer => Boolean(star))
+);
+
 export const currentRoster = writable<{
   players: Record<string, number>;
+  stars: Record<string, number>;
   reRolls: number;
   apothecary: number;
 }>({
   players: {},
+  stars: {},
   reRolls: 0,
   apothecary: 0
 });
@@ -59,8 +70,8 @@ settings.subscribe(($settings) => {
 });
 
 export const treasuryLeft = derived(
-  [currentRoster, selectedTeam, startingTreasury, settings],
-  ([$roster, $team, $start, $settings]) => {
+  [currentRoster, selectedTeam, selectedStarPlayers, startingTreasury, settings],
+  ([$roster, $team, $stars, $start, $settings]) => {
     const rules = getRulesetConfig($settings.ruleset, $settings.mode);
     const rerollCost = $settings.ruleset === "2025" && $settings.mode === "7s" ? rules.rerollCost : ($team?.rerollCost ?? 0);
     const apothecaryCost = $settings.ruleset === "2025" && $settings.mode === "7s" && $team?.apothecary ? rules.apothecaryCost : ($team?.apothecary ? 50000 : 0);
@@ -70,6 +81,11 @@ export const treasuryLeft = derived(
       Object.entries($roster.players).reduce(
         (sum, [id, count]) =>
           sum + ($team?.players.find((p: { id: string; cost: number }) => p.id === id)?.cost ?? 0) * (count as number),
+        0
+      ) -
+      Object.entries($roster.stars ?? {}).reduce(
+        (sum, [name, count]) =>
+          sum + ($stars.find((star) => star.name === name)?.cost ?? 0) * count,
         0
       ) -
       rerollCost * $roster.reRolls -

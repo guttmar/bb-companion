@@ -14,7 +14,7 @@ describe('adaptScrapedTeams', () => {
 					league: 'Chaos Clash',
 					special_rules: ['Favoured of...'],
 					staff: { cheerleader: 10000 },
-					star_players: [{ name: 'Star', cost: 100000 }],
+					star_players: ['star'],
 					inducements: [{ name: 'Item', cost: 20000 }],
 					players: [
 						{
@@ -33,6 +33,13 @@ describe('adaptScrapedTeams', () => {
 					]
 				}
 			]
+		}, {
+			star: {
+				id: 'star',
+				name: 'Star',
+				cost: 100000,
+				profiles: []
+			}
 		});
 
 		expect(Object.keys(teams)).toEqual(['chaos-chosen']);
@@ -143,6 +150,26 @@ describe('adaptScrapedTeams', () => {
 				]
 			})
 		).toThrow('Missing reroll cost for Missing Cost');
+	});
+
+	it('rejects star references missing from the catalog', () => {
+		expect(() =>
+			adaptScrapedTeams(
+				{
+					teams: [
+						{
+							name: 'Amazon',
+							reroll_cost: 60000,
+							star_players: ['missing-star'],
+							players: [
+								{ max_quantity: 16, position: 'Linewoman', MA: '6', ST: '3', AG: '3+', AV: '8+', cost: 50000 }
+							]
+						}
+					]
+				},
+				{}
+			)
+		).toThrow('Unknown star players for Amazon: missing-star');
 	});
 
 	it.each([

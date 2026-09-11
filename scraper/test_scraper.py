@@ -2,7 +2,7 @@ import unittest
 
 from bs4 import BeautifulSoup
 
-from scraper.scraper import extract_skill_entries, normalize_whitespace
+from scraper.scraper import extract_skill_entries, normalize_whitespace, parse_dash_list
 
 
 class SkillScraperTests(unittest.TestCase):
@@ -41,6 +41,22 @@ class SkillScraperTests(unittest.TestCase):
         self.assertIn(
             "When this player performs a Stab Special Action, select a Standing opposition player adjacent to this player and make an Armour Roll for the selected player.",
             entries[0]["description"],
+        )
+
+    def test_parse_dash_list_stops_at_strong_section_headers(self):
+        html = """
+        <html><body>
+        <strong>Star Players</strong>
+        <p>Akhorne the Squirrel - 80k</p>
+        <strong>Inducements</strong>
+        <p>Bloodweiser Kegs - 50k</p>
+        </body></html>
+        """
+        doc = BeautifulSoup(html, "lxml")
+
+        self.assertEqual(
+            parse_dash_list(doc.find("strong")),
+            [{"id": "akhorne-the-squirrel", "name": "Akhorne the Squirrel", "cost": 80000}],
         )
 
 
