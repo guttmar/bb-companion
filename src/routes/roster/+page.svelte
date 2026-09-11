@@ -416,7 +416,13 @@
 
   .star-stat {
     min-width: 3.5rem;
+    padding: 0.3rem 0.55rem;
+    border: 1px solid #93c5fd;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #172554;
     font-variant-numeric: tabular-nums;
+    text-align: center;
   }
 
   .star-skill-btn {
@@ -435,6 +441,12 @@
 
   :global(.dark) .star-profile + .star-profile {
     border-color: #404040;
+  }
+
+  :global(.dark) .star-stat {
+    border-color: #1e3a8a;
+    background: #172554;
+    color: #fff;
   }
 
   :global(.dark) .star-row-toggle:hover,
