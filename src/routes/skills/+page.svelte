@@ -2,16 +2,48 @@
 	import { base } from '$app/paths';
 	import { settings } from '$lib/stores/settings';
 	import { bb2025Skills } from '$lib/data/skills/bb2025';
+	import { getStarPlayers } from '$lib/data/stars';
+	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 	import { writable } from 'svelte/store';
 	import ChevronDownRegular from 'fluentui-icons-svelte/ChevronDownRegular.svelte';
 	import ChevronRightRegular from 'fluentui-icons-svelte/ChevronRightRegular.svelte';
 
 	const searchQuery = writable('');
-	const expandedCategories = writable(new Set(bb2025Skills.map((category) => category.name)));
+	const expandedCategories = writable(new SvelteSet([...bb2025Skills.map((category) => category.name), 'Star Player']));
+
+	$: starPlayerSkills = (() => {
+		const skills = new SvelteMap<
+			string,
+			{ id: string; name: string; starNames: string[]; type: 'passive'; description: string }
+		>();
+
+		for (const star of Object.values(getStarPlayers($settings.ruleset))) {
+			for (const profile of star.profiles) {
+				for (const specialSkill of profile.specialSkills) {
+					const key = specialSkill.name.trim().toLowerCase();
+					const existing = skills.get(key);
+					if (existing) {
+						if (!existing.starNames.includes(star.name)) existing.starNames.push(star.name);
+						continue;
+					}
+
+					skills.set(key, {
+						id: `star-${key.replace(/[^a-z0-9]+/g, '-')}`,
+						name: specialSkill.name,
+						starNames: [star.name],
+						type: 'passive',
+						description: specialSkill.description
+					});
+				}
+			}
+		}
+
+		return [...skills.values()];
+	})();
 
 	function toggleCategory(categoryName: string) {
 		expandedCategories.update((expanded) => {
-			const newExpanded = new Set(expanded);
+			const newExpanded = new SvelteSet(expanded);
 			if (newExpanded.has(categoryName)) {
 				newExpanded.delete(categoryName);
 			} else {
@@ -34,7 +66,7 @@
 		/>
 
 		<div class="space-y-10">
-			{#each bb2025Skills as category}
+			{#each bb2025Skills as category (category.id)}
 				<section>
 					<button
 						type="button"
@@ -85,6 +117,47 @@
 					{/if}
 				</section>
 			{/each}
+
+			<section>
+				<button
+					type="button"
+					class="mb-4 flex w-full items-center border-b border-gray-200 pb-2 text-left text-xl font-semibold text-gray-900 dark:border-gray-700 dark:text-white"
+					on:click={() => toggleCategory('Star Player')}
+				>
+					{#if $expandedCategories.has('Star Player')}
+						<ChevronDownRegular class="mr-2" />
+					{:else}
+						<ChevronRightRegular class="mr-2" />
+					{/if}
+					Star Player
+				</button>
+				{#if $expandedCategories.has('Star Player')}
+					<ul class="space-y-4">
+						{#each starPlayerSkills.filter((skill) =>
+							[skill.name, ...skill.starNames].some((value) =>
+								value.toLowerCase().includes($searchQuery.toLowerCase())
+							)
+						) as skill (skill.id)}
+							<li
+								class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+							>
+								<div class="mb-2 flex flex-wrap items-center gap-2">
+									<span class="font-medium text-gray-900 dark:text-white">{skill.name}</span>
+									<span class="text-sm text-gray-500 dark:text-gray-400">({skill.starNames.join(', ')})</span>
+									<span
+										class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300"
+									>
+										{skill.type}
+									</span>
+								</div>
+								<p class="skill-description text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+									{skill.description}
+								</p>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+			</section>
 		</div>
 	{:else}
 		<div
