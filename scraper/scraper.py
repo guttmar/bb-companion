@@ -1,6 +1,7 @@
 import json
 import re
 import time
+from pathlib import Path
 from urllib.parse import urljoin
 
 import requests
@@ -13,6 +14,7 @@ session = requests.Session()
 
 # default years to scrape
 DEFAULT_YEARS = ["2025"]
+OUTPUT_DIR = Path(__file__).resolve().parent
 
 
 def year_base(year: str) -> str:
@@ -547,21 +549,21 @@ def main(years=None):
     for year in years:
         scraped = scrape_year(year)
         teams = scraped["teams"]
-        filename = f"teams_{year}.json"
+        filename = OUTPUT_DIR / f"teams_{year}.json"
         data = {"teams": teams}
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         print(f"Saved {filename}")
         all_data[year] = teams
 
-        stars_filename = f"star_players_{year}.json"
+        stars_filename = OUTPUT_DIR / f"star_players_{year}.json"
         with open(stars_filename, "w", encoding="utf-8") as f:
             json.dump({"star_players": scraped["star_players"]}, f, indent=2, ensure_ascii=False)
         print(f"Saved {stars_filename}")
         all_data[f"{year}_star_players"] = scraped["star_players"]
 
         skills_data = scrape_skills(year)
-        skills_filename = f"skills_{year}.json"
+        skills_filename = OUTPUT_DIR / f"skills_{year}.json"
         with open(skills_filename, "w", encoding="utf-8") as f:
             json.dump(skills_data, f, indent=2, ensure_ascii=False)
         print(f"Saved {skills_filename}")
