@@ -361,7 +361,25 @@ def parse_star_player_page(url):
         profile_heading = table.find_previous(["h3", "h4"])
         profile_name = profile_heading.get_text(" ", strip=True) if profile_heading else name
         skill_list = table.find_next("ul")
-        skills = [li.get_text(" ", strip=True) for li in skill_list.find_all("li")] if skill_list else []
+        skills = []
+        special_skills = []
+        if skill_list:
+            for item in skill_list.find_all("li", recursive=False):
+                text = item.get_text(" ", strip=True)
+                if item.find("strong"):
+                    description = []
+                    sibling = skill_list.find_next_sibling()
+                    while sibling and sibling.name not in ["h1", "h2", "h3", "h4", "table"]:
+                        sibling_text = normalize_whitespace(sibling.get_text("\n", strip=True))
+                        if sibling_text:
+                            description.append(sibling_text)
+                        sibling = sibling.find_next_sibling()
+                    special_skills.append({
+                        "name": text,
+                        "description": "\n\n".join(description)
+                    })
+                else:
+                    skills.append(text)
         profiles.append({
             "name": profile_name,
             "ma": stat_value(stat_cells[0]),
@@ -376,7 +394,8 @@ def parse_star_player_page(url):
                 "pa": stat_cells[3],
                 "av": stat_cells[4]
             },
-            "skills": skills
+            "skills": skills,
+            "specialSkills": special_skills
         })
 
     if cost is None:

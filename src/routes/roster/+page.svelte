@@ -95,6 +95,15 @@
       } as Skill);
   }
 
+  function showSpecialSkill(name: string, description: string) {
+    openSkill = {
+      id: name,
+      name,
+      type: 'passive',
+      description
+    } as Skill;
+  }
+
   function closeSkill() {
     openSkill = null;
   }
@@ -686,6 +695,9 @@
                           <p>
                             {#each profile.skills as skill}
                               <button type="button" class="star-skill-btn" on:click={() => showSkill(skill)}>{skill}</button>
+                            {/each}
+                            {#each profile.specialSkills as specialSkill}
+                              <button type="button" class="star-skill-btn" on:click={() => showSpecialSkill(specialSkill.name, specialSkill.description)}>{specialSkill.name}</button>
                             {/each}
                           </p>
                         </div>

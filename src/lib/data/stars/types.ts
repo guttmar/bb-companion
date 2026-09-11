@@ -1,5 +1,10 @@
 import type { DisplayStats } from "$lib/data/teams/types";
 
+export interface StarPlayerSpecialSkill {
+  name: string;
+  description: string;
+}
+
 export interface StarPlayerProfile {
   name: string;
   ma: number;
@@ -9,6 +14,7 @@ export interface StarPlayerProfile {
   av: number;
   skills: string[];
   displayStats: DisplayStats;
+  specialSkills: StarPlayerSpecialSkill[];
 }
 
 export interface StarPlayer {
