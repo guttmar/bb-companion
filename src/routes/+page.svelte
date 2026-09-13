@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import PeopleTeamRegular from 'fluentui-icons-svelte/PeopleTeamRegular.svelte';
+	import StarRegular from 'fluentui-icons-svelte/StarRegular.svelte';
 	import FolderRegular from 'fluentui-icons-svelte/FolderRegular.svelte';
 	import BookRegular from 'fluentui-icons-svelte/BookRegular.svelte';
 	import SettingsRegular from 'fluentui-icons-svelte/SettingsRegular.svelte';
 
 	const actions = [
 		{ href: '/roster', label: 'Roster', icon: PeopleTeamRegular },
+		{ href: '/star-players', label: 'Star players', icon: StarRegular },
 		{ href: '/saved-teams', label: 'Saved teams', icon: FolderRegular },
 		{ href: '/skills', label: 'Skills', icon: BookRegular },
 		{ href: '/settings', label: 'Settings', icon: SettingsRegular }

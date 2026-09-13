@@ -7,9 +7,10 @@
   import RosterTable from "$lib/tools/RosterTable.svelte";
   import OtherTable from "$lib/tools/OtherTable.svelte";
   import RosterWarnings from "$lib/components/RosterWarnings.svelte";
+  import SkillDetailsModal from "$lib/components/SkillDetailsModal.svelte";
   import { formatCost, formatStat } from "$lib/tools/format";
-  import { bb2025Skills, type Skill } from "$lib/data/skills/bb2025";
-  import DismissRegular from "fluentui-icons-svelte/DismissRegular.svelte";
+  import type { Skill } from "$lib/data/skills/bb2025";
+  import { normalizeSkillName, resolveSkill } from "$lib/tools/skills";
   import {
     treasuryLeft,
     currentRoster,
@@ -72,19 +73,8 @@
     expandedStarId = expandedStarId === starId ? null : starId;
   }
 
-  function resolveSkill(name: string): Skill | null {
-    const normalized = name.toLowerCase();
-    for (const category of bb2025Skills) {
-      const skill = category.skills.find(
-        (candidate) => candidate.name.toLowerCase() === normalized || candidate.id.toLowerCase() === normalized
-      );
-      if (skill) return skill;
-    }
-    return null;
-  }
-
   function showSkill(name: string) {
-    const cleanedName = name.replace(/\s*\([^)]*\)\s*/g, '').trim();
+    const cleanedName = normalizeSkillName(name);
     openSkill =
       resolveSkill(cleanedName) ??
       ({
@@ -510,54 +500,6 @@
     padding: 0 1rem 1rem 1rem;
   }
 
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    display: grid;
-    place-items: center;
-    padding: 1rem;
-    background: rgb(0 0 0 / 45%);
-  }
-
-  .skill-card {
-    width: min(32rem, 100%);
-    padding: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    background: #f9fafb;
-    color: #111827;
-  }
-
-  .skill-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .skill-desc {
-    margin-top: 0.75rem;
-    line-height: 1.5;
-    white-space: pre-line;
-  }
-
-  .close-icon {
-    display: grid;
-    width: 2rem;
-    height: 2rem;
-    place-items: center;
-    border: 0;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  :global(.dark) .skill-card {
-    border-color: #404040;
-    background: #262626;
-    color: #e5e5e5;
-  }
 </style>
 
 <main>
@@ -723,22 +665,4 @@
   </div>
 </main>
 
-{#if openSkill}
-  <div
-    class="modal-overlay"
-    role="presentation"
-    tabindex="-1"
-    on:click={(event) => event.target === event.currentTarget && closeSkill()}
-    on:keydown={(event) => event.key === 'Escape' && closeSkill()}
-  >
-    <div class="skill-card" role="dialog" aria-modal="true" aria-label="Skill details">
-      <div class="skill-header">
-        <strong>{openSkill.name}</strong>
-        <button type="button" class="close-icon" on:click={closeSkill} aria-label="Close">
-          <DismissRegular />
-        </button>
-      </div>
-      <div class="skill-desc">{openSkill.description}</div>
-    </div>
-  </div>
-{/if}
+<SkillDetailsModal skill={openSkill} on:close={closeSkill} />
