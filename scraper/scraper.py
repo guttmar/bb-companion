@@ -1,6 +1,8 @@
 import json
+import hashlib
 import re
 import time
+from datetime import date
 from pathlib import Path
 from urllib.parse import urljoin
 
@@ -15,6 +17,27 @@ session = requests.Session()
 # default years to scrape
 DEFAULT_YEARS = ["2025"]
 OUTPUT_DIR = Path(__file__).resolve().parent
+
+CORE_RULE_CHAPTERS = [
+    ("game-essentials", "Game Essentials"),
+    ("rules-and-regulations", "Rules and Regulations"),
+    ("the-game-of-blood-bowl", "The Game of Blood Bowl"),
+    ("drafting-a-blood-bowl-team", "Drafting a Blood Bowl Team"),
+    ("league-play", "League Play"),
+    ("matched-play", "Matched Play"),
+    ("exhibition-play", "Exhibition Play"),
+    ("skills-and-traits", "Skills & Traits"),
+    ("inducements", "Inducements"),
+    ("the-teams", "The Teams"),
+]
+
+SUPPLEMENT_RULE_PAGES = [
+    ("faq", "FAQ / Errata", "core_rules/latest_faq/", "faq"),
+    ("spike-19", "Spike! Journal 19", "spike_journal/issue_19/", "spike"),
+    ("spike-20", "Spike! Journal 20", "spike_journal/issue_20/", "spike"),
+    ("spike-21", "Spike! Journal 21", "spike_journal/issue_21/", "spike"),
+    ("spike-22", "Spike! Journal 22", "spike_journal/issue_22/", "spike"),
+]
 
 
 def year_base(year: str) -> str:
@@ -99,6 +122,126 @@ def normalize_whitespace(text):
     cleaned = re.sub(r" *\n *", "\n", cleaned)
     cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
     return cleaned.strip()
+
+
+def slugify(text):
+    """Create a stable anchor slug for a rule section heading."""
+    return re.sub(r"^-+|-+$", "", re.sub(r"[^a-z0-9]+", "-", text.lower())).strip()
+
+
+def parse_table(table):
+    """Extract a semantic table block without flattening its rows into text."""
+    rows = []
+    headers = []
+    for row in table.find_all("tr"):
+        cells = row.find_all(["th", "td"])
+        values = [normalize_whitespace(cell.get_text(" ", strip=True)) for cell in cells]
+        if not values:
+            continue
+        if not headers and row.find("th"):
+            headers = values
+        else:
+            rows.append(values)
+
+    if not headers and rows:
+        headers = rows.pop(0)
+
+    return {
+        "type": "table",
+        "value": {
+            "caption": normalize_whitespace(table.find("caption").get_text(" ", strip=True)) if table.find("caption") else None,
+            "headers": headers,
+            "rows": rows,
+        },
+    }
+
+
+def parse_rule_blocks(elements, base_url):
+    """Extract paragraphs, lists, tables, and figures from one heading's content."""
+    blocks = []
+    for element in elements:
+        if element.name == "p":
+            image = element.find("img")
+            text = normalize_whitespace(element.get_text(" ", strip=True))
+            if image:
+                blocks.append({
+                    "type": "figure",
+                    "value": {
+                        "caption": text or None,
+                        "altText": image.get("alt", ""),
+                        "mediaRef": urljoin(base_url, image.get("src", "")),
+                        "placement": "inline",
+                    },
+                })
+            elif text:
+                blocks.append({"type": "paragraph", "value": text})
+        elif element.name in ("ul", "ol"):
+            items = [normalize_whitespace(item.get_text(" ", strip=True)) for item in element.find_all("li", recursive=False)]
+            items = [item for item in items if item]
+            if items:
+                blocks.append({"type": "list", "value": items})
+        elif element.name == "table":
+            blocks.append(parse_table(element))
+    return blocks
+
+
+def extract_rule_sections(doc, chapter, chapter_url, retrieval_date=None):
+    """Extract independently addressable Rule Sections from a source article."""
+    article = doc.find("article", class_="md-content__inner") or doc.find("article")
+    if not article:
+        raise ValueError(f"Missing rule article for {chapter_url}")
+
+    headings = article.find_all(["h2", "h3", "h4"])
+    sections = []
+    stack = []
+    retrieved = retrieval_date or date.today().isoformat()
+    for order, heading in enumerate(headings):
+        title = normalize_whitespace(heading.get_text(" ", strip=True))
+        if not title or title.lower() == "additional links":
+            break
+
+        level = int(heading.name[1])
+        while stack and stack[-1][0] >= level:
+            stack.pop()
+        parent = stack[-1][1] if stack else None
+        anchor = heading.get("id") or slugify(title)
+        elements = []
+        sibling = heading.find_next_sibling()
+        while sibling is not None and sibling.name not in ["h2", "h3", "h4"]:
+            elements.append(sibling)
+            sibling = sibling.find_next_sibling()
+        body = parse_rule_blocks(elements, chapter_url)
+        section_id = f"bb2025-{chapter['slug']}-{anchor}"
+        section = {
+            "id": section_id,
+            "ruleset": f"bb{chapter_url.split('/bb')[1].split('/')[0]}",
+            "snapshotId": f"bb{chapter_url.split('/bb')[1].split('/')[0]}-{retrieved}",
+            "family": chapter["family"],
+            "chapterId": chapter["id"],
+            "chapterTitle": chapter["title"],
+            "chapterSlug": chapter["slug"],
+            "title": title,
+            "slug": anchor,
+            "parentSectionId": parent["id"] if isinstance(parent, dict) else parent,
+            "path": [item[1]["title"] for item in stack] + [title],
+            "sectionDepth": level - 1,
+            "sectionOrder": order,
+            "contentType": "table" if any(block["type"] == "table" for block in body) else "text",
+            "body": body,
+            "source": {
+                "url": chapter_url,
+                "heading": title,
+                "anchor": anchor,
+                "retrievalDate": retrieved,
+                "contentHash": hashlib.sha256(json.dumps(body, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest(),
+            },
+            "review": {"status": "needs-review"},
+        }
+        if body:
+            sections.append(section)
+        stack.append((level, section))
+
+    return sections
 
 
 def display_name(name):
@@ -542,6 +685,55 @@ def scrape_skills(year: str):
     }
 
 
+def rule_page_url(year: str, path: str) -> str:
+    """Return a source URL for a Core Rules or supplement page."""
+    return f"{year_base(year)}/{path}"
+
+
+def scrape_rules(year: str):
+    """Scrape the BB rules corpus into a reviewed-process snapshot structure."""
+    retrieval_date = date.today().isoformat()
+    chapters = []
+    for slug, title in CORE_RULE_CHAPTERS:
+        url = rule_page_url(year, f"core_rules/{slug.replace('-', '_')}/")
+        chapter = {
+            "id": f"core-{slug}",
+            "title": title,
+            "slug": slug,
+            "family": "core-rules",
+            "description": None,
+            "sourceUrl": url,
+            "sections": [],
+        }
+        print("Scraping rules:", title)
+        chapter["sections"] = extract_rule_sections(soup(url), chapter, url, retrieval_date)
+        chapters.append(chapter)
+        time.sleep(DELAY)
+
+    for slug, title, path, family in SUPPLEMENT_RULE_PAGES:
+        url = rule_page_url(year, path)
+        chapter = {
+            "id": slug,
+            "title": title,
+            "slug": slug,
+            "family": family,
+            "description": None,
+            "sourceUrl": url,
+            "sections": [],
+        }
+        print("Scraping rules:", title)
+        chapter["sections"] = extract_rule_sections(soup(url), chapter, url, retrieval_date)
+        chapters.append(chapter)
+        time.sleep(DELAY)
+
+    return {
+        "ruleset": f"bb{year}",
+        "snapshotId": f"bb{year}-{retrieval_date}",
+        "retrievalDate": retrieval_date,
+        "chapters": chapters,
+    }
+
+
 def main(years=None):
     if years is None:
         years = DEFAULT_YEARS
@@ -568,6 +760,13 @@ def main(years=None):
             json.dump(skills_data, f, indent=2, ensure_ascii=False)
         print(f"Saved {skills_filename}")
         all_data[f"{year}_skills"] = skills_data
+
+        rules_data = scrape_rules(year)
+        rules_filename = OUTPUT_DIR / f"rules_{year}.json"
+        with open(rules_filename, "w", encoding="utf-8") as f:
+            json.dump(rules_data, f, indent=2, ensure_ascii=False)
+        print(f"Saved {rules_filename}")
+        all_data[f"{year}_rules"] = rules_data
     return all_data
 
 

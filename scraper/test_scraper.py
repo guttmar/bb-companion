@@ -2,7 +2,13 @@ import unittest
 
 from bs4 import BeautifulSoup
 
-from scraper.scraper import extract_skill_entries, normalize_whitespace, parse_dash_list, parse_star_player_page
+from scraper.scraper import (
+    extract_rule_sections,
+    extract_skill_entries,
+    normalize_whitespace,
+    parse_dash_list,
+    parse_star_player_page,
+)
 
 
 class SkillScraperTests(unittest.TestCase):
@@ -80,6 +86,43 @@ class SkillScraperTests(unittest.TestCase):
             result["profiles"][0]["specialSkills"],
             [{"name": "Special Rule", "description": "Special rule explanation."}],
         )
+
+
+class RuleScraperTests(unittest.TestCase):
+    def test_extract_rule_sections_preserves_hierarchy_and_structured_blocks(self):
+        html = """
+        <html><body><article class="md-content__inner md-typeset">
+          <h1>Rules and Regulations</h1>
+          <h2 id="general-principles">GENERAL PRINCIPLES!</h2>
+          <p>Shared rule text.</p>
+          <h3 id="rolling-dice">ROLLING DICE</h3>
+          <p>Roll dice to resolve an action.</p>
+          <ul><li>Roll a D6.</li><li>Apply the result.</li></ul>
+          <table><tr><th>Roll</th><th>Result</th></tr><tr><td>1</td><td>Fail</td></tr></table>
+          <p><img src="../../media/core_rules/dice.jpg" alt="Dice diagram" /></p>
+          <h2>Additional Links</h2><ul><li>Should not be extracted.</li></ul>
+        </article></body></html>
+        """
+        chapter = {
+            "id": "core-rules-and-regulations",
+            "title": "Rules and Regulations",
+            "slug": "rules-and-regulations",
+            "family": "core-rules",
+        }
+
+        sections = extract_rule_sections(
+            BeautifulSoup(html, "lxml"),
+            chapter,
+            "https://bloodbowlbase.ru/bb2025/core_rules/rules_and_regulations/",
+            "2026-09-16",
+        )
+
+        self.assertEqual([section["title"] for section in sections], ["GENERAL PRINCIPLES!", "ROLLING DICE"])
+        self.assertEqual(sections[1]["parentSectionId"], sections[0]["id"])
+        self.assertEqual(sections[1]["path"], ["GENERAL PRINCIPLES!", "ROLLING DICE"])
+        self.assertEqual([block["type"] for block in sections[1]["body"]], ["paragraph", "list", "table", "figure"])
+        self.assertEqual(sections[1]["body"][-1]["value"]["mediaRef"], "https://bloodbowlbase.ru/bb2025/media/core_rules/dice.jpg")
+        self.assertEqual(len(sections[1]["source"]["contentHash"]), 64)
 
 
 if __name__ == "__main__":

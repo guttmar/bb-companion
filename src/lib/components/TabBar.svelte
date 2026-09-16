@@ -9,6 +9,8 @@
 	import StarFilled from 'fluentui-icons-svelte/StarFilled.svelte';
 	import BookRegular from 'fluentui-icons-svelte/BookRegular.svelte';
 	import BookFilled from 'fluentui-icons-svelte/BookFilled.svelte';
+	import CertificateRegular from 'fluentui-icons-svelte/CertificateRegular.svelte';
+	import CertificateFilled from 'fluentui-icons-svelte/CertificateFilled.svelte';
 	import SettingsRegular from 'fluentui-icons-svelte/SettingsRegular.svelte';
 	import SettingsFilled from 'fluentui-icons-svelte/SettingsFilled.svelte';
 	import FolderRegular from 'fluentui-icons-svelte/FolderRegular.svelte';
@@ -19,7 +21,8 @@
 		{ href: '/roster', label: 'Roster', iconRegular: PeopleTeamRegular, iconFilled: PeopleTeamFilled },
 		{ href: '/star-players', label: 'Star players', iconRegular: StarRegular, iconFilled: StarFilled },
 		{ href: '/saved-teams', label: 'Saved teams', iconRegular: FolderRegular, iconFilled: FolderFilled },
-		{ href: '/skills', label: 'Skills', iconRegular: BookRegular, iconFilled: BookFilled },
+		{ href: '/skills', label: 'Skills', iconRegular: CertificateRegular, iconFilled: CertificateFilled },
+		{ href: '/rules', label: 'Rules', iconRegular: BookRegular, iconFilled: BookFilled },
 		{ href: '/settings', label: 'Settings', iconRegular: SettingsRegular, iconFilled: SettingsFilled }
 	];
 

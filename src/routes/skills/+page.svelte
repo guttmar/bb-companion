@@ -56,6 +56,9 @@
 
 <main class="mx-auto max-w-4xl px-4 py-6">
 	<h1 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">Skills</h1>
+	<p class="mb-6 text-sm text-gray-600 dark:text-gray-400">
+		Looking for the underlying rules? <a class="font-medium underline" href={`${base}/rules#bb2025-skills-and-traits-skills`}>Open the Rules Reference</a>.
+	</p>
 
 	{#if $settings.ruleset === '2025'}
 		<input

@@ -4,13 +4,15 @@
 	import StarRegular from 'fluentui-icons-svelte/StarRegular.svelte';
 	import FolderRegular from 'fluentui-icons-svelte/FolderRegular.svelte';
 	import BookRegular from 'fluentui-icons-svelte/BookRegular.svelte';
+	import CertificateRegular from 'fluentui-icons-svelte/CertificateRegular.svelte';
 	import SettingsRegular from 'fluentui-icons-svelte/SettingsRegular.svelte';
 
 	const actions = [
 		{ href: '/roster', label: 'Roster', icon: PeopleTeamRegular },
 		{ href: '/star-players', label: 'Star players', icon: StarRegular },
 		{ href: '/saved-teams', label: 'Saved teams', icon: FolderRegular },
-		{ href: '/skills', label: 'Skills', icon: BookRegular },
+		{ href: '/skills', label: 'Skills', icon: CertificateRegular },
+		{ href: '/rules', label: 'Rules', icon: BookRegular },
 		{ href: '/settings', label: 'Settings', icon: SettingsRegular }
 	];
 </script>
