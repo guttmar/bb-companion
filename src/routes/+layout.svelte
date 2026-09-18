@@ -39,7 +39,7 @@
 		{@html pwaInfo.webManifest.linkTag}
 	{/if}
 </svelte:head>
-<header>
+<header class="sticky top-0 z-40">
 	<TabBar />
 </header>
 <main class="min-h-screen bg-gray-50 dark:bg-gray-950">
