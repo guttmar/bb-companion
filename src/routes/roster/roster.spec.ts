@@ -3,9 +3,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { get } from 'svelte/store';
 import Page from './+page.svelte';
-import { formatStat } from '$lib/tools/format';
+import { formatCost, formatStat } from '$lib/tools/format';
 import { savedTeams, saveTeam } from '$lib/stores/savedTeams';
-import { currentRoster, selectedTeamId } from '$lib/stores/roster';
+import { currentRoster, selectedStarPlayers, selectedTeamId } from '$lib/stores/roster';
 
 vi.mock('$app/stores', async () => {
 	const { writable } = await import('svelte/store');
@@ -107,6 +107,35 @@ describe('roster page save behavior', () => {
 		for (const group of cardElement.querySelectorAll('.player-group')) {
 			expect(group.textContent?.trim()).not.toBe('');
 		}
+	});
+
+	it('renders expandable star-player cards with a binary selection switch', async () => {
+		render(Page);
+		await page.getByText('Star players', { exact: true }).click();
+		const star = get(selectedStarPlayers)[0];
+		expect(star).toBeDefined();
+
+		const card = page
+			.getByRole('list', { name: 'Available star players' })
+			.getByRole('listitem')
+			.first();
+		await expect.element(card.getByText(star.name, { exact: true })).toBeInTheDocument();
+		await expect.element(card.getByText(formatCost(star.cost), { exact: true })).toBeInTheDocument();
+		const selectionSwitch = card.getByRole('switch', { name: `Include ${star.name}` });
+		expect((selectionSwitch.element() as HTMLInputElement).checked).toBe(false);
+
+		(selectionSwitch.element() as HTMLInputElement).click();
+		expect(get(currentRoster).stars[star.name]).toBe(1);
+		expect((selectionSwitch.element() as HTMLInputElement).checked).toBe(true);
+		(selectionSwitch.element() as HTMLInputElement).click();
+		expect(get(currentRoster).stars[star.name]).toBe(0);
+		expect((selectionSwitch.element() as HTMLInputElement).checked).toBe(false);
+
+		const expandButton = card.getByRole('button', { name: star.name });
+		await expandButton.click();
+		await expect.element(expandButton).toHaveAttribute('aria-expanded', 'true');
+		expect(card.element().querySelector('.star-stat')).not.toBeNull();
+		expect(page.getByText('Available to teams', { exact: true }).length).toBe(0);
 	});
 
 	it('renders undefined stat values as an em dash instead of undefined+', () => {

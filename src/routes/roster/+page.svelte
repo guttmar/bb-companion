@@ -73,6 +73,13 @@
     expandedStarId = expandedStarId === starId ? null : starId;
   }
 
+  function setStarSelected(starName: string, selected: boolean) {
+    currentRoster.update((roster) => ({
+      ...roster,
+      stars: { ...roster.stars, [starName]: selected ? 1 : 0 }
+    }));
+  }
+
   function showSkill(name: string) {
     const cleanedName = normalizeSkillName(name);
     openSkill =
@@ -357,89 +364,195 @@
     padding: 0 1rem 1rem;
   }
 
-  .star-table {
-    width: 100%;
-    border-collapse: collapse;
+  .star-list {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .star-table th,
-  .star-table td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: center;
+  .star-card {
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: #fff;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+    color: #1f2937;
   }
 
-  .star-table th {
-    background: #3d8c40;
-    color: white;
+  :global(.dark) .star-card {
+    border-color: #374151;
+    background: #111827;
+    color: #e5e7eb;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
   }
 
-  .star-row-toggle {
+  .star-card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .star-expand {
+    display: flex;
+    flex: 1 1 12rem;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-align: left;
     cursor: pointer;
   }
 
-  .star-cost-toggle {
+  .star-expand span {
+    overflow-wrap: anywhere;
+  }
+
+  .star-chevron {
+    flex: 0 0 auto;
+    width: 1rem;
+    font-size: 1.5rem;
+    line-height: 1;
     text-align: center;
   }
 
-  .star-name-toggle {
-    text-align: left;
+  .star-cost {
+    flex: 0 0 auto;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
   }
 
-  .star-row-toggle:hover {
-    background: #e6f7ed;
+  :global(.dark) .star-cost {
+    background: rgb(120 53 15 / 0.3);
+    color: #fcd34d;
   }
 
-  .star-detail-row td {
-    padding: 0.75rem 1rem;
-    background: #f8fafc;
-    text-align: left;
+  .star-switch {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    min-height: 2.75rem;
+    cursor: pointer;
+  }
+
+  .star-switch input {
+    position: absolute;
+    width: 2.75rem;
+    height: 1.75rem;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .star-switch-track {
+    position: relative;
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    background: #9ca3af;
+    transition: background-color 120ms ease;
+  }
+
+  .star-switch-track::after {
+    position: absolute;
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: #fff;
+    content: '';
+    transition: transform 120ms ease;
+  }
+
+  .star-switch input:checked + .star-switch-track {
+    background: #15803d;
+  }
+
+  .star-switch input:checked + .star-switch-track::after {
+    transform: translateX(1.25rem);
+  }
+
+  .star-switch input:focus-visible + .star-switch-track,
+  .star-expand:focus-visible,
+  .star-skill-btn:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
   }
 
   .star-profile + .star-profile {
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid #d1d5db;
+    margin-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
   }
 
-  .star-profile p {
-    margin: 0.2rem 0;
+  .star-profile h3 {
+    margin: 0 0 0.5rem;
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 
-  .star-stats {
+  .star-profile-content {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .star-stats,
+  .star-skills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
-    margin-top: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .star-stat,
+  .star-skill-btn {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 
   .star-stat {
-    min-width: 3.5rem;
-    padding: 0.3rem 0.55rem;
     border: 1px solid #93c5fd;
-    border-radius: 999px;
     background: #dbeafe;
     color: #172554;
     font-variant-numeric: tabular-nums;
-    text-align: center;
   }
 
   .star-skill-btn {
-    margin: 0.15rem;
-    padding: 0.25rem 0.45rem;
-    border: 1px solid #c7f0d6;
-    border-radius: 4px;
-    background: transparent;
-    color: #064e3b;
+    border: 0;
+    background: #f3f4f6;
+    color: #1f2937;
     cursor: pointer;
   }
 
   .star-skill-btn:hover {
-    background: #e6f7ed;
+    background: #e5e7eb;
   }
 
   :global(.dark) .star-profile + .star-profile {
-    border-color: #404040;
+    border-color: #374151;
+  }
+
+  :global(.dark) .star-profile h3 {
+    color: #d1d5db;
   }
 
   :global(.dark) .star-stat {
@@ -448,29 +561,13 @@
     color: #fff;
   }
 
-  :global(.dark) .star-row-toggle:hover,
-  :global(.dark) .star-detail-row td {
-    background: #262626;
-  }
-
   :global(.dark) .star-skill-btn {
-    border-color: #14532d;
-    color: #86efac;
+    background: #374151;
+    color: #e5e7eb;
   }
 
-  .star-table button {
-    padding: 0.25rem 0.6rem;
-    border: 0;
-    border-radius: 4px;
-    background: #4caf50;
-    color: white;
-    cursor: pointer;
-  }
-
-  .star-table button:disabled {
-    background: #ccc;
-    color: #666;
-    cursor: not-allowed;
+  :global(.dark) .star-skill-btn:hover {
+    background: #4b5563;
   }
 
   :global(.dark) .roster-section summary {
@@ -479,19 +576,6 @@
 
   :global(.dark) .roster-section {
     border-color: #404040;
-  }
-
-  :global(.dark) .star-table th,
-  :global(.dark) .star-table td {
-    border-color: #404040;
-  }
-
-  :global(.dark) .star-table th {
-    background: #166534;
-  }
-
-  :global(.dark) .star-table td {
-    color: #a3a3a3;
   }
 
   .scrollable-content {
@@ -571,85 +655,64 @@
       <summary>Star players</summary>
       <div class="roster-section-content">
         {#if $selectedStarPlayers.length}
-          <table class="star-table">
-            <tbody>
-              <tr>
-                <th>Count</th>
-                <th>Cost</th>
-                <th>Name</th>
-              </tr>
-              {#each $selectedStarPlayers as star}
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      on:click={() => currentRoster.update((roster) => ({
-                        ...roster,
-                        stars: { ...roster.stars, [star.name]: 0 }
-                      }))}
-                      disabled={!($currentRoster.stars?.[star.name] ?? 0)}>-</button
-                    >
-                    <span>{$currentRoster.stars?.[star.name] ?? 0} / 1</span>
-                    <button
-                      type="button"
-                      on:click={() => currentRoster.update((roster) => ({
-                        ...roster,
-                        stars: { ...roster.stars, [star.name]: 1 }
-                      }))}
-                      disabled={($currentRoster.stars?.[star.name] ?? 0) >= 1}>+</button
-                    >
-                  </td>
-                  <td
-                    class="star-row-toggle star-cost-toggle"
-                    role="button"
-                    tabindex="0"
-                    aria-expanded={expandedStarId === star.id}
-                    aria-label={`Expand ${star.name}`}
+          <ul class="star-list" aria-label="Available star players">
+            {#each $selectedStarPlayers as star (star.id)}
+              <li class="star-card">
+                <div class="star-card-header">
+                  <label class="star-switch">
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      aria-label={`Include ${star.name}`}
+                      checked={($currentRoster.stars?.[star.name] ?? 0) > 0}
+                      on:change={(event) =>
+                        setStarSelected(star.name, (event.currentTarget as HTMLInputElement).checked)}
+                    />
+                    <span class="star-switch-track" aria-hidden="true"></span>
+                  </label>
+                  <button
+                    type="button"
+                    class="star-expand"
                     on:click={() => toggleStar(star.id)}
-                    on:keydown={(event) => (event.key === 'Enter' || event.key === ' ') && toggleStar(star.id)}
-                  >
-                    {formatCost(star.cost)}
-                  </td>
-                  <td
-                    class="star-row-toggle star-name-toggle"
-                    role="button"
-                    tabindex="0"
                     aria-expanded={expandedStarId === star.id}
-                    aria-label={`Expand ${star.name}`}
-                    on:click={() => toggleStar(star.id)}
-                    on:keydown={(event) => (event.key === 'Enter' || event.key === ' ') && toggleStar(star.id)}
                   >
-                    {star.name}
-                  </td>
-                </tr>
+                    <span class="star-chevron" aria-hidden="true">
+                      {expandedStarId === star.id ? '⌄' : '›'}
+                    </span>
+                    <span>{star.name}</span>
+                  </button>
+                  <span class="star-cost">{formatCost(star.cost)}</span>
+                </div>
+
                 {#if expandedStarId === star.id}
-                  <tr class="star-detail-row">
-                    <td colspan="3">
-                      {#each star.profiles as profile}
-                        <div class="star-profile">
-                          <div class="star-stats">
-                            <span class="star-stat">MA {profile.displayStats.ma}</span>
-                            <span class="star-stat">ST {profile.displayStats.st}</span>
-                            <span class="star-stat">AG {profile.displayStats.ag}</span>
-                            <span class="star-stat">PA {profile.displayStats.pa ?? formatStat(profile.pa, '+')}</span>
-                            <span class="star-stat">AV {profile.displayStats.av}</span>
-                          </div>
-                          <p>
-                            {#each profile.skills as skill}
-                              <button type="button" class="star-skill-btn" on:click={() => showSkill(skill)}>{skill}</button>
-                            {/each}
-                            {#each profile.specialSkills as specialSkill}
-                              <button type="button" class="star-skill-btn" on:click={() => showSpecialSkill(specialSkill.name, specialSkill.description)}>{specialSkill.name}</button>
-                            {/each}
-                          </p>
+                  {#each star.profiles as profile (profile.name)}
+                    <div class="star-profile">
+                      {#if profile.name !== star.name}
+                        <h3>{profile.name}</h3>
+                      {/if}
+                      <div class="star-profile-content">
+                        <div class="star-stats">
+                          <span class="star-stat">MA {profile.displayStats.ma}</span>
+                          <span class="star-stat">ST {profile.displayStats.st}</span>
+                          <span class="star-stat">AG {profile.displayStats.ag}</span>
+                          <span class="star-stat">PA {profile.displayStats.pa ?? formatStat(profile.pa, '+')}</span>
+                          <span class="star-stat">AV {profile.displayStats.av}</span>
                         </div>
-                      {/each}
-                    </td>
-                  </tr>
+                        <div class="star-skills">
+                          {#each profile.skills as skill, index (skill + index)}
+                            <button type="button" class="star-skill-btn" on:click={() => showSkill(skill)}>{skill}</button>
+                          {/each}
+                          {#each profile.specialSkills as specialSkill (specialSkill.name)}
+                            <button type="button" class="star-skill-btn" on:click={() => showSpecialSkill(specialSkill.name, specialSkill.description)}>{specialSkill.name}</button>
+                          {/each}
+                        </div>
+                      </div>
+                    </div>
+                  {/each}
                 {/if}
-              {/each}
-            </tbody>
-          </table>
+              </li>
+            {/each}
+          </ul>
         {:else}
           <p>No star players available.</p>
         {/if}
