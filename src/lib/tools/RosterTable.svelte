@@ -115,9 +115,6 @@
 			<div class="player-information">
 				<dl class="player-stat-band" aria-label={`${p.name} cost and stats`}>
 					<div>
-						<dd>{formatCost(p.cost)}</dd>
-					</div>
-					<div>
 						<dt>MA</dt>
 						<dd>{p.ma}</dd>
 					</div>
@@ -136,6 +133,9 @@
 					<div>
 						<dt>AV</dt>
 						<dd>{formatStat(p.av, '+')}</dd>
+					</div>
+					<div class="cost-badge" aria-label={`Cost ${formatCost(p.cost)}`}>
+						<dd>{formatCost(p.cost)}</dd>
 					</div>
 				</dl>
 
@@ -403,6 +403,21 @@
 		font-size: 0.75rem;
 		line-height: 1rem;
 		white-space: nowrap;
+	}
+
+	.player-stat-band > .cost-badge {
+		margin-left: auto;
+		padding: 0.125rem 0.625rem;
+		border: 0;
+		background: #fef3c7;
+		color: #92400e;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	:global(.dark) .player-stat-band > .cost-badge {
+		background: rgb(120 53 15 / 0.3);
+		color: #fcd34d;
 	}
 
 	:global(.dark) .player-stat-band > div {

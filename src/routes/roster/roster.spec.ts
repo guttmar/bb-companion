@@ -140,6 +140,34 @@ describe('roster page save behavior', () => {
 		}
 	});
 
+	it('renders Other items as cards with matching count controls and right-side costs', async () => {
+		render(Page);
+		await page.getByText('Other', { exact: true }).click();
+
+		const otherList = page.getByRole('list', { name: 'Other roster items' });
+		const otherItems = otherList.getByRole('listitem');
+		const rerolls = otherItems.nth(0);
+		const apothecary = otherItems.nth(1);
+
+		await expect.element(rerolls.getByText('Team Re-rolls', { exact: true })).toBeInTheDocument();
+		await expect.element(apothecary.getByText('Apothecary', { exact: true })).toBeInTheDocument();
+		await expect.element(rerolls.getByText('60k', { exact: true })).toBeInTheDocument();
+		await expect.element(apothecary.getByText('50k', { exact: true })).toBeInTheDocument();
+		expect(otherList.element().querySelector('table')).toBeNull();
+		expect(rerolls.element().querySelector('.other-count-rail')).not.toBeNull();
+		expect(rerolls.element().querySelector('.other-cost')).not.toBeNull();
+
+		const decrement = rerolls.getByRole('button', { name: 'Decrease Team Re-rolls count' });
+		const increment = rerolls.getByRole('button', { name: 'Increase Team Re-rolls count' });
+		const count = rerolls.element().querySelector('.other-count-value')!;
+		expect(decrement.element().hasAttribute('disabled')).toBe(true);
+		await increment.click();
+		expect(count.getAttribute('aria-label')).toBe('1 of 8');
+		await decrement.click();
+		expect(count.getAttribute('aria-label')).toBe('0 of 8');
+		expect(decrement.element().hasAttribute('disabled')).toBe(true);
+	});
+
 	it('renders expandable star-player cards with a binary selection switch', async () => {
 		render(Page);
 		await page.getByText('Star players', { exact: true }).click();

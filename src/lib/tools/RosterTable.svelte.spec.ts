@@ -101,8 +101,10 @@ describe('RosterTable player cards', () => {
 			await expect.element(card.getByText(tag, { exact: true })).toBeInTheDocument();
 		}
 
+		await expect.element(card.getByText('65k', { exact: true })).toBeInTheDocument();
+		expect(card.element().querySelector('.cost-badge')?.getAttribute('aria-label')).toBe('Cost 65k');
+
 		for (const [label, value] of [
-			['Cost', '65k'],
 			['MA', '6'],
 			['ST', '3'],
 			['AG', '4+'],
@@ -113,9 +115,10 @@ describe('RosterTable player cards', () => {
 			await expect.element(card.getByText(value, { exact: true })).toBeInTheDocument();
 		}
 
-		for (const label of ['Prim:', 'Sec:', 'Skills:']) {
-			await expect.element(card.getByText(label, { exact: true })).toBeInTheDocument();
-		}
+		const groups = card.element().querySelector('.player-group');
+		expect(groups?.textContent).toContain('Pri');
+		expect(groups?.textContent).toContain('Sec');
+		expect(groups?.textContent).toContain('Horns');
 	});
 
 	it('increments and decrements counts and disables decrement at zero', async () => {
@@ -123,15 +126,15 @@ describe('RosterTable player cards', () => {
 		const card = getPlayerCard(0);
 		const decrement = card.getByRole('button', { name: 'Decrease Long Player count' });
 		const increment = card.getByRole('button', { name: 'Increase Long Player count' });
-		const count = card.locator('.count-value');
+		const count = card.element().querySelector('.count-value')!;
 
 		expect(decrement.element().hasAttribute('disabled')).toBe(true);
-		getButton(increment).click();
-		await expect.element(count).toHaveAttribute('aria-label', '1 of 4');
+		await userEvent.click(getButton(increment));
+		expect(count.getAttribute('aria-label')).toBe('1 of 4');
 		expect(decrement.element().hasAttribute('disabled')).toBe(false);
 
-		getButton(decrement).click();
-		await expect.element(count).toHaveAttribute('aria-label', '0 of 4');
+		await userEvent.click(getButton(decrement));
+		expect(count.getAttribute('aria-label')).toBe('0 of 4');
 		expect(decrement.element().hasAttribute('disabled')).toBe(true);
 	});
 
