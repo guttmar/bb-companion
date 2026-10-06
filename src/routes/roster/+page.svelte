@@ -11,6 +11,7 @@
   import { formatCost, formatStat } from "$lib/tools/format";
   import type { Skill } from "$lib/data/skills/bb2025";
   import { normalizeSkillName, resolveSkill } from "$lib/tools/skills";
+  import { getRulesetConfig } from "$lib/domain/rulesets";
   import {
     treasuryLeft,
     currentRoster,
@@ -24,6 +25,7 @@
 
   let teamName = "";
   let saveMessage = "";
+  let saveDialog: HTMLDialogElement;
   let expandedStarId: string | null = null;
   let openSkill: Skill | null = null;
   // currently-editing saved team id (undefined when creating new)
@@ -37,7 +39,11 @@
   $: startingTreasuryInput = Math.floor($startingTreasury / 1000);
 
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
-  $: totalStars = Object.values($currentRoster.stars ?? {}).reduce((sum, count) => sum + count, 0);
+  $: totalStars = Object.entries($currentRoster.stars ?? {}).reduce((sum, [name, count]) => {
+    const star = $selectedStarPlayers.find((candidate) => candidate.name === name);
+    return sum + count * (star?.name.toLowerCase().includes(" and ") ? 2 : 1);
+  }, 0);
+  $: maxPlayers = getRulesetConfig($settings.ruleset, $settings.mode).maxPlayers;
   $: treasurySpent = $startingTreasury - $treasuryLeft;
 
   // derive an array of team ids sorted by the team's display name so the
@@ -133,6 +139,11 @@
     }
   });
 
+  function openSaveDialog() {
+    saveMessage = "";
+    saveDialog.showModal();
+  }
+
   function handleSave() {
     const payload = {
       name: teamName.trim() || undefined,
@@ -148,14 +159,12 @@
       updateTeam(editingId, payload);
       saveMessage = "Team updated.";
     } else {
-      const id = saveTeam(payload);
+      saveTeam(payload);
       saveMessage = "Team saved.";
     }
 
-    // if we just saved (or updated) clear the name field but keep editingId
-    // so the user can continue to tweak without losing context.  if the
-    // roster template changes the reactive block below will reset editingId.
-    teamName = "";
+    if (!editingId) teamName = "";
+    saveDialog.close();
   }
 </script>
 
@@ -216,26 +225,6 @@
     color: #a3a3a3;
   }
 
-  .save-row {
-    margin-top: 0.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .save-row label {
-    margin-bottom: 0;
-  }
-
-  .team-name-input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    min-width: 12rem;
-  }
-
   .treasury-input {
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -265,12 +254,6 @@
     color: inherit; /* match surrounding text color */
   }
 
-  :global(.dark) .team-name-input {
-    border-color: #525252;
-    background: #262626;
-    color: #e5e5e5;
-  }
-
   :global(.dark) .treasury-input {
     border-color: #525252;
     background: #262626;
@@ -283,8 +266,12 @@
   }
 
   .save-btn {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
     background-color: #3d8c40;
     color: white;
     border: none;
@@ -294,6 +281,94 @@
 
   .save-btn:hover {
     background-color: #45a049;
+  }
+
+  .save-btn :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .team-select {
+    width: max-content;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .save-dialog {
+    width: min(24rem, calc(100vw - 2rem));
+    padding: 1.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
+    background: #fff;
+    color: #111827;
+    box-shadow: 0 16px 40px rgb(0 0 0 / 0.25);
+  }
+
+  .save-dialog::backdrop {
+    background: rgb(0 0 0 / 0.55);
+  }
+
+  .save-dialog h2 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+  }
+
+  .save-dialog label {
+    margin-bottom: 0.5rem;
+  }
+
+  .save-dialog input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    padding: 0.625rem;
+    border: 1px solid #9ca3af;
+    border-radius: 0.375rem;
+    background: #fff;
+    color: #111827;
+    font: inherit;
+  }
+
+  .save-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  .save-dialog-actions button {
+    min-height: 2.5rem;
+    padding: 0.5rem 0.875rem;
+    border: 0;
+    border-radius: 0.375rem;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .save-dialog-actions .save-btn {
+    width: auto;
+    height: auto;
+  }
+
+  .save-dialog-cancel {
+    background: #e5e7eb;
+    color: #111827;
+  }
+
+  :global(.dark) .save-dialog {
+    border-color: #404040;
+    background: #171717;
+    color: #e5e5e5;
+  }
+
+  :global(.dark) .save-dialog input {
+    border-color: #525252;
+    background: #262626;
+    color: #e5e5e5;
+  }
+
+  :global(.dark) .save-dialog-cancel {
+    background: #404040;
+    color: #e5e5e5;
   }
 
   :global(.dark) .save-btn {
@@ -353,6 +428,7 @@
 
   .summary-bar .total-summary {
     font-weight: bold;
+    white-space: nowrap;
   }
 
   .summary-separator {
@@ -612,14 +688,27 @@
 <main>
   <div class="fixed-header">
     <div class="summary-bar">
-      <button type="button" class="save-btn" on:click={handleSave}>
-        {editingId ? 'Update team' : 'Save team'}
+      <button
+        type="button"
+        class="save-btn"
+        aria-label={editingId ? 'Update team' : 'Save team'}
+        title={editingId ? 'Update team' : 'Save team'}
+        on:click={openSaveDialog}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 3.75h13l3.25 3.25v13H3.75v-16.25z" />
+          <path d="M7 3.75v6h10v-6M7 20v-7h10v7M9 16h6" />
+        </svg>
       </button>
-      <p class="total-summary">Players: {totalPlayers}</p>
-      {#if totalStars > 0}
-        <span class="summary-separator" aria-hidden="true">&middot;</span>
-        <p class="total-summary">{totalStars} stars</p>
-      {/if}
+      <p class="total-summary">
+        {totalPlayers}{totalStars > 0 ? ` (+ ${totalStars})` : ''} / {maxPlayers}
+      </p>
+      <label class="sr-only" for="team-select">Choose a team</label>
+      <select id="team-select" class="team-select" bind:value={$selectedTeamId}>
+        {#each teamIds as teamId (teamId)}
+          <option value={teamId}>{$teams[teamId].name}</option>
+        {/each}
+      </select>
       <p class="treasury-summary">
         <span class="treasury-input-container">
           <input
@@ -640,28 +729,6 @@
       </p>
     </div>
 
-    <details class="roster-section">
-      <summary>Choose team and name</summary>
-      <div class="roster-section-content">
-        <label for="team-select">Choose a team:</label>
-        <select id="team-select" bind:value={$selectedTeamId}>
-          {#each teamIds as teamId}
-            <option value={teamId}>{$teams[teamId].name}</option>
-          {/each}
-        </select>
-
-        <div class="save-row">
-          <label for="team-name">Team name (optional)</label>
-          <input
-            id="team-name"
-            type="text"
-            placeholder="My team"
-            bind:value={teamName}
-            class="team-name-input"
-          />
-        </div>
-      </div>
-    </details>
     {#if saveMessage}
       <p class="save-message">{saveMessage} <a href="{base + '/saved-teams'}">View saved teams</a></p>
     {/if}
@@ -751,5 +818,17 @@
     </details>
   </div>
 </main>
+
+<dialog class="save-dialog" bind:this={saveDialog} aria-labelledby="save-dialog-title">
+  <form on:submit|preventDefault={handleSave}>
+    <h2 id="save-dialog-title">{editingId ? 'Update team' : 'Save team'}</h2>
+    <label for="team-name">Team name (optional)</label>
+    <input id="team-name" type="text" placeholder="My team" bind:value={teamName} />
+    <div class="save-dialog-actions">
+      <button type="button" class="save-dialog-cancel" on:click={() => saveDialog.close()}>Cancel</button>
+      <button type="submit" class="save-btn">{editingId ? 'Update team' : 'Save team'}</button>
+    </div>
+  </form>
+</dialog>
 
 <SkillDetailsModal skill={openSkill} on:close={closeSkill} />

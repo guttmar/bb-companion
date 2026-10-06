@@ -6,6 +6,7 @@ import Page from './+page.svelte';
 import { formatCost, formatStat } from '$lib/tools/format';
 import { savedTeams, saveTeam } from '$lib/stores/savedTeams';
 import { currentRoster, selectedStarPlayers, selectedTeamId, startingTreasury } from '$lib/stores/roster';
+import { settings } from '$lib/stores/settings';
 
 vi.mock('$app/stores', async () => {
 	const { writable } = await import('svelte/store');
@@ -41,15 +42,21 @@ describe('roster page save behavior', () => {
 		savedTeams.set([]);
 		currentRoster.set({ players: {}, stars: {}, reRolls: 0, apothecary: 0 });
 		selectedTeamId.set('amazon');
+		settings.update((value) => ({ ...value, ruleset: '2025', mode: '11s' }));
 	});
 
-	it('opens with Save team button and clicking creates a new record', async () => {
+	it('opens the save dialog and saves a new record with the entered name', async () => {
 		render(Page);
 		const saveBtn = page.getByRole('button', { name: /save team/i });
 		await expect.element(saveBtn).toBeInTheDocument();
-		(saveBtn.element() as HTMLButtonElement).click();
+		await saveBtn.click();
+		const dialog = page.getByRole('dialog');
+		await expect.element(dialog).toBeInTheDocument();
+		await dialog.getByPlaceholder('My team').fill('New team');
+		await dialog.getByRole('button', { name: 'Save team', exact: true }).click();
 		const list = get(savedTeams);
 		expect(list).toHaveLength(1);
+		expect(list[0].name).toBe('New team');
 	});
 
 	it('button shows "Update team" when editingId is provided and clicking updates', async () => {
@@ -60,16 +67,30 @@ describe('roster page save behavior', () => {
 		const updateBtn = page.getByRole('button', { name: /update team/i });
 		await expect.element(updateBtn).toBeInTheDocument();
 
-		// change the name input
-		await page.getByText('Choose team and name', { exact: true }).click();
-		const nameInput = page.getByPlaceholder('My team');
-		await nameInput.fill('bar');
 		await updateBtn.click();
+		const dialog = page.getByRole('dialog');
+		const nameInput = dialog.getByPlaceholder('My team');
+		await nameInput.fill('bar');
+		await dialog.getByRole('button', { name: 'Update team', exact: true }).click();
 
 		const list = get(savedTeams);
 		expect(list).toHaveLength(1);
 		expect(list[0].id).toBe(id);
 		expect(list[0].name).toBe('bar');
+	});
+
+	it('shows the player capacity for each game mode', async () => {
+		render(Page);
+		const summary = () =>
+			page
+				.getByRole('main')
+				.element()
+				.querySelector('.summary-bar .total-summary')
+				?.textContent?.replace(/\s+/g, ' ')
+				.trim();
+		expect(summary()).toBe('0 / 16');
+		settings.update((value) => ({ ...value, mode: '7s' }));
+		await expect.element(page.getByText('0 / 11', { exact: true })).toBeInTheDocument();
 	});
 
 	it('sorts the team select options alphabetically by name', async () => {
@@ -94,13 +115,13 @@ describe('roster page save behavior', () => {
 		expect(summary?.textContent?.replace(/\s+/g, ' ').trim()).toBe('k - 0k = 1234k');
 	});
 
-	it('renders labeled player cards instead of roster table headings', async () => {
+	it('renders player stat cards instead of a roster table', async () => {
 		render(Page);
 		const playerList = page.getByRole('list', { name: 'Available players' });
 		const firstCard = playerList.getByRole('listitem').first();
 
 		await expect.element(firstCard).toBeInTheDocument();
-		for (const label of ['Cost', 'MA', 'ST', 'AG', 'PA', 'AV', 'Prim:', 'Sec:', 'Skills:']) {
+		for (const label of ['MA', 'ST', 'AG', 'PA', 'AV']) {
 			await expect.element(firstCard.getByText(label, { exact: true })).toBeInTheDocument();
 		}
 		expect(playerList.element().querySelector('table')).toBeNull();
@@ -140,6 +161,12 @@ describe('roster page save behavior', () => {
 		(selectionSwitch.element() as HTMLInputElement).click();
 		expect(get(currentRoster).stars[star.name]).toBe(0);
 		expect((selectionSwitch.element() as HTMLInputElement).checked).toBe(false);
+
+		const pairedStar = get(selectedStarPlayers).find((candidate) => candidate.name.toLowerCase().includes(' and '))!;
+		const pairedStarSwitch = page.getByRole('switch', { name: `Include ${pairedStar.name}` });
+		(pairedStarSwitch.element() as HTMLInputElement).click();
+		expect(get(currentRoster).stars[pairedStar.name]).toBe(1);
+		await expect.element(page.getByText('0 (+ 2) / 16', { exact: true })).toBeInTheDocument();
 
 		const expandButton = card.getByRole('button', { name: star.name });
 		await expandButton.click();
