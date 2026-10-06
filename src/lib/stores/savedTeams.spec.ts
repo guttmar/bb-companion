@@ -5,8 +5,11 @@ import {
   saveTeam,
   updateTeam,
   deleteTeam,
+  ensureTeamShare,
+  importSharedTeam,
   type SavedTeam
 } from './savedTeams';
+import type { SharedTeamPayload } from '$lib/tools/teamSharing';
 
 // helpers for constructing minimal payloads
 function makePayload(name?: string): Omit<SavedTeam, 'id'> {
@@ -56,5 +59,47 @@ describe('savedTeams store', () => {
     updateTeam('not-a-real-id', { name: 'bar' });
     const after = get(savedTeams);
     expect(after).toEqual(before);
+  });
+
+  it('keeps a share identity until the saved team data changes', () => {
+    const id = saveTeam({ ...makePayload('shared'), ruleset: '2025', mode: '11s' });
+    const firstShare = ensureTeamShare(id, '2025', '11s');
+    const repeatedShare = ensureTeamShare(id, '2025', '11s');
+
+    expect(repeatedShare?.shareId).toBe(firstShare?.shareId);
+    updateTeam(id, { roster: { players: {}, stars: {}, reRolls: 0, apothecary: 0 } });
+    expect(ensureTeamShare(id, '2025', '11s')?.shareId).toBe(firstShare?.shareId);
+    updateTeam(id, { name: 'edited' });
+    expect(ensureTeamShare(id, '2025', '11s')?.shareId).not.toBe(firstShare?.shareId);
+  });
+
+  it('imports each shared identity once, and permits it again after deletion', () => {
+    const shared: SharedTeamPayload = {
+      version: 1,
+      shareId: 'source-share-1',
+      ruleset: '2025',
+      mode: '11s',
+      team: {
+        name: 'Imported',
+        selectedTeamId: 'human',
+        roster: { players: { catcher: 2 }, stars: { 'Akhorne the Squirrel': 1 }, reRolls: 1, apothecary: 0 },
+        startingTreasury: 1000000
+      }
+    };
+
+    expect(importSharedTeam(shared)).toBe('added');
+    expect(importSharedTeam(shared)).toBe('duplicate');
+    expect(get(savedTeams)).toHaveLength(1);
+    expect(get(savedTeams)[0]).toMatchObject({
+      shareId: 'source-share-1',
+      name: 'Imported',
+      ruleset: '2025',
+      mode: '11s',
+      roster: shared.team.roster
+    });
+
+    deleteTeam(get(savedTeams)[0].id);
+    expect(importSharedTeam(shared)).toBe('added');
+    expect(get(savedTeams)).toHaveLength(1);
   });
 });

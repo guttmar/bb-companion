@@ -133,7 +133,9 @@
       name: teamName.trim() || undefined,
       selectedTeamId: $selectedTeamId,
       roster: { ...$currentRoster, stars: { ...$currentRoster.stars } },
-      startingTreasury: $startingTreasury
+      startingTreasury: $startingTreasury,
+      ruleset: $settings.ruleset,
+      mode: $settings.mode
     };
 
     if (editingId) {
