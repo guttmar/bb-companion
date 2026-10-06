@@ -5,7 +5,7 @@ import { get } from 'svelte/store';
 import Page from './+page.svelte';
 import { formatCost, formatStat } from '$lib/tools/format';
 import { savedTeams, saveTeam } from '$lib/stores/savedTeams';
-import { currentRoster, selectedStarPlayers, selectedTeamId } from '$lib/stores/roster';
+import { currentRoster, selectedStarPlayers, selectedTeamId, startingTreasury } from '$lib/stores/roster';
 
 vi.mock('$app/stores', async () => {
 	const { writable } = await import('svelte/store');
@@ -61,7 +61,7 @@ describe('roster page save behavior', () => {
 		await expect.element(updateBtn).toBeInTheDocument();
 
 		// change the name input
-		await page.getByText('Choose team, name, and starting treasury', { exact: true }).click();
+		await page.getByText('Choose team and name', { exact: true }).click();
 		const nameInput = page.getByPlaceholder('My team');
 		await nameInput.fill('bar');
 		await updateBtn.click();
@@ -82,6 +82,16 @@ describe('roster page save behavior', () => {
 		// verify sorted order
 		const sorted = [...options].sort((a, b) => a.localeCompare(b));
 		expect(options).toEqual(sorted);
+	});
+
+	it('shows starting, spent, and remaining treasury in an equation', async () => {
+		render(Page);
+		await expect.element(page.getByText('Left:', { exact: true })).not.toBeInTheDocument();
+		const input = page.getByRole('spinbutton', { name: 'Starting treasury in thousands' });
+		await input.fill('1234');
+		expect(get(startingTreasury)).toBe(1234000);
+		const summary = input.element().closest('.treasury-summary');
+		expect(summary?.textContent?.replace(/\s+/g, ' ').trim()).toBe('k - 0k = 1234k');
 	});
 
 	it('renders labeled player cards instead of roster table headings', async () => {

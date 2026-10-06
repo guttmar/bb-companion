@@ -38,6 +38,7 @@
 
   $: totalPlayers = Object.values($currentRoster.players).reduce((sum, count) => sum + count, 0);
   $: totalStars = Object.values($currentRoster.stars ?? {}).reduce((sum, count) => sum + count, 0);
+  $: treasurySpent = $startingTreasury - $treasuryLeft;
 
   // derive an array of team ids sorted by the team's display name so the
   // dropdown is alphabetical.  We can't rely on the raw object order since
@@ -67,6 +68,10 @@
     if (!isNaN(num)) {
       startingTreasury.set(num * 1000);
     }
+  }
+
+  function formatTreasury(amount: number) {
+    return `${amount / 1000}k`;
   }
 
   function toggleStar(starId: string) {
@@ -232,11 +237,21 @@
   }
 
   .treasury-input {
-    padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 10rem;
+    width: 6ch;
+    padding: 0.5rem 0.25rem;
+    background: #fff;
+    color: #111827;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .treasury-input::-webkit-inner-spin-button,
+  .treasury-input::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
   }
 
   .treasury-input-container {
@@ -251,6 +266,12 @@
   }
 
   :global(.dark) .team-name-input {
+    border-color: #525252;
+    background: #262626;
+    color: #e5e5e5;
+  }
+
+  :global(.dark) .treasury-input {
     border-color: #525252;
     background: #262626;
     color: #e5e5e5;
@@ -583,7 +604,7 @@
   .scrollable-content {
     flex: 1;
     overflow-y: auto;
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 0 1rem;
   }
 
 </style>
@@ -594,19 +615,33 @@
       <button type="button" class="save-btn" on:click={handleSave}>
         {editingId ? 'Update team' : 'Save team'}
       </button>
-      <p class="total-summary">Total players: {totalPlayers}</p>
+      <p class="total-summary">Players: {totalPlayers}</p>
       {#if totalStars > 0}
         <span class="summary-separator" aria-hidden="true">&middot;</span>
         <p class="total-summary">{totalStars} stars</p>
       {/if}
       <p class="treasury-summary">
-        <span>Treasury left:</span>
-        <span class="treasury-value">{formatCost($treasuryLeft)}</span>
+        <span class="treasury-input-container">
+          <input
+            id="starting-treasury"
+            type="number"
+            min="0"
+            class="treasury-input"
+            value={startingTreasuryInput}
+            on:input={handleStartingTreasuryChange}
+            aria-label="Starting treasury in thousands"
+          />
+          <span>k</span>
+        </span>
+        <span class="summary-separator">-</span>
+        <span class="treasury-value">{formatTreasury(treasurySpent)}</span>
+        <span class="summary-separator">=</span>
+        <span class="treasury-value">{formatTreasury($treasuryLeft)}</span>
       </p>
     </div>
 
     <details class="roster-section">
-      <summary>Choose team, name, and starting treasury</summary>
+      <summary>Choose team and name</summary>
       <div class="roster-section-content">
         <label for="team-select">Choose a team:</label>
         <select id="team-select" bind:value={$selectedTeamId}>
@@ -624,19 +659,6 @@
             bind:value={teamName}
             class="team-name-input"
           />
-          <label for="starting-treasury">Starting treasury</label>
-          <div class="treasury-input-container">
-            <input
-              id="starting-treasury"
-              type="number"
-              min="0"
-              class="treasury-input"
-              value={startingTreasuryInput}
-              on:input={handleStartingTreasuryChange}
-              placeholder="1000"
-            />
-            <span>k</span>
-          </div>
         </div>
       </div>
     </details>
