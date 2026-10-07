@@ -25,7 +25,7 @@ function makeTeam(): SavedTeam {
       apothecary: 1,
       individualPlayers: {
         [template.players[0].id]: [
-          { id: 'player-one', number: 4, name: 'MVP', skills: ['block'] },
+          { id: 'player-one', number: 4, name: 'MVP', veteran: true, skills: ['block'] },
           { id: 'player-two', number: 12, numberCustomized: true, skills: [] }
         ]
       },

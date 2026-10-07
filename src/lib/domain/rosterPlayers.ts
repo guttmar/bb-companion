@@ -3,6 +3,7 @@ export type IndividualPlayer = {
 	name?: string;
 	number: number;
 	numberCustomized?: boolean;
+	veteran?: boolean;
 	skills: string[];
 };
 
@@ -38,7 +39,7 @@ export function syncIndividualPlayers(
 }
 
 export function isCustomizedPlayer(player: IndividualPlayer): boolean {
-	return Boolean(player.name?.trim() || player.numberCustomized || player.skills.length);
+	return Boolean(player.name?.trim() || player.numberCustomized || player.veteran || player.skills.length);
 }
 
 function createId(existing: Set<string>): string {

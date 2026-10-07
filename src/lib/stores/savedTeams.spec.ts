@@ -51,13 +51,13 @@ describe('savedTeams store', () => {
         players: { blitzer: 1 },
         reRolls: 0,
         apothecary: 0,
-        individualPlayers: { blitzer: [{ id: 'player-1', number: 0, name: 'Ace', skills: ['block', 'dodge'] }] },
+        individualPlayers: { blitzer: [{ id: 'player-1', number: 0, name: 'Ace', veteran: true, skills: ['block', 'dodge'] }] },
         tiersByMode: { '11s': 1, '7s': 2 }
       }
     });
 
     expect(get(savedTeams)[0].roster.individualPlayers?.blitzer[0]).toEqual({
-      id: 'player-1', number: 0, name: 'Ace', skills: ['block', 'dodge']
+      id: 'player-1', number: 0, name: 'Ace', veteran: true, skills: ['block', 'dodge']
     });
     expect(get(savedTeams)[0].roster.tiersByMode).toEqual({ '11s': 1, '7s': 2 });
   });

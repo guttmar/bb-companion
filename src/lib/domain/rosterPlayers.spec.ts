@@ -22,5 +22,6 @@ describe('individual roster players', () => {
 		expect(isCustomizedPlayer({ id: 'named', number: 2, name: 'Named', skills: [] })).toBe(true);
 		expect(isCustomizedPlayer({ id: 'numbered', number: 0, numberCustomized: true, skills: [] })).toBe(true);
 		expect(isCustomizedPlayer({ id: 'skilled', number: 3, skills: ['block'] })).toBe(true);
+		expect(isCustomizedPlayer({ id: 'veteran', number: 4, veteran: true, skills: [] })).toBe(true);
 	});
 });

@@ -3,6 +3,7 @@
 	import { bb2025Skills, type Skill } from '$lib/data/skills/bb2025';
 	import { createIndividualPlayer, isCustomizedPlayer, syncIndividualPlayers, type IndividualPlayer } from '$lib/domain/rosterPlayers';
 	import { getSkillChoices } from '$lib/domain/matchedPlay';
+	import { settings } from '$lib/stores/settings';
 	import DismissRegular from 'fluentui-icons-svelte/DismissRegular.svelte';
 	import { formatCost, formatStat } from '$lib/tools/format';
 
@@ -33,6 +34,15 @@
 				type: 'passive',
 				description: 'No description available.'
 			} as Skill);
+	}
+
+	function showVeteranSkill() {
+		openSkill = {
+			id: 'veteran',
+			name: 'Veteran',
+			type: 'passive',
+			description: 'Once per game, when your Veteran fails to pick up the ball, catch the ball, make a Pass Action or would be Knocked Down by their own Block Action, they may re-roll the dice.'
+		} as Skill;
 	}
 
 	function closeSkill() {
@@ -118,6 +128,7 @@
 		{@const secondaryItems = p.secondary ?? []}
 		{@const skillItems = p.skills ?? []}
 		{@const individualPlayers = $currentRoster.individualPlayers?.[p.id] ?? []}
+		{@const veteranAvailable = $settings.ruleset === '2025' && $settings.mode === '7s'}
 		<li class="roster-card">
 			<div class="player-identity">
 				<div class="player-name">{p.name}</div>
@@ -233,7 +244,27 @@
 										</span>
 									{/if}
 								{/each}
+								{#if veteranAvailable && player.veteran}
+									<span class="veteran-ma-badge">MA {p.ma - 1}</span>
+									<button type="button" class="skill-btn" on:click={showVeteranSkill}>Veteran</button>
+								{/if}
 							</div>
+							{#if veteranAvailable}
+								<label class="veteran-switch">
+									<input
+										type="checkbox"
+										role="switch"
+										checked={Boolean(player.veteran)}
+										aria-label={`Make ${p.name} #${player.number} a Veteran`}
+										on:change={(event) => {
+											const checked = (event.currentTarget as HTMLInputElement).checked;
+											updatePlayer(p.id, player.id, (current) => ({ ...current, veteran: checked || undefined }));
+										}}
+									/>
+									<span class="veteran-switch-track" aria-hidden="true"></span>
+									<span class="veteran-switch-label">Veteran</span>
+								</label>
+							{/if}
 							{#if choices.length}
 								<div class="skill-picker">
 									<label for={`skill-${player.id}`}>Add skill</label>
@@ -260,6 +291,10 @@
 								{@const assigned = bb2025Skills.flatMap((category) => category.skills).find((skill) => skill.id === skillId)}
 								{#if assigned}<button type="button" class="skill-btn" on:click={() => showSkill(assigned.name)}>{assigned.name}</button>{/if}
 							{/each}
+							{#if veteranAvailable && player.veteran}
+								<span class="veteran-ma-badge">MA {p.ma - 1}</span>
+								<button type="button" class="skill-btn" on:click={showVeteranSkill}>Veteran</button>
+							{/if}
 						</div>
 					{/each}
 				</div>
@@ -581,6 +616,90 @@
 
 	.assigned-skills {
 		grid-column: 1 / -1;
+	}
+
+	.veteran-switch {
+		position: relative;
+		display: inline-flex !important;
+		grid-column: 1 / -1;
+		align-items: center;
+		justify-self: start;
+		gap: 0.6rem !important;
+		cursor: pointer;
+	}
+
+	.veteran-switch input {
+		position: absolute;
+		left: 0;
+		width: 2.75rem;
+		min-width: 0;
+		height: 1.75rem;
+		min-height: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-radius: 9999px;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	.veteran-switch-track {
+		position: relative;
+		width: 2.75rem;
+		height: 1.5rem;
+		flex: 0 0 auto;
+		border-radius: 9999px;
+		background: #9ca3af;
+		pointer-events: none;
+		transition: background-color 120ms ease;
+	}
+
+	.veteran-switch-track::after {
+		position: absolute;
+		top: 0.125rem;
+		left: 0.125rem;
+		width: 1.25rem;
+		height: 1.25rem;
+		border-radius: 50%;
+		background: #fff;
+		content: '';
+		transition: transform 120ms ease;
+	}
+
+	.veteran-switch input:checked + .veteran-switch-track {
+		background: #15803d;
+	}
+
+	.veteran-switch input:checked + .veteran-switch-track::after {
+		transform: translateX(1.25rem);
+	}
+
+	.veteran-switch input:focus-visible + .veteran-switch-track {
+		outline: 3px solid #2563eb;
+		outline-offset: 3px;
+	}
+
+	.veteran-switch-label {
+		font-size: 0.8rem;
+	}
+
+	.veteran-ma-badge {
+		display: inline-flex;
+		min-height: 1.8rem;
+		align-items: center;
+		padding: 0.25rem 0.6rem;
+		border: 1px solid #93c5fd;
+		border-radius: 9999px;
+		background: #dbeafe;
+		color: #172554;
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+
+	:global(.dark) .veteran-ma-badge {
+		border-color: #1e3a8a;
+		background: #172554;
+		color: #fff;
 	}
 
 	.remove-skill {

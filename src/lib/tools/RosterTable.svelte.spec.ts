@@ -4,6 +4,7 @@ import { render } from 'vitest-browser-svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import type { Team, PlayerType } from '$lib/data/teams/types';
 import { currentRoster, selectedTeam } from '$lib/stores/roster';
+import { settings } from '$lib/stores/settings';
 import RosterTable from './RosterTable.svelte';
 
 vi.mock('$lib/stores/roster', async (importOriginal) => {
@@ -88,6 +89,7 @@ function getButton(locator: ReturnType<typeof page.getByRole>): HTMLButtonElemen
 describe('RosterTable player cards', () => {
 	beforeEach(() => {
 		selectedTeamStore.set(testTeam);
+		settings.update((value) => ({ ...value, ruleset: '2025', mode: '11s' }));
 		currentRoster.set({ players: {}, stars: {}, reRolls: 0, apothecary: 0 });
 	});
 
@@ -214,6 +216,46 @@ describe('RosterTable player cards', () => {
 		});
 		await expect.element(page.getByRole('button', { name: 'Remove Strip Ball from Eligible Player #0' })).toBeInTheDocument();
 		await expect.element(page.getByRole('button', { name: 'Remove Block from Eligible Player #0' })).not.toBeInTheDocument();
+	});
+
+	it('marks a 7s player as a Veteran and shows the movement and skill badges', async () => {
+		settings.update((value) => ({ ...value, mode: '7s' }));
+		selectedTeamStore.set({ ...testTeam, players: [makePlayer('veteran-player', 'Veteran Player', { ma: 6 })] });
+		currentRoster.set({
+			players: { 'veteran-player': 1 },
+			stars: {},
+			reRolls: 0,
+			apothecary: 0,
+			individualPlayers: { 'veteran-player': [{ id: 'veteran-id', number: 12, skills: [] }] }
+		});
+		render(RosterTable, { editMode: true });
+
+		const toggle = page.getByRole('switch', { name: 'Make Veteran Player #12 a Veteran' });
+		expect((toggle.element() as HTMLInputElement).checked).toBe(false);
+		await userEvent.click(toggle.element());
+		expect(get(currentRoster).individualPlayers?.['veteran-player'][0].veteran).toBe(true);
+		expect((toggle.element() as HTMLInputElement).checked).toBe(true);
+		await expect.element(page.getByText('MA 5', { exact: true })).toBeInTheDocument();
+
+		const veteranBadge = page.getByRole('button', { name: 'Veteran', exact: true });
+		await expect.element(veteranBadge).toBeInTheDocument();
+		await userEvent.click(veteranBadge.element());
+		const dialog = page.getByRole('dialog', { name: 'Skill details' });
+		await expect.element(dialog.getByText('Veteran', { exact: true })).toBeInTheDocument();
+		await expect.element(dialog.getByText('Once per game, when your Veteran fails to pick up the ball, catch the ball, make a Pass Action or would be Knocked Down by their own Block Action, they may re-roll the dice.', { exact: true })).toBeInTheDocument();
+	});
+
+	it('does not offer Veteran in 11s mode', async () => {
+		selectedTeamStore.set({ ...testTeam, players: [makePlayer('player', 'Player')] });
+		currentRoster.set({
+			players: { player: 1 },
+			stars: {},
+			reRolls: 0,
+			apothecary: 0,
+			individualPlayers: { player: [{ id: 'player-id', number: 1, skills: [] }] }
+		});
+		render(RosterTable, { editMode: true });
+		await expect.element(page.getByRole('switch', { name: /make player #1 a veteran/i })).not.toBeInTheDocument();
 	});
 
 	it('keeps access badges combined and displays every skill without a more toggle', async () => {

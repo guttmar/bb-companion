@@ -191,6 +191,7 @@ function isIndividualPlayers(value: unknown): boolean {
         (player.number as number) <= 99 &&
         (player.name === undefined || typeof player.name === "string") &&
         (player.numberCustomized === undefined || typeof player.numberCustomized === "boolean") &&
+        (player.veteran === undefined || typeof player.veteran === "boolean") &&
         Array.isArray(player.skills) &&
         player.skills.every((skill) => typeof skill === "string") &&
         new Set(player.skills).size === player.skills.length

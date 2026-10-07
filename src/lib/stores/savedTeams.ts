@@ -61,6 +61,7 @@ function isSavedTeamRoster(v: unknown): v is SavedTeamRoster {
           (details.number as number) > 99 ||
           (details.name !== undefined && typeof details.name !== "string") ||
           (details.numberCustomized !== undefined && typeof details.numberCustomized !== "boolean") ||
+          (details.veteran !== undefined && typeof details.veteran !== "boolean") ||
           !Array.isArray(details.skills) ||
           !details.skills.every((skill) => typeof skill === "string") ||
           new Set(details.skills).size !== details.skills.length
