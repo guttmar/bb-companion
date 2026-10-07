@@ -183,7 +183,8 @@
   main {
     max-width: 800px;
     margin: 0 auto;
-    height: 100vh;
+    height: calc(100vh - 61px);
+    height: calc(100dvh - 61px);
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -392,8 +393,16 @@
   }
 
   .fixed-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     flex-shrink: 0;
     padding: 1rem;
+    background: #fff;
+  }
+
+  :global(.dark) .fixed-header {
+    background: #171717;
   }
 
   .summary-bar {

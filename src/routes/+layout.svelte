@@ -39,9 +39,9 @@
 		{@html pwaInfo.webManifest.linkTag}
 	{/if}
 </svelte:head>
-<header class="sticky top-0 z-40">
+<header class="sticky top-0 z-40 h-[61px]">
 	<TabBar />
 </header>
-<main class="flow-root min-h-screen bg-gray-50 dark:bg-gray-950">
+<main class="flow-root min-h-[calc(100dvh-61px)] bg-gray-50 dark:bg-gray-950">
 	{@render children()}
 </main>
