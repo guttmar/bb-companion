@@ -3,6 +3,8 @@ import { getTeams } from "$lib/data/teams";
 import { getDefaultStartingTreasury, getRulesetConfig } from "$lib/domain/rulesets";
 import { settings } from "$lib/stores/settings";
 import { getStarPlayers, type StarPlayer } from "$lib/data/stars";
+import type { IndividualPlayers } from "$lib/domain/rosterPlayers";
+import type { TeamTier } from "$lib/domain/matchedPlay";
 
 export const selectedTeamId = writable<string>("amazon");
 
@@ -26,6 +28,8 @@ export const currentRoster = writable<{
   stars: Record<string, number>;
   reRolls: number;
   apothecary: number;
+  individualPlayers?: IndividualPlayers;
+  tiersByMode?: Partial<Record<'11s' | '7s', TeamTier>>;
 }>({
   players: {},
   stars: {},

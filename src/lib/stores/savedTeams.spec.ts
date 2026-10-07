@@ -36,12 +36,30 @@ describe('savedTeams store', () => {
   });
 
   it('preserves selected star players when saving a roster', () => {
-    const id = saveTeam({
+    saveTeam({
       ...makePayload('stars'),
       roster: { players: {}, stars: { 'Akhorne the Squirrel': 1 }, reRolls: 0, apothecary: 0 }
     });
 
     expect(get(savedTeams)[0].roster.stars).toEqual({ 'Akhorne the Squirrel': 1 });
+  });
+
+  it('preserves individual player records and both mode tiers', () => {
+    saveTeam({
+      ...makePayload('customized'),
+      roster: {
+        players: { blitzer: 1 },
+        reRolls: 0,
+        apothecary: 0,
+        individualPlayers: { blitzer: [{ id: 'player-1', number: 0, name: 'Ace', skills: ['block', 'dodge'] }] },
+        tiersByMode: { '11s': 1, '7s': 2 }
+      }
+    });
+
+    expect(get(savedTeams)[0].roster.individualPlayers?.blitzer[0]).toEqual({
+      id: 'player-1', number: 0, name: 'Ace', skills: ['block', 'dodge']
+    });
+    expect(get(savedTeams)[0].roster.tiersByMode).toEqual({ '11s': 1, '7s': 2 });
   });
 
   it('updateTeam modifies an existing team without adding a second item', () => {
@@ -54,7 +72,7 @@ describe('savedTeams store', () => {
   });
 
   it('updateTeam with invalid id leaves store untouched', () => {
-    const id = saveTeam(makePayload('foo'));
+    saveTeam(makePayload('foo'));
     const before = get(savedTeams);
     updateTeam('not-a-real-id', { name: 'bar' });
     const after = get(savedTeams);
@@ -75,14 +93,21 @@ describe('savedTeams store', () => {
 
   it('imports each shared identity once, and permits it again after deletion', () => {
     const shared: SharedTeamPayload = {
-      version: 1,
+      version: 2,
       shareId: 'source-share-1',
       ruleset: '2025',
       mode: '11s',
       team: {
         name: 'Imported',
         selectedTeamId: 'human',
-        roster: { players: { catcher: 2 }, stars: { 'Akhorne the Squirrel': 1 }, reRolls: 1, apothecary: 0 },
+        roster: {
+          players: { catcher: 1 },
+          stars: { 'Akhorne the Squirrel': 1 },
+          reRolls: 1,
+          apothecary: 0,
+          individualPlayers: { catcher: [{ id: 'incoming-player', number: 19, skills: ['block'] }] },
+          tiersByMode: { '11s': 2 }
+        },
         startingTreasury: 1000000
       }
     };

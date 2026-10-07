@@ -1,27 +1,17 @@
 <script lang="ts">
-	import { SvelteSet } from 'svelte/reactivity';
 	import { selectedTeam, currentRoster } from '$lib/stores/roster';
 	import { bb2025Skills, type Skill } from '$lib/data/skills/bb2025';
+	import { createIndividualPlayer, isCustomizedPlayer, syncIndividualPlayers, type IndividualPlayer } from '$lib/domain/rosterPlayers';
+	import { getSkillChoices } from '$lib/domain/matchedPlay';
 	import DismissRegular from 'fluentui-icons-svelte/DismissRegular.svelte';
 	import { formatCost, formatStat } from '$lib/tools/format';
 
+	export let editMode = false;
 	let openSkill: Skill | null = null;
-	type ExpandableGroup = 'primary' | 'secondary' | 'skills';
-	let expandedGroups = new SvelteSet<string>();
-
-	function isGroupExpanded(playerId: string, group: ExpandableGroup): boolean {
-		return expandedGroups.has(`${playerId}:${group}`);
-	}
-
-	function toggleGroup(playerId: string, group: ExpandableGroup) {
-		const key = `${playerId}:${group}`;
-		if (expandedGroups.has(key)) {
-			expandedGroups.delete(key);
-		} else {
-			expandedGroups.add(key);
-		}
-	}
-
+	let removeDialog: HTMLDialogElement;
+	let removePositionId = '';
+	let removeChoice = '';
+	let pendingSkill: Record<string, string> = {};
 	function resolveSkill(name: string): Skill | null {
 		const n = (name ?? '').toLowerCase();
 		for (const cat of bb2025Skills) {
@@ -49,43 +39,93 @@
 		openSkill = null;
 	}
 
-	function getInlineItems(primaryItems: string[], secondaryItems: string[], skillItems: string[]) {
-		const primaryValue = primaryItems.filter(Boolean).join('');
-		const secondaryValue = secondaryItems.filter(Boolean).join('');
+	$: removalCandidates = $currentRoster.individualPlayers?.[removePositionId] ?? [];
+	$: customizedCandidates = removalCandidates.filter(isCustomizedPlayer);
+	$: uncustomizedCount = removalCandidates.length - customizedCandidates.length;
 
-		return [
-			...(primaryValue ? [{ kind: 'primary', value: primaryValue }] : []),
-			...(secondaryValue ? [{ kind: 'secondary', value: secondaryValue }] : []),
-			...skillItems.map((skill) => ({ kind: 'skill', value: skill }))
-		];
+	function addPlayer(positionId: string) {
+		currentRoster.update((roster) => {
+			const players = syncIndividualPlayers(roster.players, roster.individualPlayers);
+			players[positionId] = [...(players[positionId] ?? []), createIndividualPlayer(players)];
+			return { ...roster, players: { ...roster.players, [positionId]: (roster.players[positionId] ?? 0) + 1 }, individualPlayers: players };
+		});
 	}
+
+	function openRemoveDialog(positionId: string) {
+		const candidates = $currentRoster.individualPlayers?.[positionId] ?? [];
+		const choices = [
+			...candidates.filter(isCustomizedPlayer),
+			...(candidates.some((player) => !isCustomizedPlayer(player)) ? ['uncustomized'] : [])
+		];
+		if (choices.length === 1) {
+			removePositionId = positionId;
+			removeChoice = typeof choices[0] === 'string' ? choices[0] : choices[0].id;
+			removeSelectedPlayer();
+			return;
+		}
+		removePositionId = positionId;
+		const firstCustomized = candidates.find(isCustomizedPlayer);
+		removeChoice = firstCustomized?.id ?? (candidates.length ? 'uncustomized' : '');
+		removeDialog.showModal();
+	}
+
+	function removeSelectedPlayer() {
+		currentRoster.update((roster) => {
+			const candidates = [...(roster.individualPlayers?.[removePositionId] ?? [])];
+			const target = removeChoice === 'uncustomized'
+				? candidates.find((player) => !isCustomizedPlayer(player))
+				: candidates.find((player) => player.id === removeChoice);
+			if (!target) return roster;
+			const players = candidates.filter((player) => player.id !== target.id);
+			return {
+				...roster,
+				players: { ...roster.players, [removePositionId]: Math.max(0, (roster.players[removePositionId] ?? 0) - 1) },
+				individualPlayers: { ...roster.individualPlayers, [removePositionId]: players }
+			};
+		});
+		removeDialog.close();
+	}
+
+	function updatePlayer(positionId: string, playerId: string, update: (player: IndividualPlayer) => IndividualPlayer) {
+		currentRoster.update((roster) => {
+			const individualPlayers = syncIndividualPlayers(roster.players, roster.individualPlayers);
+			return {
+				...roster,
+				individualPlayers: {
+					...individualPlayers,
+					[positionId]: individualPlayers[positionId].map((player) => player.id === playerId ? update(player) : player)
+				}
+			};
+		});
+	}
+
+	function addSkill(positionId: string, player: IndividualPlayer) {
+		const skillId = pendingSkill[player.id];
+		if (!skillId || player.skills.includes(skillId)) return;
+		updatePlayer(positionId, player.id, (current) => ({ ...current, skills: [...current.skills, skillId] }));
+		pendingSkill = { ...pendingSkill, [player.id]: '' };
+	}
+
+	function removeSkill(positionId: string, player: IndividualPlayer, skillId: string) {
+		updatePlayer(positionId, player.id, (current) => ({ ...current, skills: current.skills.filter((id) => id !== skillId) }));
+	}
+
 </script>
 
 <ul class="roster-list" aria-label="Available players">
 	{#each $selectedTeam?.players ?? [] as p (p.id)}
 		{@const primaryItems = p.primary ?? []}
-		{@const primaryExpanded = isGroupExpanded(p.id, 'primary')}
 		{@const secondaryItems = p.secondary ?? []}
-		{@const secondaryExpanded = isGroupExpanded(p.id, 'secondary')}
 		{@const skillItems = p.skills ?? []}
-		{@const skillsExpanded = isGroupExpanded(p.id, 'skills')}
-		{@const inlineItems = getInlineItems(primaryItems, secondaryItems, skillItems)}
+		{@const individualPlayers = $currentRoster.individualPlayers?.[p.id] ?? []}
 		<li class="roster-card">
 			<div class="player-identity">
 				<div class="player-name">{p.name}</div>
 				<div class="player-count" aria-label={`${p.name} roster count`}>
 					<button
+					type="button"
 						aria-label={`Decrease ${p.name} count`}
-						on:click={() =>
-							currentRoster.update((r) => {
-								r.players[p.id] = r.players[p.id] ?? 0;
-								if (r.players[p.id] == 0) {
-									return r;
-								}
-
-								r.players[p.id]--;
-								return r;
-							})}
+						on:click={() => openRemoveDialog(p.id)}
 						disabled={($currentRoster.players[p.id] ?? 0) == 0}>−</button
 					>
 					<span class="count-value" aria-label={`${$currentRoster.players[p.id] ?? 0} of ${p.max}`}>
@@ -94,13 +134,9 @@
 						<span class="count-max">{p.max}</span>
 					</span>
 					<button
+						type="button"
 						aria-label={`Increase ${p.name} count`}
-						on:click={() =>
-							currentRoster.update((r) => {
-								r.players[p.id] = r.players[p.id] ?? 0;
-								r.players[p.id]++;
-								return r;
-							})}>+</button
+						on:click={() => addPlayer(p.id)}>+</button
 					>
 				</div>
 				{#if p.tags?.length}
@@ -141,27 +177,122 @@
 
 				<div class="player-groups">
 					<div class="player-group">
-						{#if inlineItems.length}
-							{#each inlineItems as item, index (item.kind + item.value + index)}
-								{#if item.kind === 'skill'}
-									<button class="skill-btn" on:click={() => showSkill(item.value)}>
-										{item.value}
-									</button>
-								{:else}
-									<span class={`item-pill ${item.kind}-pill`}>
-										{item.kind === 'primary' ? 'Pri' : 'Sec'} {item.value}
-									</span>
-								{/if}
-							{/each}
-						{:else}
-							<span>—</span>
-						{/if}
+						{#if primaryItems.length}<span class="item-pill primary-pill">Pri {primaryItems.join('')}</span>{/if}
+						{#if secondaryItems.length}<span class="item-pill secondary-pill">Sec {secondaryItems.join('')}</span>{/if}
+						{#each skillItems as skill, index (skill + index)}
+							<button class="skill-btn" type="button" on:click={() => showSkill(skill)}>{skill}</button>
+						{/each}
+						{#if !skillItems.length}<span>—</span>{/if}
 					</div>
 				</div>
 			</div>
+			{#if editMode && individualPlayers.length}
+				<div class="individual-editor" aria-label={`${p.name} individual players`}>
+					{#each individualPlayers as player (player.id)}
+						{@const choices = getSkillChoices(p).filter((choice) => !player.skills.includes(choice.skill.id))}
+						<div class="individual-player">
+							<h3>{p.name} #{player.number}</h3>
+							<label>
+								<span>Player name</span>
+								<input
+									type="text"
+									placeholder={p.name}
+									value={player.name ?? ''}
+									aria-label={`${p.name} #${player.number} name`}
+									on:input={(event) => {
+										const value = (event.currentTarget as HTMLInputElement).value;
+										updatePlayer(p.id, player.id, (current) => ({ ...current, name: value || undefined }));
+									}}
+								/>
+							</label>
+							<label>
+								<span>Number (0–99)</span>
+								<input
+									type="number"
+									min="0"
+									max="99"
+									value={player.number}
+									aria-label={`${p.name} #${player.number} number`}
+									on:input={(event) => {
+										const input = event.currentTarget as HTMLInputElement;
+										const value = Number(input.value);
+										const numberTaken = Object.values($currentRoster.individualPlayers ?? {}).flat().some((other) => other.id !== player.id && other.number === value);
+										if (input.value !== '' && Number.isInteger(value) && value >= 0 && value <= 99 && !numberTaken) {
+											updatePlayer(p.id, player.id, (current) => ({ ...current, number: value, numberCustomized: true }));
+										}
+									}}
+								/>
+							</label>
+							<div class="assigned-skills" aria-label={`${p.name} #${player.number} added skills`}>
+								{#each player.skills as skillId (skillId)}
+									{@const assigned = bb2025Skills.flatMap((category) => category.skills).find((skill) => skill.id === skillId)}
+									{#if assigned}
+										<span class="assigned-skill">
+											<button type="button" class="skill-btn" on:click={() => showSkill(assigned.name)}>{assigned.name}</button>
+											<button type="button" class="remove-skill" aria-label={`Remove ${assigned.name} from ${p.name} #${player.number}`} on:click={() => removeSkill(p.id, player, skillId)}>×</button>
+										</span>
+									{/if}
+								{/each}
+							</div>
+							{#if choices.length}
+								<div class="skill-picker">
+									<label for={`skill-${player.id}`}>Add skill</label>
+									<select id={`skill-${player.id}`} aria-label={`Choose additional skill for ${p.name} #${player.number}`} value={pendingSkill[player.id] ?? ''} on:change={(event) => (pendingSkill = { ...pendingSkill, [player.id]: (event.currentTarget as HTMLSelectElement).value })}>
+										<option value="">Choose a skill…</option>
+										{#each choices as choice (choice.skill.id)}
+											<option value={choice.skill.id}>{choice.skill.name} · {choice.access} · {choice.cost} SP</option>
+										{/each}
+									</select>
+									<button type="button" on:click={() => addSkill(p.id, player)} disabled={!pendingSkill[player.id]}>Add skill</button>
+								</div>
+							{:else}
+								<p>No eligible additional skills remain.</p>
+							{/if}
+						</div>
+					{/each}
+				</div>
+			{:else if individualPlayers.some(isCustomizedPlayer)}
+				<div class="player-custom-summary" aria-label={`${p.name} customized players`}>
+					{#each individualPlayers.filter(isCustomizedPlayer) as player (player.id)}
+						<div>
+							<strong>{player.name?.trim() || p.name} #{player.number}</strong>
+							{#each player.skills as skillId (skillId)}
+								{@const assigned = bb2025Skills.flatMap((category) => category.skills).find((skill) => skill.id === skillId)}
+								{#if assigned}<button type="button" class="skill-btn" on:click={() => showSkill(assigned.name)}>{assigned.name}</button>{/if}
+							{/each}
+						</div>
+					{/each}
+				</div>
+			{/if}
 		</li>
 	{/each}
 </ul>
+
+<dialog class="remove-player-dialog" bind:this={removeDialog} aria-labelledby="remove-player-title">
+	<form on:submit|preventDefault={removeSelectedPlayer}>
+		<h2 id="remove-player-title">Remove { $selectedTeam?.players.find((player) => player.id === removePositionId)?.name ?? 'player' }</h2>
+		<p>Choose which player to remove from your roster.</p>
+		<fieldset>
+			<legend class="sr-only">Player to remove</legend>
+			{#each customizedCandidates as player (player.id)}
+				<label class="remove-choice">
+					<input type="radio" name="remove-player" value={player.id} bind:group={removeChoice} />
+					<span>{player.name?.trim() ? `${player.name.trim()} #${player.number}` : `${$selectedTeam?.players.find((position) => position.id === removePositionId)?.name ?? 'Player'} #${player.number}`}{player.skills.length ? ` · ${player.skills.map((id) => bb2025Skills.flatMap((category) => category.skills).find((skill) => skill.id === id)?.name ?? id).join(', ')}` : ''}</span>
+				</label>
+			{/each}
+			{#if uncustomizedCount > 0}
+				<label class="remove-choice">
+					<input type="radio" name="remove-player" value="uncustomized" bind:group={removeChoice} />
+					<span>Any uncustomized player ({uncustomizedCount})</span>
+				</label>
+			{/if}
+		</fieldset>
+		<div class="remove-dialog-actions">
+			<button type="button" on:click={() => removeDialog.close()}>Cancel</button>
+			<button type="submit" disabled={!removeChoice}>Remove player</button>
+		</div>
+	</form>
+</dialog>
 
 {#if openSkill}
 	<div
@@ -336,7 +467,6 @@
 
 	.player-count button:focus-visible,
 	.skill-btn:focus-visible,
-	.group-toggle:focus-visible,
 	.close-icon:focus-visible {
 		outline: 3px solid #2563eb;
 		outline-offset: 2px;
@@ -373,6 +503,189 @@
 		grid-row: 1;
 		grid-template-rows: auto 1fr;
 		min-width: 0;
+	}
+
+	.individual-editor {
+		grid-column: 1 / -1;
+		display: grid;
+		gap: 0.75rem;
+		padding: 0.75rem;
+		border-top: 1px solid #e5e7eb;
+		background: #f9fafb;
+	}
+
+	.player-custom-summary {
+		grid-column: 1 / -1;
+		display: grid;
+		gap: 0.4rem;
+		padding: 0.65rem 0.75rem;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.player-custom-summary > div {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: 0.8rem;
+	}
+
+	:global(.dark) .player-custom-summary {
+		border-color: #374151;
+	}
+
+	.individual-player {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+		align-items: end;
+		gap: 0.65rem;
+		padding: 0.75rem;
+		border: 1px solid #d1d5db;
+		border-radius: 0.5rem;
+		background: #fff;
+	}
+
+	.individual-player h3,
+	.individual-player p {
+		grid-column: 1 / -1;
+		margin: 0;
+	}
+
+	.individual-player label,
+	.skill-picker {
+		display: grid;
+		gap: 0.3rem;
+		min-width: 0;
+		font-size: 0.8rem;
+	}
+
+	.individual-player input,
+	.skill-picker select {
+		width: 100%;
+		min-width: 0;
+		min-height: 2.5rem;
+		padding: 0.4rem;
+		border: 1px solid #9ca3af;
+		border-radius: 0.35rem;
+		background: white;
+		color: #111827;
+	}
+
+	.assigned-skills,
+	.assigned-skill {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.3rem;
+	}
+
+	.assigned-skills {
+		grid-column: 1 / -1;
+	}
+
+	.remove-skill {
+		min-width: 1.8rem;
+		min-height: 1.8rem;
+		border: 0;
+		border-radius: 9999px;
+		background: #fee2e2;
+		color: #991b1b;
+		font-size: 1rem;
+		cursor: pointer;
+	}
+
+	.skill-picker button,
+	.remove-dialog-actions button {
+		min-height: 2.5rem;
+		padding: 0.4rem 0.75rem;
+		border: 0;
+		border-radius: 0.35rem;
+		background: #15803d;
+		color: white;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.skill-picker button:disabled,
+	.remove-dialog-actions button:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+
+	:global(.dark) .individual-editor {
+		border-color: #374151;
+		background: #1f2937;
+	}
+
+	:global(.dark) .individual-player {
+		border-color: #4b5563;
+		background: #111827;
+	}
+
+	:global(.dark) .individual-player input,
+	:global(.dark) .skill-picker select {
+		border-color: #4b5563;
+		background: #1f2937;
+		color: #f9fafb;
+	}
+
+	.remove-player-dialog {
+		width: min(30rem, calc(100vw - 2rem));
+		max-height: min(80vh, 40rem);
+		padding: 1.25rem;
+		border: 1px solid #d1d5db;
+		border-radius: 0.75rem;
+		color: #111827;
+	}
+
+	.remove-player-dialog::backdrop {
+		background: rgb(0 0 0 / 0.55);
+		backdrop-filter: blur(2px);
+	}
+
+	.remove-player-dialog form,
+	.remove-player-dialog fieldset {
+		display: grid;
+		gap: 0.75rem;
+		min-width: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	.remove-player-dialog h2,
+	.remove-player-dialog p {
+		margin: 0;
+	}
+
+	.remove-choice {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		padding: 0.65rem;
+		border: 1px solid #d1d5db;
+		border-radius: 0.4rem;
+		cursor: pointer;
+	}
+
+	.remove-dialog-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.5rem;
+	}
+
+	.remove-dialog-actions button:first-child {
+		background: #6b7280;
+	}
+
+	:global(.dark) .remove-player-dialog {
+		border-color: #4b5563;
+		background: #111827;
+		color: #f9fafb;
+	}
+
+	:global(.dark) .remove-choice {
+		border-color: #4b5563;
 	}
 
 	.player-stat-band {
@@ -452,16 +765,6 @@
 		font-size: 0.8rem;
 	}
 
-	.player-group > strong {
-		color: #374151;
-		font-size: 0.75rem;
-		font-weight: 700;
-	}
-
-	:global(.dark) .player-group > strong {
-		color: #d1d5db;
-	}
-
 	.player-group > span {
 		display: inline-flex;
 		align-items: center;
@@ -512,33 +815,6 @@
 		background: #4b5563;
 	}
 
-	.group-toggle {
-		min-height: 1.8rem;
-		padding: 0.2rem 0.35rem;
-		border: 0;
-		border-radius: 0.25rem;
-		background: transparent;
-		color: #1d4ed8;
-		font-size: 0.75rem;
-		font-weight: 600;
-		line-height: 1rem;
-		text-decoration: underline;
-		text-underline-offset: 2px;
-		cursor: pointer;
-	}
-
-	.group-toggle:hover {
-		color: #1e3a8a;
-	}
-
-	:global(.dark) .group-toggle {
-		color: #93c5fd;
-	}
-
-	:global(.dark) .group-toggle:hover {
-		color: #bfdbfe;
-	}
-
 	@media (max-width: 360px) {
 		.roster-card {
 			grid-template-columns: minmax(0, 1fr);
@@ -558,6 +834,14 @@
 		.player-information {
 			grid-column: 1;
 			grid-row: auto;
+		}
+
+		.individual-editor {
+			grid-column: 1;
+		}
+
+		.player-custom-summary {
+			grid-column: 1;
 		}
 	}
 

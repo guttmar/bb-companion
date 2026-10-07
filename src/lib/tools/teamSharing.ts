@@ -3,12 +3,12 @@ import { getTeams } from "$lib/data/teams";
 import type { GameMode, RulesetId } from "$lib/domain/rulesets";
 import type { SavedTeam, SavedTeamRoster } from "$lib/stores/savedTeams";
 
-const SHARE_VERSION = 1;
-const MAX_ENCODED_LENGTH = 16_384;
+const SHARE_VERSION = 2;
+const MAX_ENCODED_LENGTH = 32_768;
 const MAX_SHARE_ID_LENGTH = 128;
 
 export type SharedTeamPayload = {
-  version: typeof SHARE_VERSION;
+  version: 1 | typeof SHARE_VERSION;
   shareId: string;
   ruleset: RulesetId;
   mode: GameMode;
@@ -71,6 +71,24 @@ export function decodeAndValidateTeamShare(encoded: string): ShareDecodeResult {
     if (Object.keys(payload.team.roster.players).some((playerId) => !playerIds.has(playerId))) {
       return { ok: false, error: "This team link includes players that are not in its team template." };
     }
+    if (payload.team.roster.individualPlayers) {
+      if (Object.keys(payload.team.roster.individualPlayers).some((playerId) => !playerIds.has(playerId))) {
+        return { ok: false, error: "This team link includes individual players that are not in its team template." };
+      }
+      const individuals = Object.entries(payload.team.roster.individualPlayers).flatMap(([positionId, players]) => {
+        return players.length === (payload.team.roster.players[positionId] ?? 0) ? players : [];
+      });
+      const declaredCount = Object.values(payload.team.roster.individualPlayers).reduce((sum, players) => sum + players.length, 0);
+      const rosterCount = Object.values(payload.team.roster.players).reduce((sum, count) => sum + count, 0);
+      if (individuals.length !== declaredCount || declaredCount !== rosterCount) {
+        return { ok: false, error: "This team link contains inconsistent player details." };
+      }
+      const numbers = individuals.map((player) => player.number);
+      const ids = individuals.map((player) => player.id);
+      if (new Set(numbers).size !== numbers.length || new Set(ids).size !== ids.length) {
+        return { ok: false, error: "This team link contains duplicate player numbers or identities." };
+      }
+    }
 
     const starCatalog = getStarPlayers(payload.ruleset);
     const allowedStarNames = new Set(
@@ -89,7 +107,7 @@ export function decodeAndValidateTeamShare(encoded: string): ShareDecodeResult {
 }
 
 function normalizePayload(value: unknown): SharedTeamPayload | undefined {
-  if (!isRecord(value) || value.version !== SHARE_VERSION) return undefined;
+  if (!isRecord(value) || (value.version !== 1 && value.version !== SHARE_VERSION)) return undefined;
   if (
     typeof value.shareId !== "string" ||
     value.shareId.length === 0 ||
@@ -117,6 +135,8 @@ function normalizePayload(value: unknown): SharedTeamPayload | undefined {
   const sourceRoster = value.team.roster;
   if (!isCountRecord(sourceRoster.players)) return undefined;
   if (sourceRoster.stars !== undefined && !isCountRecord(sourceRoster.stars)) return undefined;
+  if (sourceRoster.individualPlayers !== undefined && !isIndividualPlayers(sourceRoster.individualPlayers)) return undefined;
+  if (sourceRoster.tiersByMode !== undefined && !isTierMap(sourceRoster.tiersByMode)) return undefined;
   if (!isCount(sourceRoster.reRolls) || sourceRoster.reRolls > 8) return undefined;
   if (!isCount(sourceRoster.apothecary) || sourceRoster.apothecary > 1) return undefined;
   const sourceStars = sourceRoster.stars === undefined ? {} : sourceRoster.stars;
@@ -128,11 +148,13 @@ function normalizePayload(value: unknown): SharedTeamPayload | undefined {
     players,
     stars,
     reRolls: sourceRoster.reRolls,
-    apothecary: sourceRoster.apothecary
+    apothecary: sourceRoster.apothecary,
+    individualPlayers: sourceRoster.individualPlayers as SavedTeamRoster["individualPlayers"],
+    tiersByMode: sourceRoster.tiersByMode as SavedTeamRoster["tiersByMode"]
   };
 
   return {
-    version: SHARE_VERSION,
+    version: value.version as SharedTeamPayload["version"],
     shareId: value.shareId,
     ruleset: value.ruleset,
     mode: value.mode,
@@ -154,6 +176,35 @@ function isCountRecord(value: unknown): value is Record<string, number> {
 
 function isCount(value: unknown): value is number {
   return Number.isSafeInteger(value) && typeof value === "number" && value >= 0;
+}
+
+function isIndividualPlayers(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  return Object.values(value).every((players) =>
+    Array.isArray(players) && players.every((player) => {
+      if (!isRecord(player)) return false;
+      return (
+        typeof player.id === "string" &&
+        player.id.length > 0 &&
+        Number.isInteger(player.number) &&
+        (player.number as number) >= 0 &&
+        (player.number as number) <= 99 &&
+        (player.name === undefined || typeof player.name === "string") &&
+        (player.numberCustomized === undefined || typeof player.numberCustomized === "boolean") &&
+        Array.isArray(player.skills) &&
+        player.skills.every((skill) => typeof skill === "string") &&
+        new Set(player.skills).size === player.skills.length
+      );
+    })
+  );
+}
+
+function isTierMap(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  return (
+    Object.keys(value).every((mode) => mode === "11s" || mode === "7s") &&
+    Object.values(value).every((tier) => Number.isInteger(tier) && (tier as number) >= 1 && (tier as number) <= 4)
+  );
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

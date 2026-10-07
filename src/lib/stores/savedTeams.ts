@@ -2,12 +2,16 @@ import { writable } from "svelte/store";
 import { browser } from "$app/environment";
 import type { GameMode, RulesetId } from "$lib/domain/rulesets";
 import type { SharedTeamPayload } from "$lib/tools/teamSharing";
+import type { IndividualPlayers } from "$lib/domain/rosterPlayers";
+import type { TeamTier } from "$lib/domain/matchedPlay";
 
 export type SavedTeamRoster = {
   players: Record<string, number>;
   stars?: Record<string, number>;
   reRolls: number;
   apothecary: number;
+  individualPlayers?: IndividualPlayers;
+  tiersByMode?: Partial<Record<GameMode, TeamTier>>;
 };
 
 export type SavedTeam = {
@@ -25,7 +29,7 @@ export type SaveTeamPayload = Omit<SavedTeam, "id" | "shareId"> & { shareId?: st
 
 const STORAGE_KEY = "bb-companion:saved-teams";
 const STORAGE_VERSION_KEY = "bb-companion:saved-teams-version";
-const STORAGE_VERSION = 2;
+const STORAGE_VERSION = 3;
 
 function isSavedTeamRoster(v: unknown): v is SavedTeamRoster {
   if (!v || typeof v !== "object") return false;
@@ -40,6 +44,38 @@ function isSavedTeamRoster(v: unknown): v is SavedTeamRoster {
     for (const val of Object.values(o.stars as Record<string, unknown>)) {
       if (typeof val !== "number") return false;
     }
+  }
+  if (o.individualPlayers !== undefined) {
+    if (!o.individualPlayers || typeof o.individualPlayers !== "object" || Array.isArray(o.individualPlayers)) return false;
+    const seenIds = new Set<string>();
+    const seenNumbers = new Set<number>();
+    for (const value of Object.values(o.individualPlayers as Record<string, unknown>)) {
+      if (!Array.isArray(value)) return false;
+      for (const player of value) {
+        if (!player || typeof player !== "object" || Array.isArray(player)) return false;
+        const details = player as Record<string, unknown>;
+        if (
+          typeof details.id !== "string" ||
+          !Number.isInteger(details.number) ||
+          (details.number as number) < 0 ||
+          (details.number as number) > 99 ||
+          (details.name !== undefined && typeof details.name !== "string") ||
+          (details.numberCustomized !== undefined && typeof details.numberCustomized !== "boolean") ||
+          !Array.isArray(details.skills) ||
+          !details.skills.every((skill) => typeof skill === "string") ||
+          new Set(details.skills).size !== details.skills.length
+        ) return false;
+        if (seenIds.has(details.id) || seenNumbers.has(details.number as number)) return false;
+        seenIds.add(details.id);
+        seenNumbers.add(details.number as number);
+      }
+    }
+  }
+  if (o.tiersByMode !== undefined) {
+    if (!o.tiersByMode || typeof o.tiersByMode !== "object" || Array.isArray(o.tiersByMode)) return false;
+    const tiers = o.tiersByMode as Record<string, unknown>;
+    if (Object.keys(tiers).some((mode) => mode !== "11s" && mode !== "7s")) return false;
+    if (Object.values(tiers).some((tier) => !Number.isInteger(tier) || (tier as number) < 1 || (tier as number) > 4)) return false;
   }
   return true;
 }
@@ -63,7 +99,7 @@ function loadFromStorage(): SavedTeam[] {
   if (!browser) return [];
   try {
     const version = Number(localStorage.getItem(STORAGE_VERSION_KEY));
-    if (version !== STORAGE_VERSION) {
+    if (version !== STORAGE_VERSION && version !== 2) {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.setItem(STORAGE_VERSION_KEY, String(STORAGE_VERSION));
       return [];
@@ -73,7 +109,9 @@ function loadFromStorage(): SavedTeam[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(isSavedTeam);
+    const loaded = parsed.filter(isSavedTeam);
+    if (version !== STORAGE_VERSION) persist(loaded);
+    return loaded;
   } catch {
     return [];
   }
@@ -113,7 +151,7 @@ export function saveTeam(payload: SaveTeamPayload): string {
     id,
     name: payload.name,
     selectedTeamId: payload.selectedTeamId,
-    roster: { ...payload.roster },
+    roster: cloneRoster(payload.roster),
     startingTreasury: payload.startingTreasury,
     ruleset: payload.ruleset,
     mode: payload.mode
@@ -182,10 +220,7 @@ export function importSharedTeam(payload: SharedTeamPayload): "added" | "duplica
         name: payload.team.name,
         selectedTeamId: payload.team.selectedTeamId,
         roster: {
-          players: { ...payload.team.roster.players },
-          stars: { ...payload.team.roster.stars },
-          reRolls: payload.team.roster.reRolls,
-          apothecary: payload.team.roster.apothecary
+          ...cloneRoster(payload.team.roster)
         },
         startingTreasury: payload.team.startingTreasury,
         ruleset: payload.ruleset,
@@ -232,6 +267,22 @@ function rosterFingerprint(roster: SavedTeamRoster): string {
     players: sortCounts(roster.players),
     stars: sortCounts(roster.stars),
     reRolls: roster.reRolls,
-    apothecary: roster.apothecary
+    apothecary: roster.apothecary,
+    individualPlayers: Object.fromEntries(
+      Object.entries(roster.individualPlayers ?? {}).sort(([left], [right]) => left.localeCompare(right))
+    ),
+    tiersByMode: roster.tiersByMode
   });
+}
+
+function cloneRoster(roster: SavedTeamRoster): SavedTeamRoster {
+  return {
+    ...roster,
+    players: { ...roster.players },
+    stars: { ...(roster.stars ?? {}) },
+    individualPlayers: roster.individualPlayers
+      ? Object.fromEntries(Object.entries(roster.individualPlayers).map(([id, players]) => [id, players.map((player) => ({ ...player, skills: [...player.skills] }))]))
+      : undefined,
+    tiersByMode: roster.tiersByMode ? { ...roster.tiersByMode } : undefined
+  };
 }

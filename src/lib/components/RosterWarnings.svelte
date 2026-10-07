@@ -18,8 +18,20 @@
     background-color: #450a0a;
     color: #fecaca;
   }
+
+  .warning.rule-warning {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    color: #92400e;
+  }
+
+  :global(.dark) .warning.rule-warning {
+    border-color: #92400e;
+    background-color: #451a03;
+    color: #fde68a;
+  }
 </style>
 
-{#each $rosterValidation as w}
-  <div class="warning">{w.message}</div>
+{#each $rosterValidation as w (w.id)}
+  <div class="warning" class:rule-warning={w.level === 'warning'}>{w.message}</div>
 {/each}

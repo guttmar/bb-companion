@@ -3,4 +3,5 @@ export type PlayerType = {
   name: string;
   cost: number;
   max?: number;
+  tags?: string[];
 };

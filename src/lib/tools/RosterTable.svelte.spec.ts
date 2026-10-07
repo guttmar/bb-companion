@@ -1,7 +1,7 @@
 import { page, userEvent } from 'vitest/browser';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { writable, type Writable } from 'svelte/store';
+import { get, writable, type Writable } from 'svelte/store';
 import type { Team, PlayerType } from '$lib/data/teams/types';
 import { currentRoster, selectedTeam } from '$lib/stores/roster';
 import RosterTable from './RosterTable.svelte';
@@ -116,9 +116,20 @@ describe('RosterTable player cards', () => {
 		}
 
 		const groups = card.element().querySelector('.player-group');
-		expect(groups?.textContent).toContain('Pri');
-		expect(groups?.textContent).toContain('Sec');
+		expect(groups?.querySelector('.primary-pill')?.textContent).toBe('Pri Prime APrime BPrime CPrime DPrime E');
+		expect(groups?.querySelector('.secondary-pill')?.textContent).toBe('Sec Second ASecond BSecond CSecond D');
 		expect(groups?.textContent).toContain('Horns');
+	});
+
+	it('renders category access strings as single compact badges', async () => {
+		selectedTeamStore.set({
+			...testTeam,
+			players: [makePlayer('eagle', 'Eagle Warrior', { primary: ['G'], secondary: ['A', 'S'] })]
+		});
+		render(RosterTable);
+		const card = getPlayerCard(0);
+		await expect.element(card.getByText('Pri G', { exact: true })).toBeInTheDocument();
+		await expect.element(card.getByText('Sec AS', { exact: true })).toBeInTheDocument();
 	});
 
 	it('increments and decrements counts and disables decrement at zero', async () => {
@@ -138,99 +149,90 @@ describe('RosterTable player cards', () => {
 		expect(decrement.element().hasAttribute('disabled')).toBe(true);
 	});
 
-	it('truncates each long group to three and expands each group and player independently', async () => {
+	it('removes directly when uncustomized players are the only removal choice', async () => {
 		render(RosterTable);
-		const first = getPlayerCard(0);
-		const second = getPlayerCard(1);
-		const primToggle = first.getByRole('button', {
-			name: 'Show 2 more Prim options for Long Player'
-		});
-		const secToggle = first.getByRole('button', {
-			name: 'Show 1 more Sec options for Long Player'
-		});
-		const skillsToggle = first.getByRole('button', { name: 'Show 3 more Skills for Long Player' });
+		const card = getPlayerCard(0);
+		await userEvent.click(getButton(card.getByRole('button', { name: 'Increase Long Player count' })));
+		await userEvent.click(getButton(card.getByRole('button', { name: 'Decrease Long Player count' })));
 
-		for (const toggle of [primToggle, secToggle, skillsToggle]) {
-			expect(toggle.element().getAttribute('aria-expanded')).toBe('false');
-		}
-		expect(primToggle.element().textContent?.trim()).toBe('+2 more');
-		expect(secToggle.element().textContent?.trim()).toBe('+1 more');
-		expect(skillsToggle.element().textContent?.trim()).toBe('+3 more');
-		await expect.element(first.getByText('Prime C', { exact: true })).toBeInTheDocument();
-		expect(first.getByText('Prime D', { exact: true }).length).toBe(0);
-		expect(first.getByText('Second D', { exact: true }).length).toBe(0);
-		expect(first.getByRole('button', { name: 'Block' }).length).toBe(0);
-
-		getButton(primToggle).click();
-		const expandedPrimToggle = first.getByRole('button', {
-			name: 'Show fewer Prim options for Long Player'
-		});
-		await expect.element(expandedPrimToggle).toHaveAttribute('aria-expanded', 'true');
-		await expect.element(first.getByText('Prime D', { exact: true })).toBeInTheDocument();
-		await expect.element(first.getByText('Prime E', { exact: true })).toBeInTheDocument();
-		expect(secToggle.element().getAttribute('aria-expanded')).toBe('false');
-		expect(skillsToggle.element().getAttribute('aria-expanded')).toBe('false');
-		expect(
-			second
-				.getByRole('button', { name: 'Show 1 more Prim options for Other Player' })
-				.element()
-				.getAttribute('aria-expanded')
-		).toBe('false');
-
-		secToggle.element().focus();
-		await userEvent.keyboard('{Enter}');
-		const expandedSecToggle = first.getByRole('button', {
-			name: 'Show fewer Sec options for Long Player'
-		});
-		await expect.element(expandedSecToggle).toHaveAttribute('aria-expanded', 'true');
-		await expect.element(first.getByText('Second D', { exact: true })).toBeInTheDocument();
-		await expect.element(expandedPrimToggle).toHaveAttribute('aria-expanded', 'true');
-
-		getButton(expandedPrimToggle).click();
-		const collapsedPrimToggle = first.getByRole('button', {
-			name: 'Show 2 more Prim options for Long Player'
-		});
-		await expect.element(collapsedPrimToggle).toHaveAttribute('aria-expanded', 'false');
-		await expect.element(first.getByText('Prime D', { exact: true })).not.toBeInTheDocument();
-		await expect.element(expandedSecToggle).toHaveAttribute('aria-expanded', 'true');
-		getButton(expandedSecToggle).click();
-		const collapsedSecToggle = first.getByRole('button', {
-			name: 'Show 1 more Sec options for Long Player'
-		});
-		await expect.element(collapsedSecToggle).toHaveAttribute('aria-expanded', 'false');
-		await expect.element(first.getByText('Second D', { exact: true })).not.toBeInTheDocument();
-
-		getButton(
-			second.getByRole('button', { name: 'Show 1 more Prim options for Other Player' })
-		).click();
-		await expect
-			.element(second.getByRole('button', { name: 'Show fewer Prim options for Other Player' }))
-			.toHaveAttribute('aria-expanded', 'true');
-		await expect
-			.element(first.getByRole('button', { name: 'Show 2 more Prim options for Long Player' }))
-			.toBeInTheDocument();
+		await expect.element(page.getByRole('dialog', { name: /remove long player/i })).not.toBeInTheDocument();
+		await expect.element(card.getByText('0', { exact: true }).first()).toBeInTheDocument();
 	});
 
-	it('shows all short groups without disclosure controls and keeps skill disclosure separate from the modal', async () => {
+	it('removes the selected customized player while preserving the other instances', async () => {
+		currentRoster.set({
+			players: { 'long-player': 3 },
+			stars: {},
+			reRolls: 0,
+			apothecary: 0,
+			individualPlayers: {
+				'long-player': [
+					{ id: 'named', number: 1, name: 'Captain', skills: [] },
+					{ id: 'skilled', number: 2, skills: ['tackle'] },
+					{ id: 'default', number: 3, skills: [] }
+			]
+			}
+		});
+		render(RosterTable);
+		const card = getPlayerCard(0);
+		await userEvent.click(getButton(card.getByRole('button', { name: 'Decrease Long Player count' })));
+		const dialog = page.getByRole('dialog', { name: /remove long player/i });
+		await expect.element(dialog.getByRole('radio', { name: /captain #1/i })).toBeInTheDocument();
+		await expect.element(dialog.getByRole('radio', { name: /any uncustomized player \(1\)/i })).toBeInTheDocument();
+		await userEvent.click(dialog.getByRole('radio', { name: /captain #1/i }).element());
+		await userEvent.click(getButton(dialog.getByRole('button', { name: 'Remove player' })));
+		expect(get(currentRoster).individualPlayers?.['long-player'].map((player) => player.id)).toEqual(['skilled', 'default']);
+		expect(get(currentRoster).players['long-player']).toBe(2);
+	});
+
+	it('edits per-player names, unique numbers, and added skills without exposing starting skills for removal', async () => {
+		const skillTeam: Team = {
+			...testTeam,
+			players: [makePlayer('eligible', 'Eligible Player', { primary: ['G'], secondary: ['A'], skills: ['Block'] })]
+		};
+		selectedTeamStore.set(skillTeam);
+		currentRoster.set({
+			players: { eligible: 1 },
+			stars: {},
+			reRolls: 0,
+			apothecary: 0,
+			individualPlayers: { eligible: [{ id: 'unique-player', number: 1, skills: [] }] }
+		});
+		render(RosterTable, { editMode: true });
+
+		const name = page.getByRole('textbox', { name: 'Eligible Player #1 name' });
+		await name.fill('The Ace');
+		const number = page.getByRole('spinbutton', { name: 'Eligible Player #1 number' });
+		await number.fill('0');
+		const skill = page.getByRole('combobox', { name: 'Choose additional skill for Eligible Player #0' });
+		(skill.element() as HTMLSelectElement).value = 'strip-ball';
+		(skill.element() as HTMLSelectElement).dispatchEvent(new Event('change', { bubbles: true }));
+		await userEvent.click(getButton(page.getByRole('button', { name: 'Add skill', exact: true })));
+
+		expect(get(currentRoster)).toMatchObject({
+			individualPlayers: { eligible: [{ id: 'unique-player', number: 0, name: 'The Ace', numberCustomized: true, skills: ['strip-ball'] }] }
+		});
+		await expect.element(page.getByRole('button', { name: 'Remove Strip Ball from Eligible Player #0' })).toBeInTheDocument();
+		await expect.element(page.getByRole('button', { name: 'Remove Block from Eligible Player #0' })).not.toBeInTheDocument();
+	});
+
+	it('keeps access badges combined and displays every skill without a more toggle', async () => {
+		render(RosterTable);
+		const first = getPlayerCard(0);
+		await expect.element(first.getByText('Pri Prime APrime BPrime CPrime DPrime E', { exact: true })).toBeInTheDocument();
+		for (const skill of ['Horns', 'Block', 'Tackle', 'Jump Up']) {
+			await expect.element(first.getByRole('button', { name: skill, exact: true })).toBeInTheDocument();
+		}
+		expect(first.getByRole('button', { name: /more/i }).length).toBe(0);
+	});
+
+	it('keeps compact access badges and skills independent from the skill details modal', async () => {
 		render(RosterTable);
 		const shortCard = getPlayerCard(2);
-		await expect.element(shortCard.getByText('Short A', { exact: true })).toBeInTheDocument();
-		await expect.element(shortCard.getByText('Short C', { exact: true })).toBeInTheDocument();
-		expect(shortCard.getByText('—', { exact: true }).length).toBe(2);
-		for (const group of ['Prim', 'Sec', 'Skills']) {
-			expect(
-				shortCard.getByRole('button', { name: new RegExp(`${group} options for Short Player`) })
-					.length
-			).toBe(0);
-		}
+		await expect.element(shortCard.getByText('Pri Short AShort BShort C', { exact: true })).toBeInTheDocument();
+		expect(shortCard.getByText('Sec', { exact: true }).length).toBe(0);
 
 		const first = getPlayerCard(0);
-		const skillsToggle = first.getByRole('button', { name: 'Show 3 more Skills for Long Player' });
-		expect(skillsToggle.element().textContent?.trim()).toBe('+3 more');
-		getButton(skillsToggle).click();
-		await expect
-			.element(first.getByRole('button', { name: 'Show fewer Skills for Long Player' }))
-			.toHaveAttribute('aria-expanded', 'true');
 		await expect.element(first.getByRole('button', { name: 'Block' })).toBeInTheDocument();
 		await expect.element(first.getByRole('button', { name: 'Tackle' })).toBeInTheDocument();
 		await expect.element(first.getByRole('button', { name: 'Jump Up' })).toBeInTheDocument();
@@ -241,11 +243,7 @@ describe('RosterTable player cards', () => {
 		await expect.element(skillDialog).toBeInTheDocument();
 		getButton(page.getByRole('button', { name: 'Close' })).click();
 		await expect.element(page.getByRole('dialog')).not.toBeInTheDocument();
-		getButton(first.getByRole('button', { name: 'Show fewer Skills for Long Player' })).click();
-		await expect
-			.element(first.getByRole('button', { name: 'Show 3 more Skills for Long Player' }))
-			.toHaveAttribute('aria-expanded', 'false');
-		await expect.element(first.getByRole('button', { name: 'Tackle' })).not.toBeInTheDocument();
+		await expect.element(first.getByRole('button', { name: 'Tackle' })).toBeInTheDocument();
 	});
 
 	it('shows active/passive and Elite badges in the roster skill modal', async () => {
@@ -288,8 +286,8 @@ describe('RosterTable player cards', () => {
 				expect(currentCount.getBoundingClientRect().top).toBeLessThan(
 					maxCount.getBoundingClientRect().top
 				);
-				expect(countDivider.getBoundingClientRect().height).toBeGreaterThan(
-					countDivider.getBoundingClientRect().width
+				expect(countDivider.getBoundingClientRect().width).toBeGreaterThan(
+					countDivider.getBoundingClientRect().height
 				);
 				expect(card.scrollWidth).toBeLessThanOrEqual(card.clientWidth + 1);
 				expect(card.getBoundingClientRect().right).toBeLessThanOrEqual(
@@ -300,13 +298,7 @@ describe('RosterTable player cards', () => {
 				);
 			}
 
-			for (const toggleName of [
-				'Show 1 more Prim options for A Very Long Player Position Name That Must Wrap On Narrow Screens',
-				'Show 1 more Sec options for A Very Long Player Position Name That Must Wrap On Narrow Screens',
-				'Show 1 more Skills for A Very Long Player Position Name That Must Wrap On Narrow Screens'
-			]) {
-				getButton(cardLocator.getByRole('button', { name: toggleName })).click();
-			}
+			expect(card.querySelectorAll('.group-toggle')).toHaveLength(0);
 
 			for (const theme of ['light', 'dark'] as const) {
 				documentElement.classList.toggle('dark', theme === 'dark');

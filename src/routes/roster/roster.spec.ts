@@ -7,6 +7,7 @@ import { formatCost, formatStat } from '$lib/tools/format';
 import { savedTeams, saveTeam } from '$lib/stores/savedTeams';
 import { currentRoster, selectedStarPlayers, selectedTeamId, startingTreasury } from '$lib/stores/roster';
 import { settings } from '$lib/stores/settings';
+import { getTeams } from '$lib/data/teams';
 
 vi.mock('$app/stores', async () => {
 	const { writable } = await import('svelte/store');
@@ -93,10 +94,48 @@ describe('roster page save behavior', () => {
 		await expect.element(page.getByText('0 / 11', { exact: true })).toBeInTheDocument();
 	});
 
+	it('shows the rules-reference tier default and permits tier edits in player edit mode', async () => {
+		render(Page);
+		await expect.element(page.getByRole('combobox', { name: 'Team tier' })).not.toBeInTheDocument();
+		await page.getByRole('button', { name: 'Edit individual players' }).click();
+		const tier = page.getByRole('combobox', { name: 'Team tier' });
+		await expect.element(tier).toHaveValue('1');
+		expect(tier.element().closest('summary')?.querySelector('.roster-section-tier-tools')).not.toBeNull();
+		expect(tier.element().closest('.roster-section-content')).toBeNull();
+		await expect.element(page.getByText('0 / 6', { exact: true })).toBeInTheDocument();
+		expect(page.getByRole('option', { name: 'Tier 1' }).element().classList.contains('default-tier')).toBe(true);
+		expect(page.getByRole('option', { name: 'Choose tier' }).length).toBe(0);
+
+		(tier.element() as HTMLSelectElement).value = '2';
+		(tier.element() as HTMLSelectElement).dispatchEvent(new Event('change', { bubbles: true }));
+		await expect.element(page.getByText('0 / 8', { exact: true })).toBeInTheDocument();
+		expect(get(currentRoster).tiersByMode?.['11s']).toBe(2);
+		await page.getByRole('button', { name: 'Done editing players' }).click();
+		await expect.element(tier).not.toBeInTheDocument();
+		await expect.element(page.getByText('0 / 8', { exact: true })).not.toBeInTheDocument();
+		expect(page.getByText('Skill Points:', { exact: false }).length).toBe(0);
+	});
+
+	it('provides an explicit individual-player edit mode', async () => {
+		render(Page);
+		await expect.element(page.getByText('Roster', { exact: true })).toBeInTheDocument();
+		await expect.element(page.getByText('Current roster', { exact: true })).not.toBeInTheDocument();
+		const editToggle = page.getByRole('button', { name: 'Edit individual players' });
+		expect(editToggle.element().getAttribute('aria-pressed')).toBe('false');
+		await editToggle.click();
+		expect(page.getByRole('button', { name: 'Done editing players' }).element().getAttribute('aria-pressed')).toBe('true');
+		const firstIncrement = page.getByRole('button', { name: /^Increase .+ count$/ }).first();
+		await firstIncrement.click();
+		const playerId = Object.keys(get(currentRoster).players)[0];
+		const selectedPosition = getTeams('2025')[get(selectedTeamId)].players.find((player) => player.id === playerId)!;
+		await expect.element(page.getByRole('textbox', { name: `${selectedPosition.name} #1 name` })).toBeInTheDocument();
+	});
+
 	it('sorts the team select options alphabetically by name', async () => {
 		render(Page);
 		// read actual options text
 		const options = page
+			.getByRole('combobox', { name: 'Choose a team' })
 			.getByRole('option')
 			.elements()
 			.map((option) => option.textContent?.trim() ?? '');

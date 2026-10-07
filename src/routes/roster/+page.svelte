@@ -12,9 +12,13 @@
   import type { Skill } from "$lib/data/skills/bb2025";
   import { normalizeSkillName, resolveSkill } from "$lib/tools/skills";
   import { getRulesetConfig } from "$lib/domain/rulesets";
+  import { getDefaultTeamTier, getSkillPointBudget, getTeamTier } from "$lib/domain/matchedPlay";
+  import { getRosterSkillSpend } from "$lib/domain/validateSkillDraft";
+  import { syncIndividualPlayers } from "$lib/domain/rosterPlayers";
   import {
     treasuryLeft,
     currentRoster,
+    selectedTeam,
     selectedTeamId,
     selectedStarPlayers,
     teams,
@@ -22,12 +26,15 @@
   } from "$lib/stores/roster";
   import { settings } from "$lib/stores/settings";
   import { getSavedTeam, saveTeam, updateTeam } from "$lib/stores/savedTeams";
+  import CertificateRegular from 'fluentui-icons-svelte/CertificateRegular.svelte';
+  import CertificateFilled from 'fluentui-icons-svelte/CertificateFilled.svelte';
 
   let teamName = "";
   let saveMessage = "";
   let saveDialog: HTMLDialogElement;
   let expandedStarId: string | null = null;
   let openSkill: Skill | null = null;
+  let editPlayers = false;
   // currently-editing saved team id (undefined when creating new)
   export let editingId: string | undefined;
   // keep track of the template that was used when loading the team so
@@ -45,6 +52,10 @@
   }, 0);
   $: maxPlayers = getRulesetConfig($settings.ruleset, $settings.mode).maxPlayers;
   $: treasurySpent = $startingTreasury - $treasuryLeft;
+  $: selectedTier = getTeamTier($selectedTeam, $selectedTeam?.name ?? '', $currentRoster.tiersByMode ?? {}, $settings.mode);
+  $: defaultTier = $selectedTeam ? getDefaultTeamTier($selectedTeam.name, $settings.mode) : undefined;
+  $: skillPointsSpent = $selectedTeam ? getRosterSkillSpend($currentRoster, $selectedTeam, $selectedStarPlayers, $settings.mode) : 0;
+  $: skillPointBudget = selectedTier ? getSkillPointBudget(selectedTier, $settings.mode) : undefined;
 
   // derive an array of team ids sorted by the team's display name so the
   // dropdown is alphabetical.  We can't rely on the raw object order since
@@ -56,7 +67,18 @@
   });
 
   $: if ($selectedTeamId) {
-    currentRoster.set({ players: {}, stars: {}, reRolls: 0, apothecary: 0 });
+    const team = $teams?.[$selectedTeamId];
+    currentRoster.set({
+      players: {},
+      stars: {},
+      reRolls: 0,
+      apothecary: 0,
+      individualPlayers: {},
+      tiersByMode: team ? {
+        '11s': getDefaultTeamTier(team.name, '11s'),
+        '7s': getDefaultTeamTier(team.name, '7s')
+      } : {}
+    });
     expandedStarId = null;
   }
 
@@ -130,7 +152,16 @@
         selectedTeamId.set(saved.selectedTeamId);
         loadedTemplateId = saved.selectedTeamId;
         tick().then(() => {
-          currentRoster.set({ ...saved.roster, stars: saved.roster.stars ?? {} });
+          const loadedTeam = $teams?.[saved.selectedTeamId];
+          currentRoster.set({
+            ...saved.roster,
+            stars: saved.roster.stars ?? {},
+            individualPlayers: syncIndividualPlayers(saved.roster.players, saved.roster.individualPlayers),
+            tiersByMode: {
+              '11s': saved.roster.tiersByMode?.['11s'] ?? (loadedTeam ? getDefaultTeamTier(loadedTeam.name, '11s') : undefined),
+              '7s': saved.roster.tiersByMode?.['7s'] ?? (loadedTeam ? getDefaultTeamTier(loadedTeam.name, '7s') : undefined)
+            }
+          });
           const url = new URL($page.url);
           url.searchParams.delete("load");
           goto(url.pathname + url.search, { replaceState: true });
@@ -144,11 +175,24 @@
     saveDialog.showModal();
   }
 
+  function setTier(event: Event) {
+    const value = (event.currentTarget as HTMLSelectElement).value;
+    currentRoster.update((roster) => ({
+      ...roster,
+      tiersByMode: { ...roster.tiersByMode, [$settings.mode]: value ? Number(value) as 1 | 2 | 3 | 4 : undefined }
+    }));
+  }
+
   function handleSave() {
     const payload = {
       name: teamName.trim() || undefined,
       selectedTeamId: $selectedTeamId,
-      roster: { ...$currentRoster, stars: { ...$currentRoster.stars } },
+      roster: {
+        ...$currentRoster,
+        stars: { ...$currentRoster.stars },
+        individualPlayers: Object.fromEntries(Object.entries($currentRoster.individualPlayers ?? {}).map(([id, players]) => [id, players.map((player) => ({ ...player, skills: [...player.skills] }))])),
+        tiersByMode: { ...$currentRoster.tiersByMode }
+      },
       startingTreasury: $startingTreasury,
       ruleset: $settings.ruleset,
       mode: $settings.mode
@@ -472,6 +516,101 @@
     padding: 0 1rem 1rem;
   }
 
+  .draft-tools {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .draft-tools select {
+    width: 5.25rem;
+    margin: 0;
+    padding: 0.35rem;
+    font-size: 0.9rem;
+  }
+
+  .draft-tools option.default-tier {
+    font-weight: 700;
+  }
+
+  .draft-tools p {
+    margin: 0;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .draft-tools .over-budget {
+    color: #b91c1c;
+  }
+
+  .roster-section > summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .roster-section-title {
+    justify-self: start;
+  }
+
+  .roster-section-tier-tools {
+    justify-self: center;
+  }
+
+  .roster-section-toggle {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .edit-players-toggle {
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #4b5563;
+    cursor: pointer;
+  }
+
+  .edit-players-toggle[aria-pressed='true'] {
+    background: #15803d;
+    color: white;
+  }
+
+  .edit-players-toggle :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .edit-players-toggle:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+  }
+
+  :global(.dark) .edit-players-toggle {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  :global(.dark) .edit-players-toggle[aria-pressed='true'] {
+    background: #15803d;
+    color: white;
+  }
+
+  :global(.dark) .draft-tools .over-budget {
+    color: #fca5a5;
+  }
+
   .star-list {
     display: grid;
     gap: 1rem;
@@ -744,9 +883,45 @@
   </div>
   <div class="scrollable-content">
     <details class="roster-section" open>
-      <summary>Current roster</summary>
+      <summary>
+        <span class="roster-section-title">Roster</span>
+        {#if $settings.ruleset === '2025' && editPlayers}
+          <div class="draft-tools roster-section-tier-tools">
+            <select id="team-tier" aria-label="Team tier" value={selectedTier ? String(selectedTier) : ''} on:click={(event) => event.stopPropagation()} on:change={setTier}>
+              {#if !selectedTier}<option value="" disabled>Choose tier</option>{/if}
+              <option value="1" class:default-tier={defaultTier === 1}>Tier 1</option>
+              <option value="2" class:default-tier={defaultTier === 2}>Tier 2</option>
+              <option value="3" class:default-tier={defaultTier === 3}>Tier 3</option>
+              <option value="4" class:default-tier={defaultTier === 4}>Tier 4</option>
+            </select>
+            <p class:over-budget={skillPointBudget !== undefined && skillPointsSpent > skillPointBudget}>
+              {skillPointsSpent} / {skillPointBudget ?? '—'}
+            </p>
+          </div>
+        {/if}
+        {#if $settings.ruleset === '2025'}
+          <button
+            type="button"
+            class="edit-players-toggle roster-section-toggle"
+            aria-label={editPlayers ? 'Done editing players' : 'Edit individual players'}
+            aria-pressed={editPlayers}
+            title={editPlayers ? 'Done editing players' : 'Edit individual players'}
+            on:click={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              editPlayers = !editPlayers;
+            }}
+          >
+            {#if editPlayers}
+              <CertificateFilled />
+            {:else}
+              <CertificateRegular />
+            {/if}
+          </button>
+        {/if}
+      </summary>
       <div class="roster-section-content">
-        <RosterTable />
+        <RosterTable editMode={editPlayers && $settings.ruleset === '2025'} />
         <RosterWarnings />
       </div>
     </details>
