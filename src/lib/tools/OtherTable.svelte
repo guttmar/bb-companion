@@ -66,8 +66,8 @@
     display: grid;
     grid-column: 2;
     grid-row: 1;
-    grid-template-columns: minmax(0, 1fr) 1px;
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1px auto;
     align-items: center;
     justify-items: center;
     min-width: 0;
@@ -85,14 +85,14 @@
 
   .other-count-value > :last-child {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
   }
 
   .other-count-divider {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    width: 1px;
-    height: 1.75rem;
+    grid-column: 1;
+    grid-row: 2;
+    width: 1.25em;
+    height: 1px;
     background: #9ca3af;
   }
 
