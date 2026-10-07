@@ -2,7 +2,12 @@
 	import { createEventDispatcher } from 'svelte';
 	import DismissRegular from 'fluentui-icons-svelte/DismissRegular.svelte';
 
-	export let skill: { name: string; description: string } | null = null;
+	export let skill: {
+		name: string;
+		description: string;
+		type?: 'active' | 'passive';
+		elite?: boolean;
+	} | null = null;
 	const dispatch = createEventDispatcher<{ close: void }>();
 
 	function close() {
@@ -20,7 +25,17 @@
 	>
 		<div class="skill-card" role="dialog" aria-modal="true" aria-label="Skill details">
 			<div class="skill-header">
-				<strong>{skill.name}</strong>
+				<div class="skill-heading">
+					<strong>{skill.name}</strong>
+					<div class="skill-tags">
+						{#if skill.type}
+							<span class="skill-type">{skill.type}</span>
+						{/if}
+						{#if skill.elite}
+							<span class="elite">Elite</span>
+						{/if}
+					</div>
+				</div>
 				<button type="button" class="close-icon" on:click={close} aria-label="Close">
 					<DismissRegular />
 				</button>
@@ -52,9 +67,45 @@
 
 	.skill-header {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: space-between;
 		gap: 1rem;
+	}
+
+	.skill-heading {
+		min-width: 0;
+	}
+
+	.skill-heading strong {
+		display: block;
+		overflow-wrap: anywhere;
+	}
+
+	.skill-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	.skill-type,
+	.elite {
+		display: inline-flex;
+		align-items: center;
+		border-radius: 9999px;
+		padding: 0.125rem 0.5rem;
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+
+	.skill-type {
+		background: #dbeafe;
+		color: #1e40af;
+	}
+
+	.elite {
+		background: #fef3c7;
+		color: #92400e;
 	}
 
 	.skill-desc {

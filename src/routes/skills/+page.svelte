@@ -5,11 +5,15 @@
 	import { getStarPlayers } from '$lib/data/stars';
 	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 	import { writable } from 'svelte/store';
+	import type { Skill } from '$lib/data/skills/bb2025';
+	import SkillDetailsModal from '$lib/components/SkillDetailsModal.svelte';
 	import ChevronDownRegular from 'fluentui-icons-svelte/ChevronDownRegular.svelte';
 	import ChevronRightRegular from 'fluentui-icons-svelte/ChevronRightRegular.svelte';
 
 	const searchQuery = writable('');
 	const expandedCategories = writable(new SvelteSet([...bb2025Skills.map((category) => category.name), 'Star Player']));
+	let openSkill: Skill | null = null;
+	let searchTerm = '';
 
 	$: starPlayerSkills = (() => {
 		const skills = new SvelteMap<
@@ -41,6 +45,17 @@
 		return [...skills.values()];
 	})();
 
+	$: searchTerm = $searchQuery.trim().toLowerCase();
+	$: filteredSkillsByCategory = bb2025Skills.map((category) => ({
+		...category,
+		skills: category.skills.filter((skill) =>
+			matchesSearch([skill.name, skill.description], searchTerm)
+		)
+	}));
+	$: filteredStarPlayerSkills = starPlayerSkills.filter((skill) =>
+		matchesSearch([skill.name, skill.description, ...skill.starNames], searchTerm)
+	);
+
 	function toggleCategory(categoryName: string) {
 		expandedCategories.update((expanded) => {
 			const newExpanded = new SvelteSet(expanded);
@@ -52,14 +67,28 @@
 			return newExpanded;
 		});
 	}
+
+	function showSkill(skill: Skill) {
+		openSkill = skill;
+	}
+
+	function showStarPlayerSkill(skill: (typeof starPlayerSkills)[number]) {
+		openSkill = {
+			...skill,
+			description: `${skill.starNames.join(', ')}: ${skill.description}`
+		};
+	}
+
+	function closeSkill() {
+		openSkill = null;
+	}
+
+	function matchesSearch(values: string[], query: string): boolean {
+		return values.some((value) => value.toLowerCase().includes(query));
+	}
 </script>
 
 <main class="mx-auto max-w-4xl px-4 py-6">
-	<h1 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">Skills</h1>
-	<p class="mb-6 text-sm text-gray-600 dark:text-gray-400">
-		Looking for the underlying rules? <a class="font-medium underline" href={`${base}/rules#bb2025-skills-and-traits-skills`}>Open the Rules Reference</a>.
-	</p>
-
 	{#if $settings.ruleset === '2025'}
 		<input
 			type="text"
@@ -69,11 +98,12 @@
 		/>
 
 		<div class="space-y-10">
-			{#each bb2025Skills as category (category.id)}
+			{#each filteredSkillsByCategory as category (category.id)}
 				<section>
 					<button
 						type="button"
 						class="mb-4 flex w-full items-center border-b border-gray-200 pb-2 text-left text-xl font-semibold text-gray-900 dark:border-gray-700 dark:text-white"
+						aria-expanded={$expandedCategories.has(category.name)}
 						on:click={() => toggleCategory(category.name)}
 					>
 						{#if $expandedCategories.has(category.name)}
@@ -84,36 +114,18 @@
 						{category.name}
 					</button>
 					{#if $expandedCategories.has(category.name)}
-						<ul class="space-y-4">
-							{#each category.skills.filter((skill) => skill.name
-									.toLowerCase()
-									.includes($searchQuery.toLowerCase())) as skill (skill.id)}
+						<ul id={`skills-${category.id}`} aria-label={`${category.name} skills`} class="skill-list">
+							{#each category.skills as skill (skill.id)}
 								<li
-									class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+									class="skill-card rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900"
 								>
-									<div class="mb-2 flex flex-wrap items-center gap-2">
-										<span class="font-medium text-gray-900 dark:text-white">{skill.name}</span>
-										<span
-											class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {skill.type ===
-											'active'
-												? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
-												: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'}"
-										>
-											{skill.type}
-										</span>
-										{#if skill.elite}
-											<span
-												class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
-											>
-												Elite
-											</span>
-										{/if}
-									</div>
-									<p
-										class="skill-description text-sm leading-relaxed text-gray-600 dark:text-gray-400"
+									<button
+										type="button"
+										class="skill-button cursor-pointer rounded-lg bg-transparent font-medium text-gray-900 transition-colors hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-white dark:hover:bg-gray-800"
+										on:click={() => showSkill(skill)}
 									>
-										{skill.description}
-									</p>
+										<span class="min-w-0 break-words">{skill.name}</span>
+									</button>
 								</li>
 							{/each}
 						</ul>
@@ -125,6 +137,7 @@
 				<button
 					type="button"
 					class="mb-4 flex w-full items-center border-b border-gray-200 pb-2 text-left text-xl font-semibold text-gray-900 dark:border-gray-700 dark:text-white"
+					aria-expanded={$expandedCategories.has('Star Player')}
 					on:click={() => toggleCategory('Star Player')}
 				>
 					{#if $expandedCategories.has('Star Player')}
@@ -135,27 +148,18 @@
 					Star Player
 				</button>
 				{#if $expandedCategories.has('Star Player')}
-					<ul class="space-y-4">
-						{#each starPlayerSkills.filter((skill) =>
-							[skill.name, ...skill.starNames].some((value) =>
-								value.toLowerCase().includes($searchQuery.toLowerCase())
-							)
-						) as skill (skill.id)}
+					<ul id="skills-star-player" aria-label="Star Player skills" class="skill-list">
+						{#each filteredStarPlayerSkills as skill (skill.id)}
 							<li
-								class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+								class="skill-card rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900"
 							>
-								<div class="mb-2 flex flex-wrap items-center gap-2">
-									<span class="font-medium text-gray-900 dark:text-white">{skill.name}</span>
-									<span class="text-sm text-gray-500 dark:text-gray-400">({skill.starNames.join(', ')})</span>
-									<span
-										class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300"
-									>
-										{skill.type}
-									</span>
-								</div>
-								<p class="skill-description text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-									{skill.description}
-								</p>
+								<button
+									type="button"
+									class="skill-button cursor-pointer rounded-lg bg-transparent font-medium text-gray-900 transition-colors hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-white dark:hover:bg-gray-800"
+									on:click={() => showStarPlayerSkill(skill)}
+								>
+									<span class="min-w-0 break-words">{skill.name}</span>
+								</button>
 							</li>
 						{/each}
 					</ul>
@@ -175,8 +179,50 @@
 	{/if}
 </main>
 
+<SkillDetailsModal skill={openSkill} on:close={closeSkill} />
+
 <style>
-	.skill-description {
-		white-space: pre-line;
+	.skill-list {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		align-items: start;
+		gap: 1rem;
+	}
+
+	.skill-card {
+		min-width: 0;
+		width: 100%;
+	}
+
+	.skill-button {
+		display: flex;
+		min-height: 5rem;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem;
+		text-align: center;
+	}
+
+	.skill-button span {
+		overflow-wrap: anywhere;
+	}
+
+	@media (max-width: 380px) {
+		.skill-list {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 640px) {
+		.skill-list {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.skill-list {
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+		}
 	}
 </style>

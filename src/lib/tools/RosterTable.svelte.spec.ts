@@ -237,7 +237,8 @@ describe('RosterTable player cards', () => {
 		expect(page.getByRole('dialog').length).toBe(0);
 
 		getButton(first.getByRole('button', { name: 'Horns' })).click();
-		await expect.element(page.getByRole('dialog', { name: 'Skill details' })).toBeInTheDocument();
+		const skillDialog = page.getByRole('dialog', { name: 'Skill details' });
+		await expect.element(skillDialog).toBeInTheDocument();
 		getButton(page.getByRole('button', { name: 'Close' })).click();
 		await expect.element(page.getByRole('dialog')).not.toBeInTheDocument();
 		getButton(first.getByRole('button', { name: 'Show fewer Skills for Long Player' })).click();
@@ -245,6 +246,21 @@ describe('RosterTable player cards', () => {
 			.element(first.getByRole('button', { name: 'Show 3 more Skills for Long Player' }))
 			.toHaveAttribute('aria-expanded', 'false');
 		await expect.element(first.getByRole('button', { name: 'Tackle' })).not.toBeInTheDocument();
+	});
+
+	it('shows active/passive and Elite badges in the roster skill modal', async () => {
+		render(RosterTable);
+		const first = getPlayerCard(0);
+
+		getButton(first.getByRole('button', { name: 'Horns', exact: true })).click();
+		const dialog = page.getByRole('dialog', { name: 'Skill details' });
+		await expect.element(dialog).toBeInTheDocument();
+		expect(dialog.element().querySelector('.badge')?.textContent?.trim()).toMatch(/^(active|passive)$/);
+		getButton(dialog.getByRole('button', { name: 'Close' })).click();
+
+		getButton(first.getByRole('button', { name: 'Block', exact: true })).click();
+		await expect.element(dialog.getByText('active', { exact: true })).toBeInTheDocument();
+		await expect.element(dialog.getByText('Elite', { exact: true })).toBeInTheDocument();
 	});
 
 	it.each([320, 360, 390, 768, 1280])(
