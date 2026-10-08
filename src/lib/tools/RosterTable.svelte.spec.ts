@@ -206,16 +206,46 @@ describe('RosterTable player cards', () => {
 		await name.fill('The Ace');
 		const number = page.getByRole('spinbutton', { name: 'Eligible Player #1 number' });
 		await number.fill('0');
-		const skill = page.getByRole('combobox', { name: 'Choose additional skill for Eligible Player #0' });
-		(skill.element() as HTMLSelectElement).value = 'strip-ball';
-		(skill.element() as HTMLSelectElement).dispatchEvent(new Event('change', { bubbles: true }));
-		await userEvent.click(getButton(page.getByRole('button', { name: 'Add skill', exact: true })));
+		await userEvent.click(getButton(page.getByRole('button', { name: 'Add skill to Eligible Player #0' })));
+		const picker = page.getByRole('dialog', { name: /add skill to eligible player #0/i });
+		expect([...picker.element().querySelectorAll('h3')].map((heading) => heading.textContent)).toEqual([
+			'Primary skills',
+			'Secondary skills'
+		]);
+		await expect.element(picker.getByRole('list', { name: 'Primary skills: General' })).toBeInTheDocument();
+		await expect.element(picker.getByRole('list', { name: 'Secondary skills: Agility' })).toBeInTheDocument();
+		await expect.element(picker.getByRole('button', { name: 'Block', exact: true })).not.toBeInTheDocument();
+		await userEvent.click(getButton(picker.getByRole('button', { name: 'Strip Ball', exact: true })));
 
 		expect(get(currentRoster)).toMatchObject({
 			individualPlayers: { eligible: [{ id: 'unique-player', number: 0, name: 'The Ace', numberCustomized: true, skills: ['strip-ball'] }] }
 		});
+		await expect.element(picker).not.toBeInTheDocument();
 		await expect.element(page.getByRole('button', { name: 'Remove Strip Ball from Eligible Player #0' })).toBeInTheDocument();
 		await expect.element(page.getByRole('button', { name: 'Remove Block from Eligible Player #0' })).not.toBeInTheDocument();
+	});
+
+	it('closes the skill picker on an outside click without selecting a skill', async () => {
+		const skillTeam: Team = {
+			...testTeam,
+			players: [makePlayer('eligible', 'Eligible Player', { primary: ['G'], secondary: ['A'], skills: ['Block'] })]
+		};
+		selectedTeamStore.set(skillTeam);
+		currentRoster.set({
+			players: { eligible: 1 },
+			stars: {},
+			reRolls: 0,
+			apothecary: 0,
+			individualPlayers: { eligible: [{ id: 'unique-player', number: 1, skills: [] }] }
+		});
+		render(RosterTable, { editMode: true });
+
+		await userEvent.click(getButton(page.getByRole('button', { name: 'Add skill to Eligible Player #1' })));
+		const picker = page.getByRole('dialog', { name: /add skill to eligible player #1/i });
+		picker.element().dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+		expect(get(currentRoster).individualPlayers?.eligible[0].skills).toEqual([]);
+		await expect.element(picker).not.toBeInTheDocument();
 	});
 
 	it('marks a 7s player as a Veteran and shows the movement and skill badges', async () => {

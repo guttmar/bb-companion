@@ -2,7 +2,7 @@
 	import { selectedTeam, currentRoster } from '$lib/stores/roster';
 	import { bb2025Skills, type Skill } from '$lib/data/skills/bb2025';
 	import { createIndividualPlayer, isCustomizedPlayer, syncIndividualPlayers, type IndividualPlayer } from '$lib/domain/rosterPlayers';
-	import { getSkillChoices } from '$lib/domain/matchedPlay';
+	import { getSkillChoices, type SkillAccess, type SkillChoice } from '$lib/domain/matchedPlay';
 	import { settings } from '$lib/stores/settings';
 	import DismissRegular from 'fluentui-icons-svelte/DismissRegular.svelte';
 	import { formatCost, formatStat } from '$lib/tools/format';
@@ -10,9 +10,11 @@
 	export let editMode = false;
 	let openSkill: Skill | null = null;
 	let removeDialog: HTMLDialogElement;
+	let skillPickerDialog: HTMLDialogElement;
 	let removePositionId = '';
 	let removeChoice = '';
-	let pendingSkill: Record<string, string> = {};
+	let skillPickerPositionId = '';
+	let skillPickerPlayerId = '';
 	function resolveSkill(name: string): Skill | null {
 		const n = (name ?? '').toLowerCase();
 		for (const cat of bb2025Skills) {
@@ -52,6 +54,13 @@
 	$: removalCandidates = $currentRoster.individualPlayers?.[removePositionId] ?? [];
 	$: customizedCandidates = removalCandidates.filter(isCustomizedPlayer);
 	$: uncustomizedCount = removalCandidates.length - customizedCandidates.length;
+	$: skillPickerPosition = $selectedTeam?.players.find((player) => player.id === skillPickerPositionId);
+	$: skillPickerPlayer = $currentRoster.individualPlayers?.[skillPickerPositionId]?.find((player) => player.id === skillPickerPlayerId);
+	$: skillPickerSections = groupSkillChoices(
+		skillPickerPosition && skillPickerPlayer
+			? getSkillChoices(skillPickerPosition).filter((choice) => !skillPickerPlayer!.skills.includes(choice.skill.id))
+			: []
+	);
 
 	function addPlayer(positionId: string) {
 		currentRoster.update((roster) => {
@@ -109,11 +118,49 @@
 		});
 	}
 
-	function addSkill(positionId: string, player: IndividualPlayer) {
-		const skillId = pendingSkill[player.id];
-		if (!skillId || player.skills.includes(skillId)) return;
-		updatePlayer(positionId, player.id, (current) => ({ ...current, skills: [...current.skills, skillId] }));
-		pendingSkill = { ...pendingSkill, [player.id]: '' };
+	function groupSkillChoices(choices: SkillChoice[]) {
+		const sections: { access: SkillAccess; label: string }[] = [
+			{ access: 'primary', label: 'Primary skills' },
+			{ access: 'secondary', label: 'Secondary skills' }
+		];
+		return sections
+			.map(({ access, label }) => ({
+				access,
+				label,
+				categories: bb2025Skills
+					.map((category) => ({
+						id: category.id,
+						name: category.name,
+						choices: choices.filter(
+							(choice) => choice.access === access && category.skills.some((skill) => skill.id === choice.skill.id)
+						)
+					}))
+					.filter((category) => category.choices.length)
+			}))
+			.filter((section) => section.categories.length);
+	}
+
+	function openSkillPicker(positionId: string, playerId: string) {
+		skillPickerPositionId = positionId;
+		skillPickerPlayerId = playerId;
+		skillPickerDialog.showModal();
+	}
+
+	function resetSkillPicker() {
+		skillPickerPositionId = '';
+		skillPickerPlayerId = '';
+	}
+
+	function chooseSkill(skillId: string) {
+		if (!skillPickerPositionId || !skillPickerPlayerId) return;
+		updatePlayer(skillPickerPositionId, skillPickerPlayerId, (current) =>
+			current.skills.includes(skillId) ? current : { ...current, skills: [...current.skills, skillId] }
+		);
+		skillPickerDialog.close();
+	}
+
+	function closeSkillPickerOnBackdrop(event: MouseEvent) {
+		if (event.target === event.currentTarget) skillPickerDialog.close();
 	}
 
 	function removeSkill(positionId: string, player: IndividualPlayer, skillId: string) {
@@ -267,14 +314,7 @@
 							{/if}
 							{#if choices.length}
 								<div class="skill-picker">
-									<label for={`skill-${player.id}`}>Add skill</label>
-									<select id={`skill-${player.id}`} aria-label={`Choose additional skill for ${p.name} #${player.number}`} value={pendingSkill[player.id] ?? ''} on:change={(event) => (pendingSkill = { ...pendingSkill, [player.id]: (event.currentTarget as HTMLSelectElement).value })}>
-										<option value="">Choose a skill…</option>
-										{#each choices as choice (choice.skill.id)}
-											<option value={choice.skill.id}>{choice.skill.name} · {choice.access} · {choice.cost} SP</option>
-										{/each}
-									</select>
-									<button type="button" on:click={() => addSkill(p.id, player)} disabled={!pendingSkill[player.id]}>Add skill</button>
+									<button type="button" aria-label={`Add skill to ${p.name} #${player.number}`} on:click={() => openSkillPicker(p.id, player.id)}>Add skill</button>
 								</div>
 							{:else}
 								<p>No eligible additional skills remain.</p>
@@ -327,6 +367,35 @@
 			<button type="submit" disabled={!removeChoice}>Remove player</button>
 		</div>
 	</form>
+</dialog>
+
+<dialog class="skill-picker-dialog" bind:this={skillPickerDialog} aria-labelledby="skill-picker-title" on:close={resetSkillPicker} on:click={closeSkillPickerOnBackdrop}>
+	<div class="skill-picker-content">
+		<h2 id="skill-picker-title">Add skill to {skillPickerPosition?.name ?? 'player'} #{skillPickerPlayer?.number ?? ''}</h2>
+		<div class="skill-picker-sections">
+			{#each skillPickerSections as section (section.access)}
+				<section>
+					<h3>{section.label}</h3>
+					{#each section.categories as category (category.id)}
+						<h4>{category.name}</h4>
+						<ul class="skill-picker-list" aria-label={`${section.label}: ${category.name}`}>
+							{#each category.choices as choice (choice.skill.id)}
+								<li>
+									<button
+										type="button"
+										class="skill-picker-option"
+										on:click={() => chooseSkill(choice.skill.id)}
+									>
+										<span>{choice.skill.name}</span>
+									</button>
+								</li>
+							{/each}
+						</ul>
+					{/each}
+				</section>
+			{/each}
+		</div>
+	</div>
 </dialog>
 
 {#if openSkill}
@@ -594,8 +663,7 @@
 		font-size: 0.8rem;
 	}
 
-	.individual-player input,
-	.skill-picker select {
+	.individual-player input {
 		width: 100%;
 		min-width: 0;
 		min-height: 2.5rem;
@@ -741,8 +809,7 @@
 		background: #111827;
 	}
 
-	:global(.dark) .individual-player input,
-	:global(.dark) .skill-picker select {
+	:global(.dark) .individual-player input {
 		border-color: #4b5563;
 		background: #1f2937;
 		color: #f9fafb;
@@ -797,6 +864,112 @@
 		background: #6b7280;
 	}
 
+	.skill-picker-dialog {
+		position: fixed;
+		inset: 0;
+		margin: auto;
+		width: min(56rem, calc(100vw - 2rem));
+		height: min(90vh, 52rem);
+		height: min(90dvh, 52rem);
+		max-height: min(90vh, 52rem);
+		max-height: min(90dvh, 52rem);
+		box-sizing: border-box;
+		padding: 1.25rem;
+		border: 1px solid #d1d5db;
+		border-radius: 0.75rem;
+		color: #111827;
+	}
+
+	.skill-picker-dialog::backdrop {
+		background: rgb(0 0 0 / 0.55);
+		backdrop-filter: blur(2px);
+	}
+
+	.skill-picker-content {
+		display: grid;
+		height: 100%;
+		grid-template-rows: auto minmax(0, 1fr);
+		gap: 1rem;
+		min-width: 0;
+	}
+
+	.skill-picker-dialog h2,
+	.skill-picker-dialog h3,
+	.skill-picker-dialog h4 {
+		margin: 0;
+	}
+
+	.skill-picker-dialog h3 {
+		margin-bottom: 0.75rem;
+		padding-bottom: 0.35rem;
+		border-bottom: 1px solid #e5e7eb;
+		font-size: 1.15rem;
+	}
+
+	.skill-picker-dialog h4 {
+		margin: 0.75rem 0 0.5rem;
+		font-size: 0.95rem;
+	}
+
+	.skill-picker-sections {
+		display: grid;
+		gap: 1.25rem;
+		min-height: 0;
+		overflow: auto;
+		align-content: start;
+	}
+
+	.skill-picker-list {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.65rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	@media (max-width: 380px) {
+		.skill-picker-list {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.skill-picker-option {
+		display: flex;
+		min-height: 4.5rem;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem;
+		border: 1px solid #e5e7eb;
+		border-radius: 0.5rem;
+		background: #fff;
+		color: #111827;
+		font-weight: 500;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.skill-picker-option span {
+		overflow-wrap: anywhere;
+	}
+
+	.skill-picker-option:hover {
+		background: #f3f4f6;
+	}
+
+	@media (min-width: 640px) {
+		.skill-picker-list {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.skill-picker-list {
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+		}
+	}
+
 	:global(.dark) .remove-player-dialog {
 		border-color: #4b5563;
 		background: #111827;
@@ -805,6 +978,26 @@
 
 	:global(.dark) .remove-choice {
 		border-color: #4b5563;
+	}
+
+	:global(.dark) .skill-picker-dialog {
+		border-color: #4b5563;
+		background: #111827;
+		color: #f9fafb;
+	}
+
+	:global(.dark) .skill-picker-dialog h3 {
+		border-color: #374151;
+	}
+
+	:global(.dark) .skill-picker-option {
+		border-color: #4b5563;
+		background: #1f2937;
+		color: #f9fafb;
+	}
+
+	:global(.dark) .skill-picker-option:hover {
+		background: #374151;
 	}
 
 	.player-stat-band {
